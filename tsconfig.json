@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "bin",
+    "target": "es5",
+    "sourceMap": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "lib": [
+      "esnext",
+      "dom"
+    ]
+  }
+}

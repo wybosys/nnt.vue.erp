@@ -1,0 +1,22 @@
+.DS_Store
+node_modules/
+/dist
+/tmp
+/logs
+/run
+/bin
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+/src/nnt/*.js
+/src/app/*.js
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.map
