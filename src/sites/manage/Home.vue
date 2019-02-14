@@ -55,26 +55,29 @@
     }
   }
 
-
-  .main-aside {
-    background-color: $aside-color;
-    color: #fff;
-    text-align: center;
-    line-height: 200px;
-    width: 300px;
-  }
-
   .main-container {
     flex: 1;
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
     line-height: 160px;
+    .main-aside {
+      background-color: $aside-color;
+      color: #fff;
+      text-align: center;
+      line-height: 200px;
+      width: 300px;
+      height: 100%;
+    }
+    .main {
+      margin-left: -300px;
+      padding-left: 350px;
+      width: 100vw;
+      box-sizing: border-box;
+    }
+
   }
-  .main {
-    flex: 1;
-    padding: 0 50px;
-  }
+
 
 
 </style>
