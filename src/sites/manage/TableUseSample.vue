@@ -1,9 +1,13 @@
 <template>
-  <m-table :tableTitle="tableTitle" :tableData="tableData"></m-table>
+  <div>
+    <m-table :tableTitle="tableTitle" :tableData="tableData"></m-table>
+  </div>
+
+
 </template>
 
-<script>
-  import MTable from "./MTable";
+<script lang="ts">
+  import MTable from "../../nnt/components/MTable";
 
   export default {
     name: "TableUseSample",

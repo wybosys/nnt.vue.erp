@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-  import MChart from "./MChart";
+  import MChart from "../../nnt/components/MChart";
   import {MChartOption} from "../../config/dataMap";
 
   export default {

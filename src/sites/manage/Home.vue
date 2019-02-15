@@ -12,27 +12,19 @@
         <el-button type="primary">安全退出</el-button>
       </div>
     </header>
-    <div class="flex main-container">
-      <aside class="main-aside" width="200px">
-        <c-aside></c-aside>
-      </aside>
-      <main class="main">
-        <router-view></router-view>
-      </main>
-    </div>
+    <main-content class="main-container"></main-content>
   </div>
 
 </template>
 
 <script lang="ts">
-  import CAside from "./CAside.vue";
+  import MainContent from "./MainContent";
 
   export default {
     name: 'HelloWorld',
-    components: {CAside},
+    components: {MainContent},
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App'
       }
     }
   }
@@ -41,11 +33,18 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   .main-wrap {
+    position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
   }
+
   .main-header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 80px;
     background-color: $color-base;
     color: #fff;
     text-align: center;
@@ -56,28 +55,17 @@
   }
 
   .main-container {
-    flex: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 80px;
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    line-height: 160px;
-    .main-aside {
-      background-color: $aside-color;
-      color: #fff;
-      text-align: center;
-      line-height: 200px;
-      width: 300px;
-      height: 100%;
-    }
-    .main {
-      margin-left: -300px;
-      padding-left: 350px;
-      width: 100vw;
-      box-sizing: border-box;
-    }
+
 
   }
-
 
 
 </style>

@@ -16,6 +16,8 @@
   flex-direction: column;
 }
 
-.flex {
-  display: flex;
+.no-wrap {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }

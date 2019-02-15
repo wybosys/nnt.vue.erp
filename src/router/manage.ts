@@ -1,10 +1,11 @@
 const _ = () => import("../sites/manage/Manage.vue")
-const _caside = () => import("../sites/manage/CAside.vue")
 const _chartusesample = () => import("../sites/manage/ChartUseSample.vue")
 const _home = () => import("../sites/manage/Home.vue")
+const _maincontent = () => import("../sites/manage/MainContent.vue")
 const _manage = () => import("../sites/manage/Manage.vue")
-const _mchart = () => import("../sites/manage/MChart.vue")
-const _mtable = () => import("../sites/manage/MTable.vue")
+const _mchart = () => import("../nnt/components/MChart.vue")
+const _mmessagebox = () => import("../sites/manage/MMessageBox.vue")
+const _mtable = () => import("../nnt/components/MTable.vue")
 const _tableusesample = () => import("../sites/manage/TableUseSample.vue")
 
 export default [
@@ -14,11 +15,6 @@ export default [
 		name: '_'
 	},
 	{
-		path: '/caside',
-		component: _caside,
-		name: '_caside'
-	},
-	{
 		path: '/chartusesample',
 		component: _chartusesample,
 		name: '_chartusesample'
@@ -26,19 +22,12 @@ export default [
 	{
 		path: '/home',
 		component: _home,
-		name: '_home',
-    children:[
-      {
-        path: 'tableusesample',
-        component: _tableusesample,
-        name: '_tableusesample'
-      },
-      {
-        path: 'chartusesample',
-        component: _chartusesample,
-        name: '_chartusesample'
-      }
-    ]
+		name: '_home'
+	},
+	{
+		path: '/maincontent',
+		component: _maincontent,
+		name: '_maincontent'
 	},
 	{
 		path: '/manage',
@@ -49,6 +38,11 @@ export default [
 		path: '/mchart',
 		component: _mchart,
 		name: '_mchart'
+	},
+	{
+		path: '/mmessagebox',
+		component: _mmessagebox,
+		name: '_mmessagebox'
 	},
 	{
 		path: '/mtable',

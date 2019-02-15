@@ -4,8 +4,8 @@ export const navMenu = {
   admin:{
     ctrName:"基础数据后台",
     action:{
-      '/home/tableusesample': '表格样例',
-      '/home/chartusesample': '图表样例',
+      'TableUseSample': '表格样例',
+      'ChartUseSample': '图表样例',
     }
   },
   play:{

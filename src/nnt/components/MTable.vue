@@ -1,17 +1,19 @@
 <template>
   <div class="m-table">
     <div class="title">{{title}}</div>
-    <el-dropdown trigger="click" @command="changeTabInfo">
-      <el-button type="primary">
-        隐藏列表<i class="el-icon-arrow-down el-icon--right"></i>
-      </el-button>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">
-          <i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
-    <el-button @click="download">导出数据到Excel</el-button>
+    <div class="op">
+      <el-dropdown trigger="click" @command="changeTabInfo">
+        <el-button type="primary">
+          隐藏列表<i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">
+            <i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-button @click="download">导出数据到Excel</el-button>
+    </div>
     <el-table
       :data="nowTableData"
       :border="true"
@@ -131,9 +133,11 @@
 
 <style lang='scss' scoped>
   .title {
-    font-size: 30px;
-    line-height: 100px;
-    height: 100px;
+    font: bold 26px/80px "Microsoft YaHei UI";
+    height: 80px;
+  }
+  .op {
+    padding-bottom: 20px;
   }
 
   .el-dropdown {
