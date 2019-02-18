@@ -89,8 +89,7 @@
           }
         }
         return uniq;
-      }
-
+      },
     }
   }
 </script>

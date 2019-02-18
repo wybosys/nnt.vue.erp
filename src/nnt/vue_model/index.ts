@@ -1,3 +1,15 @@
+export class TableTitle {
+
+  /*数据对应api的参数名*/
+  type: string;
+
+  /*该参数以何种中文名展现在表格中*/
+  title: string;
+
+  /*是否固定该列*/
+  fixed: boolean;
+}
+
 class seriesMap {
   name: string;  // 该数据名称
   type: string;  //该数据api中对应的参数  /* {name: '总分享次数',type: 'allcount'}  */

@@ -1,21 +1,8 @@
 <template>
-  <div class="m-table">
+  <div class="m-table" @click.right.prevent="">
     <div class="title">{{title}}</div>
-    <div class="op">
-      <el-dropdown trigger="click" @command="changeTabInfo">
-        <el-button type="primary">
-          隐藏列表<i class="el-icon-arrow-down el-icon--right"></i>
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">
-            <i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <el-button @click="download">导出数据到Excel</el-button>
-    </div>
     <el-table
-      :data="nowTableData"
+      :data="tableData"
       :border="true"
       :fit="true"
       ref="filterTable"
@@ -26,23 +13,46 @@
                        :filter-method="filterHandler"
                        v-if="!nowTab[index].hidden"
                        :fixed="item.fixed"
-                       :width="nowTableData[0][item.type] | width"
+                       :width="tableData[0][item.type] | width"
       >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{scope.row[item.type]}}</span>
         </template>
       </el-table-column>
     </el-table>
+    <div v-if="opList">
+      <el-dropdown-menu>
+        <el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">
+          <i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </div>
+    <!--<div class="op">-->
+    <!--<el-dropdown trigger="click" @command="changeTabInfo">-->
+    <!--<el-button type="primary">-->
+    <!--隐藏列表<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+    <!--</el-button>-->
+    <!--<el-dropdown-menu slot="dropdown">-->
+    <!--<el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">-->
+    <!--<i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}-->
+    <!--</el-dropdown-item>-->
+    <!--</el-dropdown-menu>-->
+    <!--</el-dropdown>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script lang="ts">
+  import ExportToExcel from "./ExportToExcel.vue";
+  import MPagination from "./MPagination";
+
   export default {
     name: "MTable",
+    components: {MPagination, ExportToExcel},
     props: {
       title: {
         type: String,
-        default: "表格数据"
+        default: "表单数据"
       },
       tableTitle: {
         type: Array,
@@ -57,7 +67,7 @@
       return {
         showTab: false,
         nowTab: this.tableTitle,
-        nowTableData: this.tableData
+        opList:false
       }
     },
     filters: {
@@ -73,7 +83,7 @@
           len = 32;
         } else if (nowMatch) {
           reduceLen = 10 * nowMatch.length;
-          if (val.length - nowMatch.length > 8){
+          if (val.length - nowMatch.length > 8) {
             len = 16;
           }
         }
@@ -84,6 +94,9 @@
       changeTabInfo(idx) {
         this.nowTab[idx].hidden = !this.nowTab[idx].hidden;
         this.$set(this.nowTab, idx, this.nowTab[idx]);
+      },
+      showList() {
+        console.log(122222222)
       },
       filterHandler(value, row, column) {
         const property = column['property'];
@@ -105,28 +118,6 @@
         });
         return nowClassify;
       },
-      download() {
-        import('../../vendor/Export2Excel').then(excel => {
-          let tHeaeder = [];
-          let filterVal = [];
-          this.tableTitle.forEach(v => {
-            tHeaeder.push(v.title);
-            filterVal.push(v.type);
-          });
-          let data = this.formatJson(filterVal, this.tableData);
-          excel.export_json_to_excel({
-            header: tHeaeder,
-            data,
-            filename: this.title,
-          })
-        })
-      },
-      formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
-          return v[j];
-        }))
-      },
-
     }
   }
 </script>
@@ -136,6 +127,7 @@
     font: bold 26px/80px "Microsoft YaHei UI";
     height: 80px;
   }
+
   .op {
     padding-bottom: 20px;
   }
@@ -143,12 +135,20 @@
   .el-dropdown {
     line-height: 30px;
   }
+
   .el-table {
     background: none;
   }
+
   .m-table {
     width: 100%;
+    height: 100%;
   }
 
+  .navPage {
+    position: fixed;
+    left: 50%;
+    bottom: 100px;
+  }
 
 </style>

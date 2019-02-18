@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     reload() {
-      this.router = false
+      this.router = false;
       this.$nextTick(() => {
         this.router = true
       })

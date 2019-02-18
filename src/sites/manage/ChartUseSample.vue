@@ -7,7 +7,7 @@
 
 <script lang="ts">
   import MChart from "../../nnt/components/MChart";
-  import {MChartOption} from "../../config/dataMap";
+  import {MChartOption} from "../../nnt/vue_model";
 
   export default {
     name: "ChartUseSample",

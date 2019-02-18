@@ -1,20 +1,27 @@
 <template>
   <div>
-    <m-table :tableTitle="tableTitle" :tableData="tableData"></m-table>
+    <m-table :tableTitle="tableTitle" :tableData="nowTableData"></m-table>
+    <div class="op">
+      <export-to-excel :tableData="tableData" :tableTitle="tableTitle" title="表单数据"></export-to-excel>
+    </div>
+    <m-pagination class="navPage" :pageSize="pageSize" :nowTableDataLength="tableData.length"
+                  @changeCurrentPage="changeCurrentPage"></m-pagination>
   </div>
-
 
 </template>
 
 <script lang="ts">
   import MTable from "../../nnt/components/MTable";
+  import MPagination from "../../nnt/components/MPagination";
+  import ExportToExcel from "../../nnt/components/ExportToExcel";
 
   export default {
     name: "TableUseSample",
-    components: {MTable},
+    components: {ExportToExcel, MPagination, MTable},
     data() {
       return {
-        tableTitle: [{
+        tableTitle: [
+          {
           title: '日期',
           type: 'date',
           fixed:true,
@@ -80,12 +87,29 @@
             zip: 200333,
             zip1: '上海市普陀区金沙江路上海市普陀区金沙江路上海市普陀区金沙江路上海市普陀区金沙江路',
           },
-        ]
+        ],
+        pageSize: 3,
+        startPage: 1,
+      }
+    },
+    computed: {
+      nowTableData() {
+        return this.tableData.slice((this.startPage - 1) * this.pageSize, this.startPage * this.pageSize)
+      }
+    },
+    methods:{
+      changeCurrentPage(val) {
+        this.startPage = val;
       }
     }
   }
 </script>
 
 <style lang='scss' scoped>
-
+  .navPage {
+    position: fixed;
+    left: 50%;
+    bottom: 8%;
+    transform: translateX(-50%);
+  }
 </style>

@@ -7,8 +7,8 @@
   import 'echarts/lib/component/title';
   import 'echarts/lib/component/tooltip';
   import 'echarts/lib/chart/line';
-  import {MChartOption} from "../../config/dataMap";
   import 'echarts/lib/chart/bar';
+  import {MChartOption} from "../vue_model";
 
   export default {
     name: "MChart",
