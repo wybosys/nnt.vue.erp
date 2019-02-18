@@ -6,7 +6,9 @@
       :border="true"
       :fit="true"
       ref="filterTable"
-      style="width: 100%">
+      style="width: 100%"
+      @header-contextmenu="changeList"
+    >
       <el-table-column v-for="(item,index) in tableTitle" :key="index"
                        :prop="item.type"
                        :label="item.title" :filters="getClassify(tableData,item.type)"
@@ -19,26 +21,9 @@
           <span style="margin-left: 10px">{{scope.row[item.type]}}</span>
         </template>
       </el-table-column>
+      <slot></slot>
     </el-table>
-    <div v-if="opList">
-      <el-dropdown-menu>
-        <el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">
-          <i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </div>
-    <!--<div class="op">-->
-    <!--<el-dropdown trigger="click" @command="changeTabInfo">-->
-    <!--<el-button type="primary">-->
-    <!--隐藏列表<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-    <!--</el-button>-->
-    <!--<el-dropdown-menu slot="dropdown">-->
-    <!--<el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">-->
-    <!--<i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}-->
-    <!--</el-dropdown-item>-->
-    <!--</el-dropdown-menu>-->
-    <!--</el-dropdown>-->
-    <!--</div>-->
+
   </div>
 </template>
 
@@ -67,7 +52,8 @@
       return {
         showTab: false,
         nowTab: this.tableTitle,
-        opList:false
+        opList: false,
+        nowColumn: {}
       }
     },
     filters: {
@@ -91,12 +77,10 @@
       }
     },
     methods: {
-      changeTabInfo(idx) {
-        this.nowTab[idx].hidden = !this.nowTab[idx].hidden;
-        this.$set(this.nowTab, idx, this.nowTab[idx]);
-      },
-      showList() {
-        console.log(122222222)
+
+      changeList(column, event) {
+        this.nowColumn = column;
+        this.opList = true;
       },
       filterHandler(value, row, column) {
         const property = column['property'];

@@ -29,7 +29,6 @@
     computed: {},
     methods: {
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.$emit('changeCurrentPage',val)
       },
     }

@@ -11,6 +11,12 @@
   align-items: center;
 }
 
+.flex-around-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .flex-vertical-container {
   display: flex;
   flex-direction: column;
