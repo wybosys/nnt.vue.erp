@@ -77,7 +77,6 @@
       }
     },
     methods: {
-
       changeList(column, event) {
         this.nowColumn = column;
         this.opList = true;

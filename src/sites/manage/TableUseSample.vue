@@ -3,7 +3,7 @@
     <m-table :tableTitle="tableTitle" :tableData="nowTableData"></m-table>
     <div class="navPage flex-around-container">
       <m-pagination :pageSize="pageSize" :nowTableDataLength="tableData.length"
-                    @changeCurrentPage="changeCurrentPage" @showAllData="showAllData"></m-pagination>
+                    @changeCurrentPage="changeCurrentPage"></m-pagination>
       <m-change-table-column :tableTitle="tableTitle"></m-change-table-column>
       <export-to-excel :tableData="tableData" :tableTitle="tableTitle" title="表单数据"></export-to-excel>
     </div>
@@ -104,12 +104,6 @@
       changeCurrentPage(val) {
         this.startPage = val;
       },
-      showAllData(val) {
-        console.log(124)
-        this.tableTitle.forEach(v=>{
-          v.hidden = false
-        })
-      }
     }
   }
 </script>

@@ -17,17 +17,14 @@
         </el-submenu>
       </el-menu>
     </aside>
-    <main class="main">
-      <ul class="tabs-title" v-show="titles.length">
-        <li :class="[active==index?'tab-active':'','tab','no-wrap']" v-for="(item,index) in titles"
-            @click="changeTab(item,index)">
-          <span>{{item.title}}</span>
-          <span class="close" @click.stop="close(item,index)">X</span>
-        </li>
-      </ul>
-      <keep-alive>
-        <component :is="currentTabComponent"></component>
-      </keep-alive>
+    <main class="main" @click.right.prevent="">
+      <!--<m-nav-tab :titles="titles" @changeActiveTab="changeTab" :active="active"></m-nav-tab>-->
+      <m-tab :titles="titles" @changeActiveTab="changeActiveTab" :active="active + ''"></m-tab>
+      <div class="main-content">
+        <keep-alive>
+          <component :is="currentTabComponent"></component>
+        </keep-alive>
+      </div>
     </main>
   </div>
 </template>
@@ -36,16 +33,18 @@
   import {navMenu} from "../../config/authConfig";
   import TableUseSample from "./TableUseSample";
   import ChartUseSample from "./ChartUseSample";
+  import MNavTab from "../../nnt/components/MNavTab";
+  import MTab from "../../nnt/components/Tab";
 
   export default {
     name: "MainContent",
-    components: {ChartUseSample, TableUseSample},
+    components: {MTab, MNavTab, ChartUseSample, TableUseSample},
     data() {
       return {
         currentTabComponent: '',
         titles: [],
-        active: 0,
         navMenu: '',
+        active:"0"
       }
     },
     created() {
@@ -65,19 +64,9 @@
         }
         this.currentTabComponent = componentName;
       },
-      close(item,index) {
-        this.titles.splice(index,1);
-        let len = this.titles.length;
-        if (len) {
-          this.active = len - 1;
-          this.currentTabComponent = this.titles[len-1].componentName;
-        } else {
-          this.currentTabComponent = ''
-        }
-      },
-      changeTab(item, index) {
-        this.currentTabComponent = item.componentName;
-        this.active = index;
+      changeActiveTab(obj) {
+        this.currentTabComponent = obj.componentName;
+        this.active = obj.active;
       },
       uniq(title){
         let titles = this.titles;
@@ -114,32 +103,12 @@
     right: 0;
     top: 0;
     bottom: 0;
-    padding: 0 50px;
     box-sizing: border-box;
+    .main-content {
+      padding: 0 50px;
+    }
   }
 
-  .tabs-title {
-    display: flex;
-    padding: 20px;
-    border-bottom: 2px solid #324057;
-    .tab {
-      position: relative;
-      margin: 0 10px;
-      padding: 0 20px 0 10px;
-      font: 20px/50px "Microsoft YaHei UI";
-      border: 1px solid $color-base ;
-      border-radius: 6px;
-    }
-    .tab-active {
-      background: #fff;
-      color: #409EFF;
-    }
-    .close {
-      position: absolute;
-      right: 0;
-      padding: 4px 6px;
-      font: 18px/1 "Microsoft YaHei UI";
-    }
-  }
+
 
 </style>
