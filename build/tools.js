@@ -52,6 +52,8 @@ function GenRoutes(srcdir, outputfile) {
 
     if (cfg.module) {
       arr.push("\n\t\t\tmodule: true")
+      arr.push("\n\t\t\tpriority: " + cfg.priority)
+      arr.push("\n\t\t\tlabel: '" + cfg.label + "'")
     }
 
     def += arr.join(',') + "\n\t\t}"
@@ -151,6 +153,7 @@ function ListRoutesInDirectory(dir, cur, result, site) {
       }
 
       SetObjectValue(result, curpath, 'priority', cfgobj.priority >= 0 ? cfgobj.priority : 9999)
+      SetObjectValue(result, curpath, 'label', cfgobj.label ? cfgobj.label : rootname)
       SetObjectValue(result, curpath, 'module', true)
     }
   }

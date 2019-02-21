@@ -25,12 +25,10 @@ export default {
 		{
 			path: '/manage',
 			component: _manage,
-			name: '_manage'
-		},
-		{
-			path: '/manage',
-			component: _manage,
-			name: '_manage'
+			name: '_manage',
+			module: true,
+			priority: 9999,
+			label: 'Manage'
 		},
 		{
 			path: '/',
@@ -40,12 +38,10 @@ export default {
 		{
 			path: '/base',
 			component: _base,
-			name: '_base'
-		},
-		{
-			path: '/base',
-			component: _base,
-			name: '_base'
+			name: '_base',
+			module: true,
+			priority: 0,
+			label: 'Base'
 		},
 		{
 			path: '/base/base',
@@ -55,12 +51,10 @@ export default {
 		{
 			path: '/chart',
 			component: _chart,
-			name: '_chart'
-		},
-		{
-			path: '/chart',
-			component: _chart,
-			name: '_chart'
+			name: '_chart',
+			module: true,
+			priority: 9999,
+			label: 'Chart'
 		},
 		{
 			path: '/chart/chart',
@@ -95,12 +89,10 @@ export default {
 		{
 			path: '/table',
 			component: _table,
-			name: '_table'
-		},
-		{
-			path: '/table',
-			component: _table,
-			name: '_table'
+			name: '_table',
+			module: true,
+			priority: 9999,
+			label: 'Table'
 		},
 		{
 			path: '/table/table',
@@ -115,12 +107,10 @@ export default {
 		{
 			path: '/sample',
 			component: _sample,
-			name: '_sample'
-		},
-		{
-			path: '/sample',
-			component: _sample,
-			name: '_sample'
+			name: '_sample',
+			module: true,
+			priority: 9999,
+			label: 'Sample'
 		},
 		{
 			path: '/sample/audiorecorder',
@@ -145,12 +135,10 @@ export default {
 		{
 			path: '/test',
 			component: _test,
-			name: '_test'
-		},
-		{
-			path: '/test',
-			component: _test,
-			name: '_test'
+			name: '_test',
+			module: true,
+			priority: 9999,
+			label: 'Test'
 		},
 		{
 			path: '/test/test',
