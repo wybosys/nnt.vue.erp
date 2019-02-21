@@ -10,7 +10,7 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 /src/nnt/*.js
-/src/app/*.js
+/src/api/*.js
 
 # Editor directories and files
 .idea

@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import {RestSession} from "../../nnt/RestSession";
-import {SampleEcho} from "../../app/framework-nntlogic-apis.ts";
+import {SampleEcho} from "../../api/framework-nntlogic-apis.ts";
 
 export default {
   name: "Echo",

@@ -20,35 +20,35 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: "Sample",
-    data() {
-      return {
-        loginForm: {
-          username: '',
-          password: '',
-        },
-        rules: {
-          username: [
-            {required: true, message: '请输入用户名', trigger: 'blur'},
-          ],
-          password: [
-            {required: true, message: '请输入密码', trigger: 'blur'}
-          ],
-        },
-      }
-    },
-    methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate(res => {
-          if (res) {
-            //通过接口验证登陆
-            this.$router.push('/home')
-          }
-        })
-      }
+export default {
+  name: "Sample",
+  data() {
+    return {
+      loginForm: {
+        username: '',
+        password: '',
+      },
+      rules: {
+        username: [
+          {required: true, message: '请输入用户名', trigger: 'blur'},
+        ],
+        password: [
+          {required: true, message: '请输入密码', trigger: 'blur'}
+        ],
+      },
+    }
+  },
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate(res => {
+        if (res) {
+          //通过接口验证登陆
+          this.$router.push('/manager/home')
+        }
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

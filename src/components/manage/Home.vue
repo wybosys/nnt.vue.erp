@@ -18,16 +18,15 @@
 </template>
 
 <script lang="ts">
-  import MainContent from "./MainContent";
+import MainContent from "./MainContent";
 
-  export default {
-    name: 'HelloWorld',
-    components: {MainContent},
-    data() {
-      return {
-      }
-    }
+export default {
+  name: 'HelloWorld',
+  components: {MainContent},
+  data() {
+    return {}
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -49,6 +48,7 @@
     color: #fff;
     text-align: center;
     padding: 0 60px;
+
     .title {
       font: 40px/80px 'Microsoft YaHei UI';
     }

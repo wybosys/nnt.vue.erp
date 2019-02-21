@@ -1,6 +1,6 @@
 import App from './App.vue'
 import router from './router'
-import {SampleLoginsdk, SampleLoginverifysdk} from "./app/framework-nntlogic-apis";
+import {SampleLoginsdk, SampleLoginverifysdk} from "./api/framework-nntlogic-apis";
 import {Get} from "./nnt/RestSession";
 import {Application} from "./nnt/Application";
 

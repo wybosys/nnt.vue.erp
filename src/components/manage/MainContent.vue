@@ -30,57 +30,57 @@
 </template>
 
 <script lang="ts">
-  import {navMenu} from "../../config/authConfig";
-  import TableUseSample from "./TableUseSample";
-  import ChartUseSample from "./ChartUseSample";
-  import MNavTab from "../../nnt/components/MNavTab";
-  import MTab from "../../nnt/components/Tab";
+import {navMenu} from "../../config/authConfig";
+import TableUseSample from "./TableUseSample";
+import ChartUseSample from "./ChartUseSample";
+import MNavTab from "../../nnt/components/MNavTab";
+import MTab from "../../nnt/components/Tab";
 
-  export default {
-    name: "MainContent",
-    components: {MTab, MNavTab, ChartUseSample, TableUseSample},
-    data() {
-      return {
-        currentTabComponent: '',
-        titles: [],
-        navMenu: '',
-        active:"0"
-      }
-    },
-    created() {
-      this.navMenu = navMenu;
-    },
-    methods: {
-      toOtherPage(componentName, title) {
-        let uniq = this.uniq(title);
-        if (uniq == -1) {
-          this.titles.push({
-            title:title,
-            componentName:componentName
-          });
-          this.active = this.titles.length - 1;
-        } else {
-          this.active = uniq;
-        }
-        this.currentTabComponent = componentName;
-      },
-      changeActiveTab(obj) {
-        this.currentTabComponent = obj.componentName;
-        this.active = obj.active;
-      },
-      uniq(title){
-        let titles = this.titles;
-        let uniq = -1;
-        for (let i = 0; i < titles.length; i++) {
-          if (titles[i].title == title) {
-            uniq = i;
-            break;
-          }
-        }
-        return uniq;
-      },
+export default {
+  name: "MainContent",
+  components: {MTab, MNavTab, ChartUseSample, TableUseSample},
+  data() {
+    return {
+      currentTabComponent: '',
+      titles: [],
+      navMenu: '',
+      active: "0"
     }
+  },
+  created() {
+    this.navMenu = navMenu;
+  },
+  methods: {
+    toOtherPage(componentName, title) {
+      let uniq = this.uniq(title);
+      if (uniq == -1) {
+        this.titles.push({
+          title: title,
+          componentName: componentName
+        });
+        this.active = this.titles.length - 1;
+      } else {
+        this.active = uniq;
+      }
+      this.currentTabComponent = componentName;
+    },
+    changeActiveTab(obj) {
+      this.currentTabComponent = obj.componentName;
+      this.active = obj.active;
+    },
+    uniq(title) {
+      let titles = this.titles;
+      let uniq = -1;
+      for (let i = 0; i < titles.length; i++) {
+        if (titles[i].title == title) {
+          uniq = i;
+          break;
+        }
+      }
+      return uniq;
+    },
   }
+}
 </script>
 
 <style lang='scss' scoped>
@@ -104,11 +104,9 @@
     top: 0;
     bottom: 0;
     box-sizing: border-box;
+
     .main-content {
       padding: 0 50px;
     }
   }
-
-
-
 </style>

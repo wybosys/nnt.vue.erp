@@ -10,7 +10,7 @@
 <script lang="ts">
 
 import {AudioRecorder} from "../../nnt/Audio";
-import {AudiostoreUpload} from "../../app/devops-media-apis";
+import {AudiostoreUpload} from "../../api/devops-media-apis";
 import {Get} from "../../nnt/RestSession";
 
 export default {
