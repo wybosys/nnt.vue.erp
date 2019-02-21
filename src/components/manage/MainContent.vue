@@ -6,13 +6,13 @@
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b">
-        <el-submenu v-for="(item,key,index) in navMenu" :key="index" :index="index + ''">
+        <el-submenu v-for="(item,key,index) in naviTree" :key="index" :index="index + ''">
           <template slot="title">
-            <span>{{item.ctrName}}</span>
+            <span>{{item.label}}</span>
           </template>
-          <el-menu-item v-for="(subItem,subKey,subIndex) in item.action" :key="subIndex" :index="index + '=' + subIndex"
+          <el-menu-item v-for="(subItem,subKey,subIndex) in item.children" :key="subIndex" :index="index + '=' + subIndex"
                         @click="toOtherPage(subKey,subItem)">
-            {{subItem}}
+            {{subItem.label}}
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -29,10 +29,11 @@
 </template>
 
 <script lang="ts">
-import {navMenu} from "./authConfig";
+
 import TableUseSample from "./TableUseSample";
 import ChartUseSample from "./ChartUseSample";
 import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
+import {Application} from "../../nnt/erp/Application";
 
 export default {
   name: "MainContent",
@@ -41,12 +42,12 @@ export default {
     return {
       currentTabComponent: '',
       titles: [],
-      navMenu: '',
+      naviTree: null,
       active: "0"
     }
   },
   created() {
-    this.navMenu = navMenu;
+    this.naviTree = Application.shared.tree.children
   },
   methods: {
     toOtherPage(componentName, title) {

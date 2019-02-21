@@ -1,4 +1,5 @@
 {
   "path": "/base",
-  "priority": 0
+  "priority": 0,
+  "label": "基础"
 }

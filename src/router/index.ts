@@ -12,12 +12,10 @@ const _manage_mmessagebox = () => import("../components/manage/MMessageBox.vue")
 const _table = () => import("../components/manage/table/Table.vue")
 const _table_table = () => import("../components/manage/table/Table.vue")
 const _manage_tableusesample = () => import("../components/manage/TableUseSample.vue")
-const _sample = () => import("../components/sample/Sample.vue")
 const _sample_audiorecorder = () => import("../components/sample/AudioRecorder.vue")
 const _sample_echo = () => import("../components/sample/Echo.vue")
 const _sample_helloworld = () => import("../components/sample/HelloWorld.vue")
 const _sample_sample = () => import("../components/sample/Sample.vue")
-const _test = () => import("../components/test/Test.vue")
 const _test_test = () => import("../components/test/Test.vue")
 
 export default {
@@ -41,7 +39,7 @@ export default {
 			name: '_base',
 			module: true,
 			priority: 0,
-			label: 'Base'
+			label: '基础'
 		},
 		{
 			path: '/base/base',
@@ -53,8 +51,8 @@ export default {
 			component: _chart,
 			name: '_chart',
 			module: true,
-			priority: 9999,
-			label: 'Chart'
+			priority: 2,
+			label: '图表'
 		},
 		{
 			path: '/chart/chart',
@@ -91,8 +89,8 @@ export default {
 			component: _table,
 			name: '_table',
 			module: true,
-			priority: 9999,
-			label: 'Table'
+			priority: 1,
+			label: '表格'
 		},
 		{
 			path: '/table/table',
@@ -103,14 +101,6 @@ export default {
 			path: '/manage/tableusesample',
 			component: _manage_tableusesample,
 			name: '_manage_tableusesample'
-		},
-		{
-			path: '/sample',
-			component: _sample,
-			name: '_sample',
-			module: true,
-			priority: 9999,
-			label: 'Sample'
 		},
 		{
 			path: '/sample/audiorecorder',
@@ -131,14 +121,6 @@ export default {
 			path: '/sample/sample',
 			component: _sample_sample,
 			name: '_sample_sample'
-		},
-		{
-			path: '/test',
-			component: _test,
-			name: '_test',
-			module: true,
-			priority: 9999,
-			label: 'Test'
 		},
 		{
 			path: '/test/test',

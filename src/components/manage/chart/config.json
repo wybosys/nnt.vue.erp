@@ -1,3 +1,5 @@
 {
-  "path": "/chart"
+  "path": "/chart",
+  "priority": 2,
+  "label": "图表"
 }

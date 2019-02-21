@@ -14,7 +14,10 @@ declare let process: any;
 export interface IRoute {
   path: string,
   component: any,
-  name: string
+  name: string,
+  label?: string,
+  module?: boolean,
+  priority?: number
 }
 
 export interface IApplicationRouter {
