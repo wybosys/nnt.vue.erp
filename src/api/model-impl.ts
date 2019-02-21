@@ -1,5 +1,5 @@
-import {Base} from "../nnt/Logic";
-import {config} from "../nnt/Config";
+import {Base} from "../nnt/core/Logic";
+import {config} from "../nnt/core/Config";
 
 export class Model extends Base {
 

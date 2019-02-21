@@ -4,8 +4,8 @@
 
 <script lang="ts">
 
-import {Storage} from "./Storage";
-import {Application, IRoute} from "./Application";
+import {Storage} from "../core/Storage";
+import {Application, IRoute} from "../core/Application";
 
 const KEY_CURRENT_SITE = '::nnt::vue::sites::current'
 

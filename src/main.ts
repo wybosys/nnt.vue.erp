@@ -1,8 +1,8 @@
 import App from './App.vue'
 import router from './router'
 import {SampleLoginsdk, SampleLoginverifysdk} from "./api/framework-nntlogic-apis";
-import {Get} from "./nnt/RestSession";
-import {Application} from "./nnt/Application";
+import {Get} from "./nnt/core/RestSession";
+import {Application} from "./nnt/core/Application";
 
 import Vue from 'vue';
 import ElementUI from 'element-ui';
