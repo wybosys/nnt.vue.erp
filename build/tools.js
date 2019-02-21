@@ -165,7 +165,7 @@ function GenSites() {
   // 生成基础的routers，来支持多站点
   let content = [];
   // 导入对象
-  content.push('const _ = () => import("../nnt/Site.vue")')
+  content.push('const _ = () => import("../nnt/sites/Index.vue")')
   sites.forEach(site => {
     content.push('const ' + site + ' = () => import("./' + site + '")')
   })
