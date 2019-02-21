@@ -1,21 +1,22 @@
 <template>
   <div>
-    <m-chart id="chart1" :chartOption="chartOption" :chartData="chartData"></m-chart>
-    <m-chart id="chart2" :chartOption="chartOption2" :chartData="chartData"></m-chart>
+    <chart id="chart1" :chartOption="chartOption" :chartData="chartData"></chart>
+    <chart id="chart2" :chartOption="chartOption2" :chartData="chartData"></chart>
   </div>
 </template>
 
 <script lang="ts">
-import MChart from "../../nnt/components/MChart";
-import {MChartOption} from "../../nnt/vue_model";
+
+import Chart from "../../nnt/erp/widgets/chart/Chart.vue";
+import {Option} from "../../nnt/model/chart/Option";
 
 export default {
   name: "ChartUseSample",
-  components: {MChart},
+  components: {Chart},
   data() {
     return {
-      chartOption: new MChartOption(),
-      chartOption2: new MChartOption(),
+      chartOption: new Option(),
+      chartOption2: new Option(),
       chartData: [],
       chartData2: []
     }
@@ -26,7 +27,7 @@ export default {
   },
   methods: {
     getInfo1() {
-      let m = new MChartOption();
+      let m = new Option();
       m.type = 'bar';
       m.title = '趋势图案例';
 
@@ -63,7 +64,7 @@ export default {
         {date: "2019-02-03", allcount: "1373", peoplecount: "797", dailyshare: "537", invitate: "363"}]
     },
     getInfo2() {
-      let m = new MChartOption();
+      let m = new Option();
       m.type = 'line';
       m.title = '趋势图案例2';
 
