@@ -2,13 +2,7 @@ import App from './App.vue'
 import router from './router'
 import {SampleLoginsdk, SampleLoginverifysdk} from "./api/framework-nntlogic-apis";
 import {Get} from "./nnt/core/RestSession";
-import {Application} from "./nnt/core/Application";
-
-import Vue from 'vue';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-
-Vue.use(ElementUI);
+import {Application} from "./nnt/erp/Application";
 
 new Application({
   app: App,
