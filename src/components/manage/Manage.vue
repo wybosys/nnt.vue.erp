@@ -20,6 +20,8 @@
 </template>
 
 <script lang="ts">
+import {Application} from "../../nnt/core/Application";
+
 export default {
   name: "Sample",
   data() {
@@ -42,8 +44,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(res => {
         if (res) {
-          //通过接口验证登陆
-          this.$router.push('/manager/home')
+          Application.shared.push('/manage/home')
         }
       })
     }
