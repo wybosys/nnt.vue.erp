@@ -3,6 +3,7 @@
 </template>
 
 <script lang="ts">
+
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/tooltip';
@@ -71,7 +72,7 @@ export default {
   },
   mounted() {
     let id = this.id;
-    this.myChart = echarts.init(document.getElementById(id));
+    this.myChart = echarts.init(<HTMLDivElement>document.getElementById(id));
     this.myChart.setOption(this.originData);
     this.getChartMap()
   },

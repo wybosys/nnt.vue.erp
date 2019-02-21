@@ -28,11 +28,10 @@
 </template>
 
 <script lang="ts">
-import ExportToExcel from "./ExportToExcel.vue";
 
 export default {
   name: "ErpTable",
-  components: {ExportToExcel},
+  components: {},
   props: {
     title: {
       type: String,
