@@ -19,6 +19,13 @@ function SaveDevServer() {
   fs.writeFileSync('run/dev-server.pid', process.pid)
 }
 
+function SetObjectValue(result, group, key, value) {
+  if (!(group in result)) {
+    result[group] = {}
+  }
+  result[group][key] = value
+}
+
 function GenRoutes(srcdir, outputfile) {
   // 默认输出到src/router/index.ts中
   // 默认组件保存在src/components中
@@ -34,7 +41,7 @@ function GenRoutes(srcdir, outputfile) {
 
   for (let key in routes) {
     let name = key.replace(/\//g, '_')
-    imports.push('const ' + name + ' = () => import("../components' + routes[key] + '")')
+    imports.push('const ' + name + ' = () => import("../components' + routes[key].file + '")')
     defs.push("\t\t{\n\t\t\tpath: '" + key + "',\n\t\t\tcomponent: " + name + ",\n\t\t\tname: '" + name + "'\n\t\t}")
   }
 
@@ -78,7 +85,7 @@ function GenRoutesInSite(srcdir, site) {
 
   for (let key in routes) {
     let name = key.replace(/\//g, '_')
-    imports.push('const ' + name + ' = () => import("../sites/' + site + routes[key] + '")')
+    imports.push('const ' + name + ' = () => import("../sites/' + site + routes[key].file + '")')
     defs.push("\t{\n\t\tpath: '" + key + "',\n\t\tcomponent: " + name + ",\n\t\tname: '" + name + "'\n\t}")
   }
 
@@ -113,13 +120,20 @@ function UppercaseFirst(str) {
 
 function ListRoutesInDirectory(dir, cur, result, site) {
   let cfg = dir + '/config.json'
+  let curpath = cur;
+
   if (fs.existsSync(cfg)) {
     let cfgobj = JSON.parse(fs.readFileSync(cfg))
     let rootname = UppercaseFirst(path.basename(cur))
+
+    // 如果定义了path，则使用config的定义
+    if (cfgobj.path)
+      curpath = cfgobj.path;
+
     if (fs.existsSync(dir + '/' + rootname + '.vue')) {
-      result[cur] = cur + '/' + rootname + '.vue'
+      SetObjectValue(result, curpath, 'file', cur + '/' + rootname + '.vue')
       if (cfgobj.default) {
-        result[path.dirname(cur)] = cur + '/' + rootname + '.vue'
+        SetObjectValue(result, path.dirname(cur), 'file', cur + '/' + rootname + '.vue')
       }
     }
   }
@@ -127,7 +141,7 @@ function ListRoutesInDirectory(dir, cur, result, site) {
   // 如果是site模式，则必须生成根
   if (site) {
     let rootname = UppercaseFirst(site)
-    result['/'] = cur + '/' + rootname + '.vue'
+    SetObjectValue(result, '/', 'file', cur + '/' + rootname + '.vue')
   }
 
   fs.readdirSync(dir).forEach(each => {
@@ -137,7 +151,7 @@ function ListRoutesInDirectory(dir, cur, result, site) {
     } else {
       if (path.extname(each) == ".vue") {
         let name = path.basename(each, ".vue").toLowerCase()
-        result[cur + '/' + name] = cur + '/' + each
+        SetObjectValue(result, curpath + '/' + name, 'file', cur + '/' + each)
       }
     }
   })

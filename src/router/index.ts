@@ -1,10 +1,16 @@
 const _manage = () => import("../components/manage/Manage.vue")
 const _ = () => import("../components/manage/Manage.vue")
+const _base = () => import("../components/manage/base/Base.vue")
+const _base_base = () => import("../components/manage/base/Base.vue")
+const _chart = () => import("../components/manage/chart/Chart.vue")
+const _chart_chart = () => import("../components/manage/chart/Chart.vue")
 const _manage_chartusesample = () => import("../components/manage/ChartUseSample.vue")
 const _manage_home = () => import("../components/manage/Home.vue")
 const _manage_maincontent = () => import("../components/manage/MainContent.vue")
 const _manage_manage = () => import("../components/manage/Manage.vue")
 const _manage_mmessagebox = () => import("../components/manage/MMessageBox.vue")
+const _table = () => import("../components/manage/table/Table.vue")
+const _table_table = () => import("../components/manage/table/Table.vue")
 const _manage_tableusesample = () => import("../components/manage/TableUseSample.vue")
 const _sample = () => import("../components/sample/Sample.vue")
 const _sample_audiorecorder = () => import("../components/sample/AudioRecorder.vue")
@@ -25,6 +31,26 @@ export default {
 			path: '/',
 			component: _,
 			name: '_'
+		},
+		{
+			path: '/base',
+			component: _base,
+			name: '_base'
+		},
+		{
+			path: '/base/base',
+			component: _base_base,
+			name: '_base_base'
+		},
+		{
+			path: '/chart',
+			component: _chart,
+			name: '_chart'
+		},
+		{
+			path: '/chart/chart',
+			component: _chart_chart,
+			name: '_chart_chart'
 		},
 		{
 			path: '/manage/chartusesample',
@@ -50,6 +76,16 @@ export default {
 			path: '/manage/mmessagebox',
 			component: _manage_mmessagebox,
 			name: '_manage_mmessagebox'
+		},
+		{
+			path: '/table',
+			component: _table,
+			name: '_table'
+		},
+		{
+			path: '/table/table',
+			component: _table_table,
+			name: '_table_table'
 		},
 		{
 			path: '/manage/tableusesample',
