@@ -40,9 +40,20 @@ function GenRoutes(srcdir, outputfile) {
   let defs = []
 
   for (let key in routes) {
+    let cfg = routes[key]
     let name = key.replace(/\//g, '_')
-    imports.push('const ' + name + ' = () => import("../components' + routes[key].file + '")')
+    imports.push('const ' + name + ' = () => import("../components' + cfg.file + '")')
     defs.push("\t\t{\n\t\t\tpath: '" + key + "',\n\t\t\tcomponent: " + name + ",\n\t\t\tname: '" + name + "'\n\t\t}")
+    if (cfg.module) {
+      let def = "\t\t{"
+      let arr = [
+        "\n\t\t\tpath: '" + key + "'",
+        "\n\t\t\tcomponent: " + name,
+        "\n\t\t\tname: '" + name + "'"
+      ]
+      def += arr.join(',') + "\n\t\t}"
+      defs.push(def)
+    }
   }
 
   // 如果是二级目录，则需要生成额外的router
@@ -84,8 +95,9 @@ function GenRoutesInSite(srcdir, site) {
   let defs = []
 
   for (let key in routes) {
+    let cfg = routes[key]
     let name = key.replace(/\//g, '_')
-    imports.push('const ' + name + ' = () => import("../sites/' + site + routes[key].file + '")')
+    imports.push('const ' + name + ' = () => import("../sites/' + site + cfg.file + '")')
     defs.push("\t{\n\t\tpath: '" + key + "',\n\t\tcomponent: " + name + ",\n\t\tname: '" + name + "'\n\t}")
   }
 
@@ -135,6 +147,9 @@ function ListRoutesInDirectory(dir, cur, result, site) {
       if (cfgobj.default) {
         SetObjectValue(result, path.dirname(cur), 'file', cur + '/' + rootname + '.vue')
       }
+
+      SetObjectValue(result, curpath, 'priority', cfgobj.priority >= 0 ? cfgobj.priority : 9999)
+      SetObjectValue(result, curpath, 'module', true)
     }
   }
 

@@ -28,6 +28,11 @@ export default {
 			name: '_manage'
 		},
 		{
+			path: '/manage',
+			component: _manage,
+			name: '_manage'
+		},
+		{
 			path: '/',
 			component: _,
 			name: '_'
@@ -38,9 +43,19 @@ export default {
 			name: '_base'
 		},
 		{
+			path: '/base',
+			component: _base,
+			name: '_base'
+		},
+		{
 			path: '/base/base',
 			component: _base_base,
 			name: '_base_base'
+		},
+		{
+			path: '/chart',
+			component: _chart,
+			name: '_chart'
 		},
 		{
 			path: '/chart',
@@ -83,6 +98,11 @@ export default {
 			name: '_table'
 		},
 		{
+			path: '/table',
+			component: _table,
+			name: '_table'
+		},
+		{
 			path: '/table/table',
 			component: _table_table,
 			name: '_table_table'
@@ -91,6 +111,11 @@ export default {
 			path: '/manage/tableusesample',
 			component: _manage_tableusesample,
 			name: '_manage_tableusesample'
+		},
+		{
+			path: '/sample',
+			component: _sample,
+			name: '_sample'
 		},
 		{
 			path: '/sample',
@@ -116,6 +141,11 @@ export default {
 			path: '/sample/sample',
 			component: _sample_sample,
 			name: '_sample_sample'
+		},
+		{
+			path: '/test',
+			component: _test,
+			name: '_test'
 		},
 		{
 			path: '/test',
