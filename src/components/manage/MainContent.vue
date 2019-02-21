@@ -11,7 +11,7 @@
             <span>{{item.label}}</span>
           </template>
           <el-menu-item v-for="(subItem,subKey,subIndex) in item.children" :key="subIndex" :index="index + '=' + subIndex"
-                        @click="toOtherPage(subKey,subItem)">
+                        @click="toOtherPage(subItem)">
             {{subItem.label}}
           </el-menu-item>
         </el-submenu>
@@ -32,6 +32,7 @@
 
 import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
 import {Application} from "../../nnt/erp/Application";
+import {TreeNode} from "../../nnt/erp/ModuleTree";
 
 export default {
   name: "MainContent",
@@ -48,28 +49,24 @@ export default {
     this.naviTree = Application.shared.tree.children
   },
   methods: {
-    toOtherPage(componentName, title) {
-      let uniq = this.uniq(title);
+    toOtherPage(route: TreeNode) {
+      let uniq = this.uniq(route.id);
       if (uniq == -1) {
-        this.titles.push({
-          title: title,
-          componentName: componentName
-        });
+        this.titles.push(route);
         this.active = this.titles.length - 1;
       } else {
         this.active = uniq;
       }
-      this.currentTabComponent = componentName;
+      //this.currentTabComponent = route.path;
     },
-    changeActiveTab(obj) {
-      this.currentTabComponent = obj.componentName;
-      this.active = obj.active;
+    changeActiveTab(obj:TreeNode) {
+      //this.currentTabComponent;
+      //this.active = obj.active;
     },
-    uniq(title) {
-      let titles = this.titles;
+    uniq(id:number) {
       let uniq = -1;
-      for (let i = 0; i < titles.length; i++) {
-        if (titles[i].title == title) {
+      for (let i = 0; i < this.titles.length; i++) {
+        if (this.titles[i].id == id) {
           uniq = i;
           break;
         }
