@@ -30,14 +30,12 @@
 
 <script lang="ts">
 
-import TableUseSample from "./TableUseSample";
-import ChartUseSample from "./ChartUseSample";
 import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
 import {Application} from "../../nnt/erp/Application";
 
 export default {
   name: "MainContent",
-  components: {ErpTab, ChartUseSample, TableUseSample},
+  components: {ErpTab},
   data() {
     return {
       currentTabComponent: '',
