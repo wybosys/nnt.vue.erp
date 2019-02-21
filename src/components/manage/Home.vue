@@ -5,16 +5,15 @@
         后台管理系统
       </div>
       <div>
-        <span>当前系统环境：{{}}</span>
+        <span>当前系统环境</span>
         <span>
-          <span>管理组|duchunhua</span>
+          <span>管理组</span>
         </span>
         <el-button type="primary">安全退出</el-button>
       </div>
     </header>
     <main-content class="main-container"></main-content>
   </div>
-
 </template>
 
 <script lang="ts">
@@ -63,9 +62,6 @@ export default {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-
-
   }
-
 
 </style>
