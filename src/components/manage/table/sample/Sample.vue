@@ -13,10 +13,10 @@
 
 <script lang="ts">
 
-import ErpTable from "../../nnt/erp/widgets/table/Table.vue";
-import ErpPagination from "../../nnt/erp/widgets/table/Pagination.vue";
-import ErpChangeTableColumn from "../../nnt/erp/widgets/table/ChangeTableColumn.vue";
-import ErpExportToExcel from "../../nnt/erp/widgets/export/ExportToExcel.vue";
+import ErpTable from "../../../../nnt/erp/widgets/table/Table.vue";
+import ErpPagination from "../../../../nnt/erp/widgets/table/Pagination.vue";
+import ErpChangeTableColumn from "../../../../nnt/erp/widgets/table/ChangeTableColumn.vue";
+import ErpExportToExcel from "../../../../nnt/erp/widgets/export/ExportToExcel.vue";
 
 export default {
   name: "TableUseSample",

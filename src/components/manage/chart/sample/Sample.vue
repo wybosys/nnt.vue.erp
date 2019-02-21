@@ -7,8 +7,8 @@
 
 <script lang="ts">
 
-import {Option} from "../../nnt/model/chart/Option";
-import ErpChart from "../../nnt/erp/widgets/chart/Chart.vue";
+import {Option} from "../../../../nnt/model/chart/Option";
+import ErpChart from "../../../../nnt/erp/widgets/chart/Chart.vue";
 
 export default {
   name: "ChartUseSample",

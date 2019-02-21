@@ -4,13 +4,15 @@ const _manage_base_base = () => import("../components/manage/base/Base.vue")
 const _manage_base_msgbox_mmessagebox = () => import("../components/manage/base/msgbox/MMessageBox.vue")
 const _chart = () => import("../components/manage/chart/Chart.vue")
 const _chart_chart = () => import("../components/manage/chart/Chart.vue")
-const _manage_chartusesample = () => import("../components/manage/ChartUseSample.vue")
+const _chart_sample = () => import("../components/manage/chart/sample/Sample.vue")
+const _chart_sample_sample = () => import("../components/manage/chart/sample/Sample.vue")
 const _manage_home = () => import("../components/manage/Home.vue")
 const _manage_maincontent = () => import("../components/manage/MainContent.vue")
 const _manage_manage = () => import("../components/manage/Manage.vue")
 const _table = () => import("../components/manage/table/Table.vue")
+const _table_sample = () => import("../components/manage/table/sample/Sample.vue")
+const _table_sample_sample = () => import("../components/manage/table/sample/Sample.vue")
 const _table_table = () => import("../components/manage/table/Table.vue")
-const _manage_tableusesample = () => import("../components/manage/TableUseSample.vue")
 const _sample_audiorecorder = () => import("../components/sample/AudioRecorder.vue")
 const _sample_echo = () => import("../components/sample/Echo.vue")
 const _sample_helloworld = () => import("../components/sample/HelloWorld.vue")
@@ -56,9 +58,17 @@ export default {
 			name: '_chart_chart'
 		},
 		{
-			path: '/manage/chartusesample',
-			component: _manage_chartusesample,
-			name: '_manage_chartusesample'
+			path: '/chart/sample',
+			component: _chart_sample,
+			name: '_chart_sample',
+			module: true,
+			priority: 0,
+			label: '简单'
+		},
+		{
+			path: '/chart/sample/sample',
+			component: _chart_sample_sample,
+			name: '_chart_sample_sample'
 		},
 		{
 			path: '/manage/home',
@@ -84,14 +94,22 @@ export default {
 			label: '表格'
 		},
 		{
+			path: '/table/sample',
+			component: _table_sample,
+			name: '_table_sample',
+			module: true,
+			priority: 0,
+			label: '简单'
+		},
+		{
+			path: '/table/sample/sample',
+			component: _table_sample_sample,
+			name: '_table_sample_sample'
+		},
+		{
 			path: '/table/table',
 			component: _table_table,
 			name: '_table_table'
-		},
-		{
-			path: '/manage/tableusesample',
-			component: _manage_tableusesample,
-			name: '_manage_tableusesample'
 		},
 		{
 			path: '/sample/audiorecorder',
