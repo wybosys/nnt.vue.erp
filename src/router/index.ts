@@ -1,14 +1,13 @@
 const _manage = () => import("../components/manage/Manage.vue")
 const _ = () => import("../components/manage/Manage.vue")
-const _base = () => import("../components/manage/base/Base.vue")
-const _base_base = () => import("../components/manage/base/Base.vue")
+const _manage_base_base = () => import("../components/manage/base/Base.vue")
+const _manage_base_msgbox_mmessagebox = () => import("../components/manage/base/msgbox/MMessageBox.vue")
 const _chart = () => import("../components/manage/chart/Chart.vue")
 const _chart_chart = () => import("../components/manage/chart/Chart.vue")
 const _manage_chartusesample = () => import("../components/manage/ChartUseSample.vue")
 const _manage_home = () => import("../components/manage/Home.vue")
 const _manage_maincontent = () => import("../components/manage/MainContent.vue")
 const _manage_manage = () => import("../components/manage/Manage.vue")
-const _manage_mmessagebox = () => import("../components/manage/MMessageBox.vue")
 const _table = () => import("../components/manage/table/Table.vue")
 const _table_table = () => import("../components/manage/table/Table.vue")
 const _manage_tableusesample = () => import("../components/manage/TableUseSample.vue")
@@ -34,17 +33,14 @@ export default {
 			name: '_'
 		},
 		{
-			path: '/base',
-			component: _base,
-			name: '_base',
-			module: true,
-			priority: 0,
-			label: '基础'
+			path: '/manage/base/base',
+			component: _manage_base_base,
+			name: '_manage_base_base'
 		},
 		{
-			path: '/base/base',
-			component: _base_base,
-			name: '_base_base'
+			path: '/manage/base/msgbox/mmessagebox',
+			component: _manage_base_msgbox_mmessagebox,
+			name: '_manage_base_msgbox_mmessagebox'
 		},
 		{
 			path: '/chart',
@@ -78,11 +74,6 @@ export default {
 			path: '/manage/manage',
 			component: _manage_manage,
 			name: '_manage_manage'
-		},
-		{
-			path: '/manage/mmessagebox',
-			component: _manage_mmessagebox,
-			name: '_manage_mmessagebox'
 		},
 		{
 			path: '/table',
