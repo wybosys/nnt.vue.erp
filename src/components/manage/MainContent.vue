@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import {navMenu} from "../../config/authConfig";
+import {navMenu} from "./authConfig";
 import TableUseSample from "./TableUseSample";
 import ChartUseSample from "./ChartUseSample";
 import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
