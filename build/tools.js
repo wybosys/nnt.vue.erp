@@ -43,17 +43,19 @@ function GenRoutes(srcdir, outputfile) {
     let cfg = routes[key]
     let name = key.replace(/\//g, '_')
     imports.push('const ' + name + ' = () => import("../components' + cfg.file + '")')
-    defs.push("\t\t{\n\t\t\tpath: '" + key + "',\n\t\t\tcomponent: " + name + ",\n\t\t\tname: '" + name + "'\n\t\t}")
+    let def = "\t\t{"
+    let arr = [
+      "\n\t\t\tpath: '" + key + "'",
+      "\n\t\t\tcomponent: " + name,
+      "\n\t\t\tname: '" + name + "'"
+    ]
+
     if (cfg.module) {
-      let def = "\t\t{"
-      let arr = [
-        "\n\t\t\tpath: '" + key + "'",
-        "\n\t\t\tcomponent: " + name,
-        "\n\t\t\tname: '" + name + "'"
-      ]
-      def += arr.join(',') + "\n\t\t}"
-      defs.push(def)
+      arr.push("\n\t\t\tmodule: true")
     }
+
+    def += arr.join(',') + "\n\t\t}"
+    defs.push(def)
   }
 
   // 如果是二级目录，则需要生成额外的router
