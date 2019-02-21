@@ -1,18 +1,18 @@
 <template>
   <div>
-    <chart id="chart1" :chartOption="chartOption" :chartData="chartData"></chart>
-    <chart id="chart2" :chartOption="chartOption2" :chartData="chartData"></chart>
+    <erp-chart id="chart1" :chartOption="chartOption" :chartData="chartData"></erp-chart>
+    <erp-chart id="chart2" :chartOption="chartOption2" :chartData="chartData"></erp-chart>
   </div>
 </template>
 
 <script lang="ts">
 
-import Chart from "../../nnt/erp/widgets/chart/Chart.vue";
 import {Option} from "../../nnt/model/chart/Option";
+import ErpChart from "../../nnt/erp/widgets/chart/Chart.vue";
 
 export default {
   name: "ChartUseSample",
-  components: {Chart},
+  components: {ErpChart},
   data() {
     return {
       chartOption: new Option(),

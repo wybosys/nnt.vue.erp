@@ -17,6 +17,7 @@
 </template>
 
 <script lang="ts">
+
 import MainContent from "./MainContent";
 
 export default {

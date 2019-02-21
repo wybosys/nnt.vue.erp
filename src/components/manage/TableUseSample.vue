@@ -1,25 +1,26 @@
 <template>
   <div>
-    <m-table :tableTitle="tableTitle" :tableData="nowTableData"></m-table>
+    <erp-table :tableTitle="tableTitle" :tableData="nowTableData"></erp-table>
     <div class="navPage flex-around-container">
-      <m-pagination :pageSize="pageSize" :nowTableDataLength="tableData.length"
-                    @changeCurrentPage="changeCurrentPage"></m-pagination>
-      <m-change-table-column :tableTitle="tableTitle"></m-change-table-column>
-      <export-to-excel :tableData="tableData" :tableTitle="tableTitle" title="表单数据"></export-to-excel>
+      <erp-pagination :pageSize="pageSize" :nowTableDataLength="tableData.length"
+                      @changeCurrentPage="changeCurrentPage"></erp-pagination>
+      <erp-change-table-column :tableTitle="tableTitle"></erp-change-table-column>
+      <erp-export-to-excel :tableData="tableData" :tableTitle="tableTitle" title="表单数据"></erp-export-to-excel>
     </div>
   </div>
 
 </template>
 
 <script lang="ts">
-import MTable from "../../nnt/components/MTable";
-import MPagination from "../../nnt/components/MPagination";
-import ExportToExcel from "../../nnt/components/ExportToExcel";
-import MChangeTableColumn from "../../nnt/components/MChangeTableColumn";
+
+import ErpTable from "../../nnt/erp/widgets/table/Table.vue";
+import ErpPagination from "../../nnt/erp/widgets/table/Pagination.vue";
+import ErpChangeTableColumn from "../../nnt/erp/widgets/table/ChangeTableColumn.vue";
+import ErpExportToExcel from "../../nnt/erp/widgets/export/ExportToExcel.vue";
 
 export default {
   name: "TableUseSample",
-  components: {MChangeTableColumn, ExportToExcel, MPagination, MTable},
+  components: {ErpExportToExcel, ErpChangeTableColumn, ErpPagination, ErpTable},
   data() {
     return {
       tableTitle: [

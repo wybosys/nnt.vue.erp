@@ -18,8 +18,7 @@
       </el-menu>
     </aside>
     <main class="main" @click.right.prevent="">
-      <!--<m-nav-tab :titles="titles" @changeActiveTab="changeTab" :active="active"></m-nav-tab>-->
-      <m-tab :titles="titles" @changeActiveTab="changeActiveTab" :active="active + ''"></m-tab>
+      <erp-tab :titles="titles" @changeActiveTab="changeActiveTab" :active="active + ''"></erp-tab>
       <div class="main-content">
         <keep-alive>
           <component :is="currentTabComponent"></component>
@@ -33,12 +32,11 @@
 import {navMenu} from "../../config/authConfig";
 import TableUseSample from "./TableUseSample";
 import ChartUseSample from "./ChartUseSample";
-import MNavTab from "../../nnt/components/MNavTab";
-import MTab from "../../nnt/components/Tab";
+import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
 
 export default {
   name: "MainContent",
-  components: {MTab, MNavTab, ChartUseSample, TableUseSample},
+  components: {ErpTab, ChartUseSample, TableUseSample},
   data() {
     return {
       currentTabComponent: '',

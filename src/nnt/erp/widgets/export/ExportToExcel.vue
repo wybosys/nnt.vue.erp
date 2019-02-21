@@ -6,7 +6,7 @@
 import {config} from "../../../core/Config";
 
 export default {
-  name: "ExportToExcel",
+  name: "ErpExportToExcel",
   props: {
     title: {
       type: String,

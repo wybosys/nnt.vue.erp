@@ -11,7 +11,7 @@ import 'echarts/lib/chart/bar';
 import {Option} from "../../../model/chart/Option";
 
 export default {
-  name: "Chart",
+  name: "ErpChart",
   props: {
     id: {
       type: String

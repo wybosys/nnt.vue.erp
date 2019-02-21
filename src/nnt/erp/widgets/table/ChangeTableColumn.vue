@@ -14,26 +14,26 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: "MChangeTableColumn",
-    props: {
-      tableTitle: {
-        type: Array,
-        require: true
-      },
+export default {
+  name: "ErpChangeTableColumn",
+  props: {
+    tableTitle: {
+      type: Array,
+      require: true
     },
-    data(){
-      return {
-        nowTab: this.tableTitle,
-      }
-    },
-    methods:{
-      changeTabInfo(idx) {
-        this.nowTab[idx].hidden = !this.nowTab[idx].hidden;
-        this.$set(this.nowTab, idx, this.nowTab[idx]);
-      }
+  },
+  data() {
+    return {
+      nowTab: this.tableTitle,
+    }
+  },
+  methods: {
+    changeTabInfo(idx) {
+      this.nowTab[idx].hidden = !this.nowTab[idx].hidden;
+      this.$set(this.nowTab, idx, this.nowTab[idx]);
     }
   }
+}
 </script>
 
 <style lang='scss' scoped>
