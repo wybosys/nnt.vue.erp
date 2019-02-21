@@ -39,7 +39,7 @@ exports.cssLoaders = function (options) {
   }
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
     if (loader) {
@@ -64,6 +64,7 @@ exports.cssLoaders = function (options) {
   }
 
   let resources = [];
+
   function findAllFile(dirPath,) {
     if (fs.existsSync(dirPath)) {
       const files = fs.readdirSync(dirPath);
@@ -82,7 +83,8 @@ exports.cssLoaders = function (options) {
       console.warn(`${dirPath}该目录不存在`)
     }
   }
-  findAllFile(path.resolve(__dirname, '../src/style/'))
+
+  findAllFile(path.resolve(__dirname, '../src'))
 
   function generateSassResourceLoader() {
     var loaders = [
