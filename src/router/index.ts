@@ -1,5 +1,5 @@
 const _manage = () => import("../components/manage/Manage.vue")
-const _ = () => import("../components/sample/Sample.vue")
+const _ = () => import("../components/manage/Manage.vue")
 const _manage_chartusesample = () => import("../components/manage/ChartUseSample.vue")
 const _manage_home = () => import("../components/manage/Home.vue")
 const _manage_maincontent = () => import("../components/manage/MainContent.vue")
