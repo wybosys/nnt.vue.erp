@@ -20,6 +20,7 @@
 </template>
 
 <script lang="ts">
+
 import {Application} from "../../nnt/core/Application";
 
 export default {
