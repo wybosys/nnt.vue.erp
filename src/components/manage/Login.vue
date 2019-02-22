@@ -6,7 +6,7 @@
       </div>
       <el-form :model="mlogin" :rules="rlogin" ref="login">
         <el-form-item prop="username">
-          <el-input v-model="mlogin.username" placeholder="用户名"><span>dsfsf</span></el-input>
+          <el-input v-model="mlogin.username" placeholder="用户名"><span></span></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input type="password" placeholder="密码" v-model="mlogin.password"></el-input>
