@@ -20,13 +20,10 @@
   import {Application} from "../../nnt/erp/Application";
   import {TreeNode} from "../../nnt/erp/ModuleTree";
   import ErpDropList from "../../nnt/erp/widgets/droplist/DropList.vue";
-  import DropListSample from "../../nnt/erp/widgets/droplist/baseSample/DropList.vue";
-  import TabSample from "../../nnt/erp/widgets/tabbar/baseSample/Tab";
-  import ChartSample from "../../nnt/erp/widgets/chart/baseSample/Chart";
 
   export default {
     name: "MainContainer",
-    components: {ChartSample, TabSample, DropListSample, ErpDropList, ErpTab},
+    components: {ErpDropList, ErpTab},
     data() {
       return {
         naviTree: null,
