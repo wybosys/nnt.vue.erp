@@ -4,7 +4,7 @@
       <div class="manage_tip">
         后台管理系统
       </div>
-      <el-form :model="loginForm" :rules="rules" ref="loginForm">
+      <el-form :model="mlogin" :rules="rlogin" ref="login">
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" placeholder="用户名"><span>dsfsf</span></el-input>
         </el-form-item>
@@ -12,7 +12,7 @@
           <el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登陆</el-button>
+          <el-button type="primary" @click="actLogin()" class="submit_btn">登陆</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -27,11 +27,11 @@ export default {
   name: "Sample",
   data() {
     return {
-      loginForm: {
+      mlogin: {
         username: '',
         password: '',
       },
-      rules: {
+      rlogin: {
         username: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
         ],
@@ -42,11 +42,11 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(res => {
-        if (res) {
-          Application.shared.push('/manage/home')
-        }
+    actLogin() {
+      this.$refs.login.validate(res => {
+        if (!res)
+          return
+        Application.shared.push('/manage/home')
       })
     }
   }
