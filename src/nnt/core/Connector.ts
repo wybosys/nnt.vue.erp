@@ -1,4 +1,4 @@
-import {Failed, SObject, UrlT} from "./Kernel";
+import {Failed, IndexedObject, SObject, UrlT} from "./Kernel";
 import {
   SignalChanged,
   SignalClose,
@@ -43,6 +43,9 @@ export class CHttpConnector extends SObject {
 
   /** 获取的数据 */
   data: any;
+
+  /** 请求头 */
+  reqHeaders: IndexedObject;
 
   /** override 发送请求 */
   start() {
@@ -140,10 +143,11 @@ export class HttpConnector extends CHttpConnector {
 
     if (this.method == HttpMethod.GET) {
       this._imp.open('GET', this.fullUrl());
+      this._setReqHeaders();
       this._imp.send();
-    }
-    else {
+    } else {
       this._imp.open('POST', this.url);
+      this._setReqHeaders();
       if (hasfile) {
         let form = new FormData();
         for (let k in this.fields) {
@@ -156,6 +160,14 @@ export class HttpConnector extends CHttpConnector {
       } else {
         let d = UrlT.MapToField(this.fields);
         this._imp.send(d);
+      }
+    }
+  }
+
+  private _setReqHeaders() {
+    if (this.reqHeaders) {
+      for (let k in this.reqHeaders) {
+        this._imp.setRequestHeader(k, this.reqHeaders[k]);
       }
     }
   }

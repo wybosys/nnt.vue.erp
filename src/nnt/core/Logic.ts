@@ -126,10 +126,10 @@ function toBoolean(v: any): boolean {
 }
 
 // 填数据
-function Decode(mdl: any, params: any) {
+export function Decode<T>(mdl: T, params: any):T {
   let fps = mdl[FP_KEY];
   if (!fps)
-    return;
+    return null;
   for (let key in params) {
     let fp: FieldOption = fps[key];
     if (fp == null) // 注意这边和core/proto有些不同，不去判断input的类型
@@ -313,9 +313,12 @@ function Decode(mdl: any, params: any) {
         mdl[key] = val;
     }
   }
+
   // 处理内置参数
   if ("_mid" in params)
     mdl["_mid"] = params["_mid"];
+
+  return mdl;
 }
 
 // 把所有input的数据拿出来

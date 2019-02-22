@@ -1,8 +1,9 @@
 import {Model, VERBOSE} from "./ApiModel";
-import {DateTime, ISObject, Memcache, SObject} from "./Kernel";
+import {DateTime, IndexedObject, ISObject, Memcache, SObject} from "./Kernel";
 import {SignalDone, SignalEnd, SignalFailed, SignalStart, SignalSucceed, SignalTimeout, Slot} from "./Signals";
 import {HttpConnector, HttpMethod} from "./Connector";
 import {config} from "./Config";
+import Index from "../sites/Index.vue";
 
 export class _CrossLoader {
   private static _regID: number = 0;
@@ -116,8 +117,7 @@ class _RestSession extends SObject {
 
     if (m.iscross()) {
       _CrossLoader.process(m);
-    }
-    else {
+    } else {
       let url = m.url();
 
       if (url.indexOf('?') == -1)
