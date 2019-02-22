@@ -1,6 +1,18 @@
 <template>
   <div>
-    <erp-table :tableTitle="tableTitle" :tableData="nowTableData"></erp-table>
+    <erp-table :tableTitle="tableTitle" :tableData="nowTableData">
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </erp-table>
     <div class="navPage flex-around-container">
       <erp-pagination :pageSize="pageSize" :nowTableDataLength="tableData.length"
                       @changeCurrentPage="changeCurrentPage"></erp-pagination>
@@ -105,6 +117,12 @@ export default {
     changeCurrentPage(val) {
       this.startPage = val;
     },
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+    }
   }
 }
 </script>
