@@ -3,7 +3,7 @@ import {DateTime, IndexedObject, ISObject, Memcache, SObject} from "./Kernel";
 import {SignalDone, SignalEnd, SignalFailed, SignalStart, SignalSucceed, SignalTimeout, Slot} from "./Signals";
 import {HttpConnector, HttpMethod} from "./Connector";
 import {config} from "./Config";
-import {Storage} from "./Storage";
+import {storagable} from "./Storage";
 
 export class _CrossLoader {
   private static _regID: number = 0;
@@ -51,16 +51,8 @@ class _RestSession extends SObject {
   }
 
   /** 可选的SESSIONID，将附带到URL的尾端 */
-  private _SID: string = Storage.shared.value('::erp::sid');
-
-  get SID(): string {
-    return this._SID;
-  }
-
-  set SID(sid: string) {
-    Storage.shared.set('::erp::sid', sid);
-    this._SID = sid;
-  }
+  @storagable('::erp::sid')
+  SID: string;
 
   // 请求API的序列号
   static __sequenceId = 0;
