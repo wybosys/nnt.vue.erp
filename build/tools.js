@@ -34,7 +34,7 @@ function UpcaseFirst(str) {
   return str[0].toUpperCase() + str.substr(1)
 }
 
-function GenRoutes(srcdir, outputfile) {
+function GenRoutes(outputfile, ...srcdirs) {
   // 默认输出到src/router/index.ts中
   // 默认组件保存在src/components中
 
@@ -42,7 +42,12 @@ function GenRoutes(srcdir, outputfile) {
   let routes = {}
 
   // 列出所有目录中的组件
-  ListRoutesInDirectory('src/' + srcdir, '', routes)
+  srcdirs.forEach(e => {
+    let dir = 'src/' + e
+    if (fs.existsSync(dir)) {
+      ListRoutesInDirectory(dir, '', routes)
+    }
+  })
 
   let imports = []
   let defs = []
@@ -253,7 +258,7 @@ function GetDevopsDomain() {
 if (process.argv.indexOf('stop') != -1) {
   StopDevServer()
 } else if (process.argv.indexOf('routes') != -1) {
-  GenRoutes('components', 'index')
+  GenRoutes('index', 'app', 'components')
 } else if (process.argv.indexOf('sites') != -1) {
   GenSites()
 }
