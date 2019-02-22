@@ -5,7 +5,8 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            type="primary"
+            @click="handleEdit(scope)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
@@ -19,6 +20,11 @@
       <erp-change-table-column :tableTitle="tableTitle"></erp-change-table-column>
       <erp-export-to-excel :tableData="tableData" :tableTitle="tableTitle" title="表单数据"></erp-export-to-excel>
     </div>
+    <erp-dialog v-if="scope" :scope="scope" text="编辑" @exitDialog="close" @saveDialog="saveDialog">
+      <ul class="list">
+        <li v-for="(item,index) in scope.row" :key="index">{{item}}</li>
+      </ul>
+    </erp-dialog>
   </div>
 
 </template>
@@ -29,10 +35,11 @@ import ErpTable from "../../../../nnt/erp/widgets/table/Table.vue";
 import ErpPagination from "../../../../nnt/erp/widgets/table/Pagination.vue";
 import ErpChangeTableColumn from "../../../../nnt/erp/widgets/table/ChangeTableColumn.vue";
 import ErpExportToExcel from "../../../../nnt/erp/widgets/export/ExportToExcel.vue";
+import ErpDialog from "../../../../nnt/erp/widgets/dialog/Dialog.vue";
 
 export default {
   name: "TableUseSample",
-  components: {ErpExportToExcel, ErpChangeTableColumn, ErpPagination, ErpTable},
+  components: {ErpDialog, ErpExportToExcel, ErpChangeTableColumn, ErpPagination, ErpTable},
   data() {
     return {
       tableTitle: [
@@ -106,6 +113,7 @@ export default {
       ],
       pageSize: 3,
       startPage: 1,
+      scope:null
     }
   },
   computed: {
@@ -117,11 +125,33 @@ export default {
     changeCurrentPage(val) {
       this.startPage = val;
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(scope) {
+      this.scope = scope;
     },
     handleDelete(index, row) {
       console.log(index, row);
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    close(){
+      this.scope = null;
+    },
+    saveDialog(){
+      this.scope = null;
     }
   }
 }

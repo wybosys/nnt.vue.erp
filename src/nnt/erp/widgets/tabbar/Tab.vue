@@ -69,5 +69,18 @@
 </script>
 
 <style lang='scss' scoped>
-
+  .el-tabs /deep/ {
+    background-color: #E9EEF3;
+    .el-tabs__item {
+      transition: .5s;
+    }
+    .el-tabs__item.is-active {
+      border-bottom-color: $color-base;
+      background: $color-base;
+      color: #fff;
+    }
+    .el-tabs__header {
+      border-bottom-color: $color-base;
+    }
+  }
 </style>
