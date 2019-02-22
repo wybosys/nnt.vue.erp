@@ -137,3 +137,18 @@ if (_storageMode == 0) {
   IMP_STORAGE_DEL = k => delete __g_storage[k]
   IMP_STORAGE_CLEAR = () => __g_storage = {}
 }
+
+export function storagable(storagekey: string): (target: any, key: string) => void {
+  return (target: any, key: string) => {
+    Object.defineProperty(target, key, {
+      get: function () {
+        return Storage.shared.value(storagekey);
+      },
+      set: function (newValue) {
+        Storage.shared.set(storagekey, newValue);
+      },
+      enumerable: true,
+      configurable: true
+    });
+  };
+}

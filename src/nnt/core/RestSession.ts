@@ -3,7 +3,7 @@ import {DateTime, IndexedObject, ISObject, Memcache, SObject} from "./Kernel";
 import {SignalDone, SignalEnd, SignalFailed, SignalStart, SignalSucceed, SignalTimeout, Slot} from "./Signals";
 import {HttpConnector, HttpMethod} from "./Connector";
 import {config} from "./Config";
-import Index from "../sites/Index.vue";
+import {storagable} from "./Storage";
 
 export class _CrossLoader {
   private static _regID: number = 0;
@@ -51,6 +51,7 @@ class _RestSession extends SObject {
   }
 
   /** 可选的SESSIONID，将附带到URL的尾端 */
+  @storagable('::erp::sid')
   SID: string;
 
   // 请求API的序列号
