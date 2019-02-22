@@ -1,23 +1,7 @@
 <template>
   <div>
-    <aside class="main-aside" width="200px">
-      <el-menu
-        default-active="2"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-        :default-active = "currentNode ? currentNode.id + '' : ''"
-      >
-        <el-submenu v-for="item in naviTree" :key="item.id" :index="item.id + ''">
-          <template slot="title">
-            <span>{{item.label}}</span>
-          </template>
-          <el-menu-item v-for="subItem in item.children" :key="subItem.id" :index="subItem.id + ''"
-                        @click="changeCurrentNode(subItem)">
-            {{subItem.label}}
-          </el-menu-item>
-        </el-submenu>
-      </el-menu>
+    <aside class="main-aside">
+      <erp-drop-list :currentNode="currentNode" :naviTree="naviTree" @changeActiveTab="changeCurrentNode"></erp-drop-list>
     </aside>
     <main class="main" @click.right.prevent="">
       <erp-tab :currentNode="currentNode" @changeActiveTab="changeCurrentNode"></erp-tab>
@@ -35,10 +19,14 @@
   import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
   import {Application} from "../../nnt/erp/Application";
   import {TreeNode} from "../../nnt/erp/ModuleTree";
+  import ErpDropList from "../../nnt/erp/widgets/droplist/DropList.vue";
+  import DropListSample from "../../nnt/erp/widgets/droplist/baseSample/DropList.vue";
+  import TabSample from "../../nnt/erp/widgets/tabbar/baseSample/Tab";
+  import ChartSample from "../../nnt/erp/widgets/chart/baseSample/Chart";
 
   export default {
     name: "MainContainer",
-    components: {ErpTab},
+    components: {ChartSample, TabSample, DropListSample, ErpDropList, ErpTab},
     data() {
       return {
         naviTree: null,

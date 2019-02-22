@@ -15,7 +15,8 @@ export default {
   name: "ErpChart",
   props: {
     id: {
-      type: String
+      type: String,
+      require: true
     },
     chartOption: {
       type: Option,

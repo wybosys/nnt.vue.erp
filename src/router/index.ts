@@ -1,12 +1,13 @@
+const _manage = () => import("../components/manage/Manage.vue")
+const _ = () => import("../components/manage/Manage.vue")
 const _manage_base_base = () => import("../components/manage/base/Base.vue")
-const _manage_base_msgbox_mmessagebox = () => import("../components/manage/base/msgbox/MMessageBox.vue")
 const _chart = () => import("../components/manage/chart/Chart.vue")
 const _chart_chart = () => import("../components/manage/chart/Chart.vue")
 const _chart_sample = () => import("../components/manage/chart/sample/Sample.vue")
 const _chart_sample_sample = () => import("../components/manage/chart/sample/Sample.vue")
-const _manage_login = () => import("../components/manage/Login.vue")
 const _manage_main = () => import("../components/manage/Main.vue")
 const _manage_maincontainer = () => import("../components/manage/MainContainer.vue")
+const _manage_manage = () => import("../components/manage/Manage.vue")
 const _table = () => import("../components/manage/table/Table.vue")
 const _table_sample = () => import("../components/manage/table/sample/Sample.vue")
 const _table_sample_sample = () => import("../components/manage/table/sample/Sample.vue")
@@ -20,14 +21,22 @@ const _test_test = () => import("../components/test/Test.vue")
 export default {
 	routes: [
 		{
+			path: '/manage',
+			component: _manage,
+			name: '_manage',
+			module: true,
+			priority: 9999,
+			label: 'Manage'
+		},
+		{
+			path: '/',
+			component: _,
+			name: '_'
+		},
+		{
 			path: '/manage/base/base',
 			component: _manage_base_base,
 			name: '_manage_base_base'
-		},
-		{
-			path: '/manage/base/msgbox/mmessagebox',
-			component: _manage_base_msgbox_mmessagebox,
-			name: '_manage_base_msgbox_mmessagebox'
 		},
 		{
 			path: '/chart',
@@ -56,11 +65,6 @@ export default {
 			name: '_chart_sample_sample'
 		},
 		{
-			path: '/manage/login',
-			component: _manage_login,
-			name: '_manage_login'
-		},
-		{
 			path: '/manage/main',
 			component: _manage_main,
 			name: '_manage_main'
@@ -69,6 +73,11 @@ export default {
 			path: '/manage/maincontainer',
 			component: _manage_maincontainer,
 			name: '_manage_maincontainer'
+		},
+		{
+			path: '/manage/manage',
+			component: _manage_manage,
+			name: '_manage_manage'
 		},
 		{
 			path: '/table',
