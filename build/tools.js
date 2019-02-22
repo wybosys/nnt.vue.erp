@@ -36,44 +36,42 @@ function UpcaseFirst(str) {
 
 function GenRoutes(outputfile, ...srcdirs) {
   // 默认输出到src/router/index.ts中
-  // 默认组件保存在src/components中
 
   // { path: filepath }
-  let routes = {}
+  let imports = []
+  let defs = []
 
   // 列出所有目录中的组件
   srcdirs.forEach(e => {
     let dir = 'src/' + e
     if (fs.existsSync(dir)) {
+      let routes = {}
       ListRoutesInDirectory(dir, '', routes)
+
+      for (let key in routes) {
+        let cfg = routes[key]
+        //let name = key.split('/').map(UppercaseFirst).join('') + '_'
+        let name = key.replace(/\//g, '_')
+
+        imports.push('const ' + name + ' = () => import("../' + e + cfg.file + '")')
+        let def = "    {"
+        let arr = [
+          "\n      path: '" + key + "'",
+          "\n      component: " + name,
+          "\n      name: '" + name + "'"
+        ]
+
+        if (cfg.module) {
+          arr.push("\n      module: true")
+          arr.push("\n      priority: " + cfg.priority)
+          arr.push("\n      label: '" + cfg.label + "'")
+        }
+
+        def += arr.join(',') + "\n    }"
+        defs.push(def)
+      }
     }
   })
-
-  let imports = []
-  let defs = []
-
-  for (let key in routes) {
-    let cfg = routes[key]
-    //let name = key.split('/').map(UppercaseFirst).join('') + '_'
-    let name = key.replace(/\//g, '_')
-
-    imports.push('const ' + name + ' = () => import("../components' + cfg.file + '")')
-    let def = "    {"
-    let arr = [
-      "\n      path: '" + key + "'",
-      "\n      component: " + name,
-      "\n      name: '" + name + "'"
-    ]
-
-    if (cfg.module) {
-      arr.push("\n      module: true")
-      arr.push("\n      priority: " + cfg.priority)
-      arr.push("\n      label: '" + cfg.label + "'")
-    }
-
-    def += arr.join(',') + "\n    }"
-    defs.push(def)
-  }
 
   // 如果是二级目录，则需要生成额外的router
   /*
