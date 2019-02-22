@@ -26,14 +26,6 @@ function SetObjectValue(result, group, key, value) {
   result[group][key] = value
 }
 
-function UpcaseFirst(str) {
-  if (!str)
-    return ''
-  if (str.length == 1)
-    return str.toUpperCase()
-  return str[0].toUpperCase() + str.substr(1)
-}
-
 function GenRoutes(outputfile, ...srcdirs) {
   // 默认输出到src/router/index.ts中
 
@@ -46,14 +38,13 @@ function GenRoutes(outputfile, ...srcdirs) {
     let dir = 'src/' + e
     if (fs.existsSync(dir)) {
       let routes = {}
-      ListRoutesInDirectory(dir, '', routes)
+      ListRoutesInDirectory(dir, e, routes)
 
       for (let key in routes) {
         let cfg = routes[key]
-        //let name = key.split('/').map(UppercaseFirst).join('') + '_'
         let name = key.replace(/\//g, '_')
 
-        imports.push('const ' + name + ' = () => import("../' + e + cfg.file + '")')
+        imports.push('const ' + name + ' = () => import("../' + cfg.file + '")')
         let def = "    {"
         let arr = [
           "\n      path: '" + key + "'",
@@ -159,12 +150,12 @@ function ListRoutesInDirectory(dir, cur, result, site) {
 
     // 如果定义了path，则使用config的定义
     if (cfgobj.path)
-      curpath = cfgobj.path;
+      curpath = cfgobj.path
 
     if (fs.existsSync(dir + '/' + rootname + '.vue')) {
       SetObjectValue(result, curpath, 'file', cur + '/' + rootname + '.vue')
       if (cfgobj.default) {
-        SetObjectValue(result, path.dirname(cur), 'file', cur + '/' + rootname + '.vue')
+        SetObjectValue(result, path.dirname(curpath), 'file', cur + '/' + rootname + '.vue')
       }
 
       SetObjectValue(result, curpath, 'priority', cfgobj.priority >= 0 ? cfgobj.priority : 9999)
