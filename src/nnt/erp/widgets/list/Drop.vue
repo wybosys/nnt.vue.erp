@@ -18,18 +18,18 @@
 </template>
 
 <script lang="ts">
-  import {Application} from "../../Application";
-  import {TreeNode} from "../../ModuleTree";
 
-  export default {
-    name: "ErpDropList",
-    props:['currentNode','naviTree'],
-    methods: {
-      changeCurrentNode(currentNode: TreeNode) {
-        this.$emit("changeActiveTab",currentNode)
-      }
+import {TreeNode} from "../../ModuleTree";
+
+export default {
+  name: "ErpDrop",
+  props: ['currentNode', 'naviTree'],
+  methods: {
+    changeCurrentNode(currentNode: TreeNode) {
+      this.$emit("changeActiveTab", currentNode)
     }
   }
+}
 </script>
 
 <style lang='scss' scoped>
