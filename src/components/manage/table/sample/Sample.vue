@@ -5,11 +5,13 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            @click="handleEdit(scope.$index, scope.row)">编辑
+          </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </erp-table>
@@ -17,7 +19,6 @@
       <erp-pagination :pageSize="pageSize" :nowTableDataLength="tableData.length"
                       @changeCurrentPage="changeCurrentPage"></erp-pagination>
       <erp-change-table-column :tableTitle="tableTitle"></erp-change-table-column>
-      <erp-export-to-excel :tableData="tableData" :tableTitle="tableTitle" title="表单数据"></erp-export-to-excel>
     </div>
   </div>
 
@@ -28,11 +29,10 @@
 import ErpTable from "../../../../nnt/erp/widgets/table/Table.vue";
 import ErpPagination from "../../../../nnt/erp/widgets/table/Pagination.vue";
 import ErpChangeTableColumn from "../../../../nnt/erp/widgets/table/ChangeTableColumn.vue";
-import ErpExportToExcel from "../../../../nnt/erp/widgets/export/ExportToExcel.vue";
 
 export default {
   name: "TableUseSample",
-  components: {ErpExportToExcel, ErpChangeTableColumn, ErpPagination, ErpTable},
+  components: {ErpChangeTableColumn, ErpPagination, ErpTable},
   data() {
     return {
       tableTitle: [
