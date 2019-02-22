@@ -37,7 +37,7 @@ export class SdkMerchantInfo {
 export class Sdks {
 
   protected hosts = config.get('DEBUG') ? 'http://develop.91egame.com' : 'https://apps.91yigame.com';
-  merchants = this.hosts + "/platform/merchants";
+  merchants = this.hosts + "/platform/merchants/";
 
   // 加密管理员密码
   static AdminEncryptPassword(pwd: string): string {
