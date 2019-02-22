@@ -18,10 +18,10 @@
 
 <script lang="ts">
 
-import MainContent from "./MainContent";
+import MainContent from "./MainContainer";
 
 export default {
-  name: 'HelloWorld',
+  name: 'Main',
   components: {MainContent},
   data() {
     return {}

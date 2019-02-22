@@ -24,7 +24,7 @@
 import {Application} from "../../nnt/core/Application";
 
 export default {
-  name: "Sample",
+  name: "Login",
   data() {
     return {
       loginForm: {
@@ -45,7 +45,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(res => {
         if (res) {
-          Application.shared.push('/manage/home')
+          Application.shared.push('/manage/main')
         }
       })
     }

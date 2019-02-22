@@ -11,17 +11,17 @@
             <span>{{item.label}}</span>
           </template>
           <el-menu-item v-for="subItem in item.children" :key="subItem.id" :index="item.id + '=' + subItem.id"
-                        @click="toOtherPage(subItem)">
+                        @click="changeCurrentNode(subItem)">
             {{subItem.label}}
           </el-menu-item>
         </el-submenu>
       </el-menu>
     </aside>
     <main class="main" @click.right.prevent="">
-      <erp-tab :titles="titles" @changeActiveTab="changeActiveTab" :active="active + ''"></erp-tab>
+      <erp-tab :currentNode="currentNode" @changeActiveTab="changeCurrentNode"></erp-tab>
       <div class="main-content">
         <keep-alive>
-          <component :is="currentTabComponent"></component>
+          <component :is="currentNode ? currentNode.route.component: ''"></component>
         </keep-alive>
       </div>
     </main>
@@ -30,51 +30,28 @@
 
 <script lang="ts">
 
-import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
-import {Application} from "../../nnt/erp/Application";
-import {TreeNode} from "../../nnt/erp/ModuleTree";
+  import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
+  import {Application} from "../../nnt/erp/Application";
+  import {TreeNode} from "../../nnt/erp/ModuleTree";
 
-export default {
-  name: "MainContent",
-  components: {ErpTab},
-  data() {
-    return {
-      currentTabComponent: '',
-      titles: [],
-      naviTree: null,
-      active: "0"
+  export default {
+    name: "MainContainer",
+    components: {ErpTab},
+    data() {
+      return {
+        naviTree: null,
+        currentNode: null
+      }
+    },
+    created() {
+      this.naviTree = Application.shared.tree.children
+    },
+    methods: {
+      changeCurrentNode(currentNode: TreeNode) {
+        this.currentNode = currentNode;
+      }
     }
-  },
-  created() {
-    this.naviTree = Application.shared.tree.children
-  },
-  methods: {
-    toOtherPage(route: TreeNode) {
-      let uniq = this.uniq(route.id);
-      if (uniq == -1) {
-        this.titles.push(route);
-        this.active = this.titles.length - 1;
-      } else {
-        this.active = uniq;
-      }
-      //this.currentTabComponent = route.path;
-    },
-    changeActiveTab(obj:TreeNode) {
-      //this.currentTabComponent;
-      //this.active = obj.active;
-    },
-    uniq(id:number) {
-      let uniq = -1;
-      for (let i = 0; i < this.titles.length; i++) {
-        if (this.titles[i].id == id) {
-          uniq = i;
-          break;
-        }
-      }
-      return uniq;
-    },
   }
-}
 </script>
 
 <style lang='scss' scoped>

@@ -15,6 +15,10 @@ export class TreeNode {
     return this.route ? this.route.path : null;
   }
 
+  get name(): string {
+    return this.route ? this.route.name : null;
+  }
+
   // 查找指定路径上的节点，如果autocreate为true，则当找不到的时候会自动创建路径节点
   find(path: string, autocreate = false): TreeNode {
     let paths = StringT.Split(path, '/', true);

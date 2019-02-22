@@ -26,6 +26,14 @@ function SetObjectValue(result, group, key, value) {
   result[group][key] = value
 }
 
+function UpcaseFirst(str) {
+  if (!str)
+    return ''
+  if (str.length == 1)
+    return str.toUpperCase()
+  return str[0].toUpperCase() + str.substr(1)
+}
+
 function GenRoutes(srcdir, outputfile) {
   // 默认输出到src/router/index.ts中
   // 默认组件保存在src/components中
@@ -41,7 +49,9 @@ function GenRoutes(srcdir, outputfile) {
 
   for (let key in routes) {
     let cfg = routes[key]
+    //let name = key.split('/').map(UppercaseFirst).join('') + '_'
     let name = key.replace(/\//g, '_')
+
     imports.push('const ' + name + ' = () => import("../components' + cfg.file + '")')
     let def = "\t\t{"
     let arr = [
