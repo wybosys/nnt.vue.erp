@@ -1,41 +1,30 @@
 <template>
   <div>
-    <erp-drop-list :list="list"></erp-drop-list>
-    <erp-collapse :listData="list"></erp-collapse>
+    <erp-drop-list :title="title" :items="items" @clickItem="clickItem"></erp-drop-list>
   </div>
-
-
 
 </template>
 
 <script lang="ts">
 
-  import ErpCollapse from "../../../../nnt/erp/widgets/collapse/Collapse";
-  import ErpDropList from "../../../../nnt/erp/widgets/droplist/DropList";
+  import ErpDropList from "../../../../nnt/erp/widgets/base/DropList";
+  import {IListItem, ListItem} from "../../../../nnt/model/List";
+
   export default {
     name: "Sample",
-    components: {ErpDropList, ErpCollapse},
+    components: {ErpDropList},
     data() {
       return {
-        list: [
-          {
-            title: "一致性",
-            children: [
-              "与现实生活一致",
-              "在界面中一致"
-            ]
-          },
-          {
-            title: "反馈 ",
-            children: [
-              "控制反馈",
-              "页面反馈"
-            ]
-          },
-          {
-            title: "反馈 "
-          },
-        ]
+          title: "反馈 ",
+          items: [
+            ListItem.Text("控制反馈"),
+            ListItem.Text("页面反馈")
+          ]
+      }
+    },
+    methods:{
+      clickItem(item:IListItem){
+        console.log(`点击了第${item.index}按钮${item.label}`)
       }
     }
   }
