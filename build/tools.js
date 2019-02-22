@@ -53,20 +53,20 @@ function GenRoutes(srcdir, outputfile) {
     let name = key.replace(/\//g, '_')
 
     imports.push('const ' + name + ' = () => import("../components' + cfg.file + '")')
-    let def = "  {"
+    let def = "    {"
     let arr = [
-      "\n   path: '" + key + "'",
-      "\n   component: " + name,
-      "\n   name: '" + name + "'"
+      "\n      path: '" + key + "'",
+      "\n      component: " + name,
+      "\n      name: '" + name + "'"
     ]
 
     if (cfg.module) {
-      arr.push("\n   module: true")
-      arr.push("\n   priority: " + cfg.priority)
-      arr.push("\n   label: '" + cfg.label + "'")
+      arr.push("\n      module: true")
+      arr.push("\n      priority: " + cfg.priority)
+      arr.push("\n      label: '" + cfg.label + "'")
     }
 
-    def += arr.join(',') + "\n  }"
+    def += arr.join(',') + "\n    }"
     defs.push(def)
   }
 
@@ -87,7 +87,7 @@ function GenRoutes(srcdir, outputfile) {
   content += imports.join('\n')
   content += '\n\n'
   content += 'export default {\n'
-  content += ' routes: [\n'
+  content += '  routes: [\n'
   content += defs.join(',\n')
   content += ']\n'
   content += '}\n'
