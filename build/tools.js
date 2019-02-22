@@ -53,20 +53,20 @@ function GenRoutes(srcdir, outputfile) {
     let name = key.replace(/\//g, '_')
 
     imports.push('const ' + name + ' = () => import("../components' + cfg.file + '")')
-    let def = "\t\t{"
+    let def = "  {"
     let arr = [
-      "\n\t\t\tpath: '" + key + "'",
-      "\n\t\t\tcomponent: " + name,
-      "\n\t\t\tname: '" + name + "'"
+      "\n   path: '" + key + "'",
+      "\n   component: " + name,
+      "\n   name: '" + name + "'"
     ]
 
     if (cfg.module) {
-      arr.push("\n\t\t\tmodule: true")
-      arr.push("\n\t\t\tpriority: " + cfg.priority)
-      arr.push("\n\t\t\tlabel: '" + cfg.label + "'")
+      arr.push("\n   module: true")
+      arr.push("\n   priority: " + cfg.priority)
+      arr.push("\n   label: '" + cfg.label + "'")
     }
 
-    def += arr.join(',') + "\n\t\t}"
+    def += arr.join(',') + "\n  }"
     defs.push(def)
   }
 
@@ -78,7 +78,7 @@ function GenRoutes(srcdir, outputfile) {
     for (let key in routes) {
       let name = key.replace(/\//g, '_')
       key = path + key
-      defs.push("\t{\n\t\tpath: '" + key + "',\n\t\tcomponent: " + name + ",\n\t\tname: 'devops" + name + "'\n\t}")
+      defs.push(" {\n  path: '" + key + "',\n  component: " + name + ",\n  name: 'devops" + name + "'\n }")
     }
   }
   */
@@ -87,7 +87,7 @@ function GenRoutes(srcdir, outputfile) {
   content += imports.join('\n')
   content += '\n\n'
   content += 'export default {\n'
-  content += '\troutes: [\n'
+  content += ' routes: [\n'
   content += defs.join(',\n')
   content += ']\n'
   content += '}\n'
@@ -113,7 +113,7 @@ function GenRoutesInSite(srcdir, site) {
     let cfg = routes[key]
     let name = key.replace(/\//g, '_')
     imports.push('const ' + name + ' = () => import("../sites/' + site + cfg.file + '")')
-    defs.push("\t{\n\t\tpath: '" + key + "',\n\t\tcomponent: " + name + ",\n\t\tname: '" + name + "'\n\t}")
+    defs.push(" {\n  path: '" + key + "',\n  component: " + name + ",\n  name: '" + name + "'\n }")
   }
 
   // 如果是二级目录，则需要生成额外的router
@@ -124,7 +124,7 @@ function GenRoutesInSite(srcdir, site) {
     for (let key in routes) {
       let name = key.replace(/\//g, '_')
       key = path + key
-      defs.push("\t{\n\t\tpath: '" + key + "',\n\t\tcomponent: " + name + ",\n\t\tname: 'devops" + name + "'\n\t}")
+      defs.push(" {\n  path: '" + key + "',\n  component: " + name + ",\n  name: 'devops" + name + "'\n }")
     }
   }
   */
@@ -223,22 +223,22 @@ function GenSites() {
   content.push('export default {')
 
   // 生成gateway路由配置
-  content.push('\troutes: [')
-  content.push("\t\t{\n\t\t\tpath: '/',\n\t\t\tcomponent: _,\n\t\t\tname: '_site_'\n\t\t},")
-  content.push("\t\t{\n\t\t\tpath: '/:site',\n\t\t\tcomponent: _,\n\t\t\tname: '_site__'\n\t\t},")
-  content.push("\t\t{\n\t\t\tpath: '*',\n\t\t\tcomponent: _,\n\t\t\tname: '_any_'\n\t\t}")
-  content.push('\t],')
+  content.push(' routes: [')
+  content.push("  {\n   path: '/',\n   component: _,\n   name: '_site_'\n  },")
+  content.push("  {\n   path: '/:site',\n   component: _,\n   name: '_site__'\n  },")
+  content.push("  {\n   path: '*',\n   component: _,\n   name: '_any_'\n  }")
+  content.push(' ],')
 
   // 生成sites的配置
-  content.push('\tsites: {')
+  content.push(' sites: {')
   let sitecontents = []
   sites.forEach(each => {
-    sitecontents.push('\t\t' + each + ': ' + each)
+    sitecontents.push('  ' + each + ': ' + each)
   })
   if (defaultsite && !('default' in sites))
-    sitecontents.push('\t\tdefault: ' + defaultsite)
+    sitecontents.push('  default: ' + defaultsite)
   content.push(sitecontents.join(',\n'))
-  content.push('\t}')
+  content.push(' }')
 
   content.push('}')
   fs.writeFileSync('src/router/index.ts', content.join('\n'))
