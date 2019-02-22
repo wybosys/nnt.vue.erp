@@ -6,6 +6,10 @@ const _chart = () => import("../components/manage/chart/Chart.vue")
 const _chart_chart = () => import("../components/manage/chart/Chart.vue")
 const _chart_sample = () => import("../components/manage/chart/sample/Sample.vue")
 const _chart_sample_sample = () => import("../components/manage/chart/sample/Sample.vue")
+const _droplist = () => import("../components/manage/droplist/Droplist.vue")
+const _droplist_droplist = () => import("../components/manage/droplist/Droplist.vue")
+const _droplist_sample = () => import("../components/manage/droplist/sample/Sample.vue")
+const _droplist_sample_sample = () => import("../components/manage/droplist/sample/Sample.vue")
 const _manage_main = () => import("../components/manage/Main.vue")
 const _manage_maincontainer = () => import("../components/manage/MainContainer.vue")
 const _manage_manage = () => import("../components/manage/Manage.vue")
@@ -64,6 +68,32 @@ export default {
       path: '/chart/sample/sample',
       component: _chart_sample_sample,
       name: '_chart_sample_sample'
+    },
+    {
+      path: '/droplist',
+      component: _droplist,
+      name: '_droplist',
+      module: true,
+      priority: 3,
+      label: '下拉列表'
+    },
+    {
+      path: '/droplist/droplist',
+      component: _droplist_droplist,
+      name: '_droplist_droplist'
+    },
+    {
+      path: '/droplist/sample',
+      component: _droplist_sample,
+      name: '_droplist_sample',
+      module: true,
+      priority: 0,
+      label: '简单'
+    },
+    {
+      path: '/droplist/sample/sample',
+      component: _droplist_sample_sample,
+      name: '_droplist_sample_sample'
     },
     {
       path: '/manage/main',
