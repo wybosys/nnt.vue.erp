@@ -113,7 +113,7 @@ function GenRoutesInSite(srcdir, site) {
     let cfg = routes[key]
     let name = key.replace(/\//g, '_')
     imports.push('const ' + name + ' = () => import("../sites/' + site + cfg.file + '")')
-    defs.push(" {\n  path: '" + key + "',\n  component: " + name + ",\n  name: '" + name + "'\n }")
+    defs.push("  {\n    path: '" + key + "',\n    component: " + name + ",\n    name: '" + name + "'\n  }")
   }
 
   // 如果是二级目录，则需要生成额外的router
@@ -223,22 +223,22 @@ function GenSites() {
   content.push('export default {')
 
   // 生成gateway路由配置
-  content.push(' routes: [')
-  content.push("  {\n   path: '/',\n   component: _,\n   name: '_site_'\n  },")
-  content.push("  {\n   path: '/:site',\n   component: _,\n   name: '_site__'\n  },")
-  content.push("  {\n   path: '*',\n   component: _,\n   name: '_any_'\n  }")
-  content.push(' ],')
+  content.push('  routes: [')
+  content.push("    {\n      path: '/',\n      component: _,\n      name: '_site_'\n    },")
+  content.push("    {\n      path: '/:site',\n      component: _,\n      name: '_site__'\n    },")
+  content.push("    {\n      path: '*',\n      component: _,\n      name: '_any_'\n    }")
+  content.push('  ],')
 
   // 生成sites的配置
-  content.push(' sites: {')
+  content.push('  sites: {')
   let sitecontents = []
   sites.forEach(each => {
-    sitecontents.push('  ' + each + ': ' + each)
+    sitecontents.push('    ' + each + ': ' + each)
   })
   if (defaultsite && !('default' in sites))
-    sitecontents.push('  default: ' + defaultsite)
+    sitecontents.push('    default: ' + defaultsite)
   content.push(sitecontents.join(',\n'))
-  content.push(' }')
+  content.push('  }')
 
   content.push('}')
   fs.writeFileSync('src/router/index.ts', content.join('\n'))
