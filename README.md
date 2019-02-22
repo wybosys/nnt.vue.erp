@@ -1,6 +1,6 @@
-# nnt.vue
+# nnt.vue.erp
 
-> nnt.vue标准项目
+> 基于nnt.vue开发ERP类标准项目
 
 ## Build Setup
 
@@ -16,6 +16,10 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 生成单站点模式的route文件
+npm run routes
+
+# 生成多站点模式的route文件
+npm run sites
+```
