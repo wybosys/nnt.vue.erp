@@ -12,7 +12,7 @@
           <el-input type="password" placeholder="密码" v-model="mlogin.password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="actLogin()" class="submit_btn">登陆</el-button>
+          <erp-button type="primary" @click="actLogin()" class="submit_btn">登录</erp-button>
         </el-form-item>
       </el-form>
     </div>
@@ -21,36 +21,38 @@
 
 <script lang="ts">
 
-  import {Application} from "../../nnt/core/Application";
+import {Application} from "../../nnt/core/Application";
+import ErpButton from "../../nnt/erp/widgets/base/Button.vue";
 
-  export default {
-    name: "Login",
-    data() {
-      return {
-        mlogin: {
-          username: '',
-          password: '',
-        },
-        rlogin: {
-          username: [
-            {required: true, message: '请输入用户名', trigger: 'blur'},
-          ],
-          password: [
-            {required: true, message: '请输入密码', trigger: 'blur'}
-          ],
-        },
-      }
-    },
-    methods: {
-      actLogin() {
-        this.$refs.login.validate(res => {
-          if (!res)
-            return
-          Application.shared.push('/manage/main')
-        })
-      }
+export default {
+  name: "Login",
+  components: {ErpButton},
+  data() {
+    return {
+      mlogin: {
+        username: '',
+        password: '',
+      },
+      rlogin: {
+        username: [
+          {required: true, message: '请输入用户名', trigger: 'blur'},
+        ],
+        password: [
+          {required: true, message: '请输入密码', trigger: 'blur'}
+        ],
+      },
+    }
+  },
+  methods: {
+    actLogin() {
+      this.$refs.login.validate(res => {
+        if (!res)
+          return
+        Application.shared.push('/manage/main')
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
