@@ -4,17 +4,17 @@
       <div class="manage_tip">
         后台管理系统
       </div>
-      <el-form :model="mlogin" :rules="rlogin" ref="login">
-        <el-form-item prop="username">
+      <erp-form :model="mlogin" :rules="rlogin" ref="login">
+        <erp-form-item prop="username">
           <erp-input v-model="mlogin.username" placeholder="用户名"><span></span></erp-input>
-        </el-form-item>
-        <el-form-item prop="password">
+        </erp-form-item>
+        <erp-form-item prop="password">
           <erp-input type="password" placeholder="密码" v-model="mlogin.password"></erp-input>
-        </el-form-item>
-        <el-form-item>
+        </erp-form-item>
+        <erp-form-item>
           <erp-button type="primary" @click="actLogin()" class="submit_btn">登录</erp-button>
-        </el-form-item>
-      </el-form>
+        </erp-form-item>
+      </erp-form>
     </div>
   </div>
 </template>
@@ -24,10 +24,12 @@
 import {Application} from "../../nnt/core/Application";
 import ErpButton from "../../nnt/erp/widgets/base/Button.vue";
 import ErpInput from "../../nnt/erp/widgets/base/Input.vue";
+import ErpForm from "../../nnt/erp/widgets/base/Form.vue";
+import ErpFormItem from "../../nnt/erp/widgets/base/FormItem.vue";
 
 export default {
   name: "Login",
-  components: {ErpInput, ErpButton},
+  components: {ErpFormItem, ErpForm, ErpInput, ErpButton},
   data() {
     return {
       mlogin: {
