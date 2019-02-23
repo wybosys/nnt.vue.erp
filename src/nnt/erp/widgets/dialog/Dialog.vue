@@ -14,20 +14,19 @@
   </div>
 </template>
 
-
 <script lang="ts">
-  export default {
-    name: "ErpDialog",
-    props:["text"],
-    methods: {
-      exit() {
-        this.$emit('exitDialog')
-      },
-      sure(){
-        this.$emit('saveDialog')
-      }
+export default {
+  name: "ErpDialog",
+  props: ["text"],
+  methods: {
+    exit() {
+      this.$emit('exitDialog')
+    },
+    sure() {
+      this.$emit('saveDialog')
     }
   }
+}
 </script>
 
 <style lang='scss' scoped>
@@ -38,22 +37,26 @@
     right: 0;
     bottom: 0;
     z-index: 9999999;
+
     .content {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
       background: #fff;
       padding: 50px;
       box-shadow: 0 0 2px $color-base;
       border-radius: 5px;
     }
+
     .header {
       font: bold 30px/60px "Microsoft YaHei UI";
     }
+
     .list {
       padding-bottom: 20px;
       font: 20px/40px "Microsoft YaHei UI";
+
       li {
         border-bottom: 2px solid $color-base;
       }

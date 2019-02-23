@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+
   import {TreeNode} from "../../ModuleTree";
   import {ArrayT} from "../../../core/Kernel";
 

@@ -22,7 +22,7 @@
 import {TreeNode} from "../../ModuleTree";
 
 export default {
-  name: "ErpDrop",
+  name: "ErpNavigationList",
   props: ['currentNode', 'naviTree'],
   methods: {
     changeCurrentNode(currentNode: TreeNode) {

@@ -16,10 +16,10 @@
 
 <script lang="ts">
 
-  import ErpTab from "../../nnt/erp/widgets/tabbar/Tab.vue";
+  import ErpTab from "../../nnt/erp/widgets/tab/Tab.vue";
   import {Application} from "../../nnt/erp/Application";
   import {TreeNode} from "../../nnt/erp/ModuleTree";
-  import ErpDropList from "../../nnt/erp/widgets/navMenu/navMenu.vue";
+  import ErpDropList from "../../nnt/erp/widgets/navigation/List.vue";
 
   export default {
     name: "MainContainer",

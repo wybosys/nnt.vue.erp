@@ -7,7 +7,7 @@
 
 <script lang="ts">
 
-  import ErpDropList from "../../../../nnt/erp/widgets/base/DropList";
+  import ErpDropList from "../../../../nnt/erp/widgets/picker/DropList";
   import {IListItem, ListItem} from "../../../../nnt/model/List";
 
   export default {

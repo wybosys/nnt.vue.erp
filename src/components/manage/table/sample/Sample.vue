@@ -33,7 +33,7 @@
 
 import ErpTable from "../../../../nnt/erp/widgets/table/Table.vue";
 import ErpPagination from "../../../../nnt/erp/widgets/table/Pagination.vue";
-import ErpChangeTableColumn from "../../../../nnt/erp/widgets/table/ChangeTableColumn.vue";
+import ErpChangeTableColumn from "../../../../nnt/erp/widgets/table/ChangeColumn.vue";
 import ErpDialog from "../../../../nnt/erp/widgets/dialog/Dialog.vue";
 
 export default {
