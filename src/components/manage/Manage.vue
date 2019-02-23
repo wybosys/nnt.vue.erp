@@ -43,13 +43,9 @@ export default {
     }
   },
   methods: {
-    actLogin() {
-      alert(this.mlogin.username)
-      this.$refs.login.validate(res => {
-        if (!res)
-          return
-        Application.shared.push('/manage/main')
-      })
+    async actLogin() {
+      await this.$refs.login.validate()
+      Application.shared.push('/manage/main')
     }
   }
 }

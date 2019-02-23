@@ -9,8 +9,14 @@ export default {
   name: "Form",
   props: ['model', 'rules'],
   methods: {
-    validate(cb: (pass: boolean) => void) {
-      this.$refs.form.validate(cb)
+
+    // 验证当前form的每一个item是否符合rule的定义
+    async validate() {
+      return new Promise<void>((resolve, reject) => {
+        this.$refs.form.validate(res => {
+          res ? resolve() : reject;
+        });
+      });
     }
   }
 }
