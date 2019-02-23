@@ -4,7 +4,7 @@
 
 <script lang="ts">
 export default {
-  name: "ErpInput",
+  name: "Input",
   props: ['type', 'placeholder', 'value']
 }
 </script>

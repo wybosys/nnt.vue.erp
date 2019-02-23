@@ -6,7 +6,7 @@
 
 <script lang="ts">
 export default {
-  name: "ErpForm",
+  name: "Form",
   props: ['model', 'rules']
 }
 </script>

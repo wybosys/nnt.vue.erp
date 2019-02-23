@@ -22,14 +22,10 @@
 <script lang="ts">
 
 import {Application} from "../../nnt/core/Application";
-import ErpButton from "../../nnt/erp/widgets/base/Button.vue";
-import ErpInput from "../../nnt/erp/widgets/base/Input.vue";
-import ErpForm from "../../nnt/erp/widgets/base/Form.vue";
-import ErpFormItem from "../../nnt/erp/widgets/base/FormItem.vue";
 
 export default {
   name: "Login",
-  components: {ErpFormItem, ErpForm, ErpInput, ErpButton},
+  components: {},
   data() {
     return {
       mlogin: {

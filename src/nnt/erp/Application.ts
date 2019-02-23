@@ -3,8 +3,10 @@ import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import {ModuleTree} from "./ModuleTree";
+import Widgets from "./widgets/Widgets";
 
 Vue.use(ElementUI);
+Vue.use(Widgets);
 
 export class Application extends CoreApplication {
 
