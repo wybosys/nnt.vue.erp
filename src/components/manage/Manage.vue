@@ -6,10 +6,10 @@
       </div>
       <el-form :model="mlogin" :rules="rlogin" ref="login">
         <el-form-item prop="username">
-          <el-input v-model="mlogin.username" placeholder="用户名"><span></span></el-input>
+          <erp-input v-model="mlogin.username" placeholder="用户名"><span></span></erp-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="密码" v-model="mlogin.password"></el-input>
+          <erp-input type="password" placeholder="密码" v-model="mlogin.password"></erp-input>
         </el-form-item>
         <el-form-item>
           <erp-button type="primary" @click="actLogin()" class="submit_btn">登录</erp-button>
@@ -23,10 +23,11 @@
 
 import {Application} from "../../nnt/core/Application";
 import ErpButton from "../../nnt/erp/widgets/base/Button.vue";
+import ErpInput from "../../nnt/erp/widgets/base/Input.vue";
 
 export default {
   name: "Login",
-  components: {ErpButton},
+  components: {ErpInput, ErpButton},
   data() {
     return {
       mlogin: {
@@ -45,6 +46,7 @@ export default {
   },
   methods: {
     actLogin() {
+      alert(this.mlogin.username)
       this.$refs.login.validate(res => {
         if (!res)
           return

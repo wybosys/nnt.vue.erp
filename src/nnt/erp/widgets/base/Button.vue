@@ -1,5 +1,5 @@
 <template>
-  <el-button :type="type" @click="actClick">
+  <el-button :type="type" @click="$emit('click', $event)">
     <slot>button label</slot>
   </el-button>
 </template>
@@ -10,11 +10,6 @@ export default {
   props: {
     type: {
       type: String
-    }
-  },
-  methods: {
-    actClick(e) {
-      this.$emit('click', e)
     }
   }
 }
