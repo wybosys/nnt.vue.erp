@@ -16,29 +16,27 @@
 
 <script lang="ts">
 
-  import ErpTab from "../../nnt/erp/widgets/tab/Tab.vue";
-  import {Application} from "../../nnt/erp/Application";
-  import {TreeNode} from "../../nnt/erp/ModuleTree";
-  import ErpDropList from "../../nnt/erp/widgets/navigation/List.vue";
+import {Application} from "../../nnt/erp/Application";
+import {TreeNode} from "../../nnt/erp/ModuleTree";
 
-  export default {
-    name: "MainContainer",
-    components: {ErpDropList, ErpTab},
-    data() {
-      return {
-        naviTree: null,
-        currentNode: null
-      }
-    },
-    created() {
-      this.naviTree = Application.shared.tree.children
-    },
-    methods: {
-      changeCurrentNode(currentNode: TreeNode) {
-        this.currentNode = currentNode;
-      }
+export default {
+  name: "MainContainer",
+  components: {},
+  data() {
+    return {
+      naviTree: null,
+      currentNode: null
+    }
+  },
+  created() {
+    this.naviTree = Application.shared.tree.children
+  },
+  methods: {
+    changeCurrentNode(currentNode: TreeNode) {
+      this.currentNode = currentNode;
     }
   }
+}
 </script>
 
 <style lang='scss' scoped>
