@@ -18,7 +18,7 @@
   import {ArrayT} from "../../../core/Kernel";
 
   export default {
-    name: "ErpTab",
+    name: "Tab",
     props: {
       currentNode: {
         type: TreeNode,

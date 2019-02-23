@@ -12,7 +12,7 @@ import 'echarts/lib/chart/bar';
 import {Option} from "../../../model/chart/Option";
 
 export default {
-  name: "ErpChart",
+  name: "Chart",
   props: {
     id: {
       type: String,

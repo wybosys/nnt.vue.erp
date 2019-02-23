@@ -16,7 +16,7 @@
 
 <script lang="ts">
 export default {
-  name: "ErpDialog",
+  name: "Dialog",
   props: ["text"],
   methods: {
     exit() {

@@ -10,7 +10,7 @@
 
 <script lang="ts">
 export default {
-  name: "ErpTablePagination",
+  name: "TablePagination",
   data() {
     return {
       currentPage: 1,

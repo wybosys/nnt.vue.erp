@@ -12,7 +12,7 @@
 
 <script lang="ts">
 export default {
-  name: "ErpPickerDropList",
+  name: "PickerDropList",
   props: ['title', 'items'],
   methods: {
     handleCommand(command) {

@@ -16,9 +16,9 @@
       </el-table-column>
     </erp-table>
     <div class="navPage flex-around-container">
-      <erp-pagination :pageSize="pageSize" :nowTableDataLength="tableData.length"
-                      @changeCurrentPage="changeCurrentPage"></erp-pagination>
-      <erp-change-table-column :tableTitle="tableTitle"></erp-change-table-column>
+      <erp-table-pagination :pageSize="pageSize" :nowTableDataLength="tableData.length"
+                      @changeCurrentPage="changeCurrentPage"></erp-table-pagination>
+      <erp-table-changecolumn :tableTitle="tableTitle"></erp-table-changecolumn>
     </div>
     <erp-dialog v-if="scope" :scope="scope" text="编辑" @exitDialog="close" @saveDialog="saveDialog">
       <ul class="list">
@@ -31,14 +31,9 @@
 
 <script lang="ts">
 
-import ErpTable from "../../../../nnt/erp/widgets/table/Table.vue";
-import ErpPagination from "../../../../nnt/erp/widgets/table/Pagination.vue";
-import ErpChangeTableColumn from "../../../../nnt/erp/widgets/table/ChangeColumn.vue";
-import ErpDialog from "../../../../nnt/erp/widgets/dialog/Dialog.vue";
-
 export default {
   name: "TableUseSample",
-  components: {ErpDialog, ErpChangeTableColumn, ErpPagination, ErpTable},
+  components: {},
   data() {
     return {
       tableTitle: [

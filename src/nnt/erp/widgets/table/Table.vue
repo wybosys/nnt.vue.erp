@@ -30,7 +30,7 @@
 <script lang="ts">
 
 export default {
-  name: "ErpTable",
+  name: "Table",
   components: {},
   props: {
     title: {

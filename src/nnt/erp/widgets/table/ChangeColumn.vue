@@ -15,7 +15,7 @@
 
 <script lang="ts">
 export default {
-  name: "ErpTableChangeColumn",
+  name: "TableChangeColumn",
   props: {
     tableTitle: {
       type: Array,
