@@ -1,7 +1,7 @@
 <template>
   <div>
     <aside class="main-aside">
-      <erp-drop-list :currentNode="currentNode" :naviTree="naviTree" @changeActiveTab="changeCurrentNode"></erp-drop-list>
+      <erp-navigation-list :currentNode="currentNode" :naviTree="naviTree" @changeActiveTab="changeCurrentNode"></erp-navigation-list>
     </aside>
     <main class="main" @click.right.prevent="">
       <erp-tab :currentNode="currentNode" @changeActiveTab="changeCurrentNode"></erp-tab>
