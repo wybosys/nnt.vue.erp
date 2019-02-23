@@ -1,5 +1,12 @@
 <template>
-  <el-input :type="type" :placeholder="placeholder" ref="input" :value="value" @input="$emit('input', $event)"></el-input>
+  <el-input
+    :type="type"
+    :placeholder="placeholder"
+    ref="input"
+    :value="value"
+    @input="$emit('input', $event)"
+  >
+  </el-input>
 </template>
 
 <script lang="ts">

@@ -1,6 +1,5 @@
 <template>
   <div class="m-table" @click.right.prevent="">
-    <div class="title">{{title}}</div>
     <el-table
       :data="tableData"
       :border="true"
@@ -33,10 +32,6 @@ export default {
   name: "Table",
   components: {},
   props: {
-    title: {
-      type: String,
-      default: "表单数据"
-    },
     tableTitle: {
       type: Array,
       require: true
@@ -104,11 +99,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .title {
-    font: bold 26px/80px "Microsoft YaHei UI";
-    height: 80px;
-  }
-
   .op {
     padding-bottom: 20px;
   }
