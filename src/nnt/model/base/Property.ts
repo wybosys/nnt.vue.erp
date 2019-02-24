@@ -66,7 +66,7 @@ export class Property implements IProperty {
   editing: boolean = false;
 
   static Simple(index: number, label: string, value: any, type: VariantType): IProperty {
-    let r = new Property();
+    let r = new this();
     r.index = index;
     r.value = r.tmp = value;
     r.label = label;
@@ -75,7 +75,7 @@ export class Property implements IProperty {
   }
 
   static Extract(obj: any, label: string, variname: string, type: VariantType): IProperty {
-    let r = new Property();
+    let r = new this();
     r.value = r.tmp = obj[variname];
     r.variable = variname;
     r.label = label;
@@ -83,4 +83,8 @@ export class Property implements IProperty {
     return r;
   }
 
+  setReadonly(b = true): this {
+    this.readonly = b;
+    return this;
+  }
 }

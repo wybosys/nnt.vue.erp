@@ -12,3 +12,10 @@ export enum VariantType {
   MULTIMAP = 10,
   PASSWORD = 11,
 }
+
+export enum VariantSortType {
+  NONE = 0,
+  ASC = 1,
+  DESC = 2,
+  CUSTOM = 3
+}

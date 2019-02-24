@@ -917,6 +917,18 @@ export class Random {
 
 /** 提供了操作 array 的工具函数 */
 export class ArrayT {
+
+  /** 生成排序用的复合hash，输入每个级别对应差值 */
+  static MakeSortKey(...results): number {
+    let cut = 32 - (32 / results.length | 0);
+    let cutmask = 0xffffffff >> cut; // 生成用来截断数据的mask
+    let r = 0;
+    results.forEach(e => {
+      r |= (e & cutmask) << cut;
+    });
+    return r;
+  }
+
   /** 最大值 */
   static Max<T>(arr: T[]): T {
     let t = arr[0];

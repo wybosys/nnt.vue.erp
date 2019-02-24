@@ -6,6 +6,7 @@
     v-model="model.tmp"
     @change="cbChanged"
     :readonly="isReadonly()"
+    :suffix-icon="suffixIcon()"
   >
   </el-input>
 </template>
@@ -35,6 +36,13 @@ export default {
       if (!this.model.editing)
         return true
       return false
+    },
+    suffixIcon() {
+      if (this.model.readonly)
+        return null
+      if (this.model.editing)
+        return 'el-icon-edit'
+      return null
     }
   }
 }
