@@ -11,6 +11,7 @@ export enum VariantType {
   MAP = 9,
   MULTIMAP = 10,
   PASSWORD = 11,
+  DATETIME = 12,
 }
 
 export enum VariantSortType {

@@ -1,5 +1,4 @@
 import {IProperty, Property} from "../base/Property";
-import {VariantType} from "../../core/Variant";
 
 export interface ICell extends IProperty {
 
@@ -7,11 +6,15 @@ export interface ICell extends IProperty {
 
 export class Cell extends Property implements Cell {
 
-  static Value(value: any, variable, type: VariantType): Cell {
+  static Value(value: any): Cell {
     let r = new this();
     r.value = r.tmp = value;
-    r.variable = variable;
-    r.type = type;
     return r;
+  }
+
+  strictAs(r: IProperty): this {
+    super.strictAs(r);
+    this.variable = r.variable;
+    return this;
   }
 }

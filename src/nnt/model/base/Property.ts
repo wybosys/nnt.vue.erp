@@ -87,4 +87,10 @@ export class Property implements IProperty {
     this.readonly = b;
     return this;
   }
+
+  strictAs(r: IProperty): this {
+    this.readonly = r.readonly;
+    this.type = r.type;
+    return this;
+  }
 }
