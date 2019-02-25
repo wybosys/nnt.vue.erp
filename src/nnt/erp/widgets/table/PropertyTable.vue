@@ -15,10 +15,16 @@
         <erp-input-property :model="input.row[index]"></erp-input-property>
       </template>
     </el-table-column>
-    <el-table-column width="180">
+    <el-table-column width="300">
+      <template slot="header" slot-scope="header">
+        <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
+      </template>
       <template slot-scope="control">
-        <el-button size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}</el-button>
-        <el-button size="mini" type="danger" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
+        <el-button v-if="model.editable" size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}
+        </el-button>
+        <el-button size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
+        </el-button>
+        <el-button v-if="model.removable" size="mini" type="danger" @click="actRemove(control)">删除
         </el-button>
       </template>
     </el-table-column>
@@ -26,14 +32,21 @@
 </template>
 
 <script lang="ts">
-import {ICell} from "../../../model/table/Cell";
+import {Cell, ICell} from "../../../model/table/Cell";
 import {ArrayT} from "../../../core/Kernel";
+import {Empty} from "../../../model/base/Empty";
+import {DefaultValue} from "../../../core/Variant";
 
 export default {
   name: "PropertyTable",
   props: {
     model: {
       type: Object // IPropertyTable
+    }
+  },
+  data() {
+    return {
+      createdRows: []
     }
   },
   methods: {
@@ -49,7 +62,59 @@ export default {
     },
     actSave(scope) {
       let row: ICell[] = scope.row
-      this.$emit('save', row)
+      // 如果是新加的，则走新增的event
+      let fnd = this.createdRows.indexOf(row)
+      if (fnd != -1) {
+        this.$emit('create', row, () => {
+          // 添加成功
+          ArrayT.RemoveObjectAtIndex(this.createdRows, fnd)
+
+          // 同步数据
+          row.forEach(e => {
+            if (!e.readonly)
+              e.value = e.tmp
+          })
+        })
+      } else {
+        this.$emit('save', row, () => {
+          // 保存成功
+          row.forEach(e => {
+            if (!e.readonly)
+              e.value = e.tmp
+          })
+        })
+      }
+    },
+    actRemove(scope) {
+      let row: ICell[] = scope.row
+      // 如果是新加的，则不确认，直接删除
+      let fnd = this.createdRows.indexOf(row)
+      if (fnd != -1) {
+        ArrayT.RemoveObjectAtIndex(this.createdRows, fnd)
+        fnd = this.model.rows.indexOf(row)
+        ArrayT.RemoveObjectAtIndex(this.model.rows, fnd)
+      } else {
+        let values = []
+        this.model.columns.forEach((e, idx) => {
+          values.push(e.label + ':' + row[idx].value)
+        })
+        if (confirm('确认删除 ' + values.join(', '))) {
+          this.$emit('remove', row, () => {
+            fnd = this.model.rows.indexOf(row)
+            ArrayT.RemoveObjectAtIndex(this.model.rows, fnd)
+          })
+        }
+      }
+    },
+    actCreate(scope) {
+      // 添加一行新的
+      let nw: ICell[] = []
+      this.model.columns.forEach(col => {
+        nw.push(Cell.Value(DefaultValue(col.type)).strictAs(col))
+      })
+      this.model.rows.push(nw)
+      this.createdRows.push(nw)
+      // 保存后才真正调用增加的event
     },
     btnEditLabel(scope) {
       let row: ICell[] = scope.row

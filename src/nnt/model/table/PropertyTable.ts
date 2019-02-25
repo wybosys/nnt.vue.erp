@@ -8,6 +8,15 @@ export interface IPropertyTable {
 
   // 行数据
   rows: IProperty[][];
+
+  // 是否可以编辑
+  editable: boolean;
+
+  // 是否可以删除
+  removable: boolean;
+
+  // 是否可以增加
+  creatable: boolean;
 }
 
 export class PropertyTable implements IPropertyTable {
@@ -17,4 +26,13 @@ export class PropertyTable implements IPropertyTable {
 
   // 行数据
   rows: IProperty[][] = [];
+
+  // 是否可以编辑
+  editable: boolean = true;
+
+  // 是否可以删除
+  removable: boolean;
+
+  // 是否可以增加
+  creatable: boolean;
 }

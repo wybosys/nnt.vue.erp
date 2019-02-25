@@ -1,3 +1,5 @@
+import {MultiMap} from "./Kernel";
+
 export enum VariantType {
   ANY = 0,
   INTEGER = 1,
@@ -19,4 +21,41 @@ export enum VariantSortType {
   ASC = 1,
   DESC = 2,
   CUSTOM = 3
+}
+
+export function DefaultValue(typ: VariantType) {
+  let r: any = null;
+  switch (typ) {
+    case VariantType.INTEGER:
+    case VariantType.DOUBLE:
+    case VariantType.NUMBER:
+      r = 0;
+      break;
+    case VariantType.BOOLEAN:
+      r = false;
+      break;
+    case VariantType.PASSWORD:
+    case VariantType.STRING:
+      r = '';
+      break;
+    case VariantType.JSON:
+      r = '{}';
+      break;
+    case VariantType.OBJECT:
+      r = null;
+      break;
+    case VariantType.ARRAY:
+      r = [];
+      break;
+    case VariantType.MAP:
+      r = new Map();
+      break;
+    case VariantType.MULTIMAP:
+      r = new MultiMap();
+      break;
+    case VariantType.DATETIME:
+      r = new Date().getTime();
+      break;
+  }
+  return r;
 }
