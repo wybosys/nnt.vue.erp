@@ -161,6 +161,19 @@ export function toNumber(o: any, def = 0): number {
   return def;
 }
 
+export function toBoolean(o: any, def = false): boolean {
+  if (o == null)
+    return def;
+  if (typeof o == 'string') {
+    if (o == 'true' || o == '1')
+      return true;
+    if (o == 'false' || o == '0')
+      return false;
+    return def;
+  }
+  return !!o;
+}
+
 /** 转换到字符串 */
 export function asString(o: any, def = ''): string {
   if (o == null)

@@ -1,28 +1,33 @@
 import {IProperty} from "../../../model/base/Property";
+import {StrictValue} from "../../../core/Variant";
 
 export class InputUtil {
 
   static PropertyChanged(model: IProperty) {
     // 恢复空的
-    if (model.tmp == '')
-      model.tmp = model.value
+    if (model.tmp == '') {
+      model.tmp = model.value;
+    } else {
+      // 修正tmp的类型
+      model.tmp = StrictValue(model.tmp, model.type);
+    }
   }
 
   static PropertyIsReadonly(model: IProperty): boolean {
     if (!model)
-      return true
+      return true;
     if (model.readonly)
-      return true
+      return true;
     if (!model.editing)
-      return true
-    return false
+      return true;
+    return false;
   }
 
   static PropertySuffixIcon(model: IProperty): string {
     if (model.readonly)
-      return null
+      return null;
     if (model.editing)
-      return 'el-icon-edit'
-    return null
+      return 'el-icon-edit';
+    return null;
   }
 }

@@ -1,4 +1,4 @@
-import {MultiMap} from "./Kernel";
+import {ArrayT, asString, DateTime, MultiMap, StringT, toBoolean, toFloat, toInt, toJson, toJsonObject} from "./Kernel";
 
 export enum VariantType {
   ANY = 0,
@@ -55,6 +55,54 @@ export function DefaultValue(typ: VariantType) {
       break;
     case VariantType.DATETIME:
       r = new Date().getTime();
+      break;
+  }
+  return r;
+}
+
+export function StrictValue(val: any, typ: VariantType): any {
+  let r: any = null;
+  switch (typ) {
+    case VariantType.INTEGER:
+      r = toInt(val);
+      break;
+    case VariantType.DOUBLE:
+    case VariantType.NUMBER:
+      r = toFloat(val);
+      break;
+    case VariantType.BOOLEAN:
+      r = toBoolean(val);
+      break;
+    case VariantType.PASSWORD:
+    case VariantType.STRING:
+      r = asString(val);
+      break;
+    case VariantType.JSON:
+      r = toJson(toJsonObject(val));
+      break;
+    case VariantType.OBJECT:
+      r = toJsonObject(val);
+      break;
+    case VariantType.ARRAY:
+      r = StringT.Split(val, ',');
+      break;
+    case VariantType.MAP:
+      r = new Map();
+      let t = toJsonObject(val);
+      if (t) {
+        for (let k in t)
+          r.set(k, t[k]);
+      }
+      break;
+    case VariantType.MULTIMAP:
+      r = new MultiMap();
+      if (t) {
+        for (let k in t)
+          r.replace(k, t[k]);
+      }
+      break;
+    case VariantType.DATETIME:
+      r = new DateTime(toInt(val));
       break;
   }
   return r;
