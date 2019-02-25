@@ -14,6 +14,7 @@
 <script lang="ts">
 
 import {Property} from "../../../model/base/Property";
+import {InputUtil} from "./InputUtil";
 
 export default {
   name: "PropertyInput",
@@ -31,23 +32,13 @@ export default {
   },
   methods: {
     cbChanged() {
-      // pass
+      InputUtil.PropertyChanged(this.model)
     },
     isReadonly() {
-      if (!this.model)
-        return true
-      if (this.model.readonly)
-        return true
-      if (!this.model.editing)
-        return true
-      return false
+      return InputUtil.PropertyIsReadonly(this.model)
     },
     suffixIcon() {
-      if (this.model.readonly)
-        return null
-      if (this.model.editing)
-        return 'el-icon-edit'
-      return null
+      return InputUtil.PropertySuffixIcon(this.model)
     }
   }
 }

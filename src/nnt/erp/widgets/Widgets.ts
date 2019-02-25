@@ -5,6 +5,8 @@ import Form from "./base/Form.vue";
 import FormItem from "./base/FormItem.vue";
 import Chart from "./chart/Chart.vue";
 import Dialog from "./dialog/Dialog.vue";
+import FilterInput from "./filter/Input.vue";
+import FilterList from "./filter/List.vue";
 import NavigationList from "./navigation/List.vue";
 import PickerDropList from "./picker/DropList.vue";
 import Tab from "./tab/Tab.vue";
@@ -23,6 +25,8 @@ export default {
     Vue.component('erp-form-item', FormItem);
     Vue.component('erp-chart', Chart);
     Vue.component('erp-dialog', Dialog);
+    Vue.component('erp-filter-input', FilterInput);
+    Vue.component('erp-filter-list', FilterList);
     Vue.component('erp-navigation-list', NavigationList);
     Vue.component('erp-picker-droplist', PickerDropList);
     Vue.component('erp-tab', Tab);

@@ -1,35 +1,32 @@
 <template>
   <el-pagination
-    @current-change="handleCurrentChange"
-    :current-page="currentPage"
-    :page-size="pageSize"
+    @current-change="cbPageChanged"
     layout="total, prev, pager, next, jumper"
-    :total="nowTableDataLength">
+    :current-page="currentPage()"
+    :page-size="model.limit"
+    :total="model.total"
+  >
   </el-pagination>
 </template>
 
 <script lang="ts">
 export default {
   name: "TablePagination",
-  data() {
-    return {
-      currentPage: 1,
-    }
-  },
   props: {
-    nowTableDataLength: {
-      type: Number,
-      require: true
-    },
-    pageSize: {
-      type: Number,
-      default: 10
+    model: {
+      type: Object // INumPaged
     }
   },
-  computed: {},
   methods: {
-    handleCurrentChange(val) {
-      this.$emit('changeCurrentPage', val)
+    totalpages() {
+      return Math.ceil(this.model.total / this.model.limit)
+    },
+    currentPage() {
+      return this.model.page + 1
+    },
+    cbPageChanged(cur) {
+      this.model.page = cur - 1
+      this.$emit('pagechanged', cur)
     },
   }
 }

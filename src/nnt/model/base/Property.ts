@@ -65,7 +65,7 @@ export class Property implements IProperty {
   // 是否正在修改
   editing: boolean = false;
 
-  static Simple(index: number, label: string, value: any, type: VariantType): IProperty {
+  static Simple(index: number, label: string, value: any, type: VariantType): Property {
     let r = new this();
     r.index = index;
     r.value = r.tmp = value;
@@ -74,7 +74,7 @@ export class Property implements IProperty {
     return r;
   }
 
-  static Extract(obj: any, label: string, variname: string, type: VariantType): IProperty {
+  static Extract(obj: any, label: string, variname: string, type: VariantType): Property {
     let r = new this();
     r.value = r.tmp = obj[variname];
     r.variable = variname;

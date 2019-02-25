@@ -55,6 +55,47 @@ export function nonnull1st<T>(def: T, ...p: T[]) {
   return def;
 }
 
+// 生成IndexedObject
+// args (key,value)+，如果是奇数，则0下标的为给特定的object增加kv
+// 常用来构造key为变量的IndexedObject
+export function indexed(...args: any[]): IndexedObject {
+  let r: IndexedObject;
+  let lb: number;
+  if (args.length % 2) {
+    r = args[0];
+    lb = 1;
+  } else {
+    r = {};
+    lb = 0;
+  }
+  for (let i = lb, l = args.length; i < l; i += 2) {
+    let k = args[i];
+    let v = args[i + 1];
+    r[k] = v;
+  }
+  return r;
+}
+
+export function indexed_safe(...args: any[]): IndexedObject {
+  let r: IndexedObject;
+  let lb: number;
+  if (args.length % 2) {
+    r = args[0];
+    lb = 1;
+  } else {
+    r = {};
+    lb = 0;
+  }
+  for (let i = lb, l = args.length; i < l; i += 2) {
+    let k = args[i];
+    let v = args[i + 1];
+    if (k == null || v == null)
+      continue;
+    r[k] = v;
+  }
+  return r;
+}
+
 /** 带保护的判断对象是不是 0 */
 export function isZero(o: any): boolean {
   if (o == null || o == 0)
