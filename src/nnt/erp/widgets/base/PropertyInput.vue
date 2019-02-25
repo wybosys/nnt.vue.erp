@@ -12,12 +12,17 @@
 </template>
 
 <script lang="ts">
+
+import {Property} from "../../../model/base/Property";
+
 export default {
   name: "PropertyInput",
   props: {
     'type': {},
     'placeholder': {},
-    'model': {default: {}}
+    'model': {
+      default: new Property()
+    }
   },
   computed: {
     value: () => {
