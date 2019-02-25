@@ -44,6 +44,7 @@ interface FieldOption {
   enum?: boolean;
   file?: boolean;
   json?: boolean;
+  filter?: boolean;
 
   // 注释
   comment?: string;
@@ -75,16 +76,14 @@ function DefineFp(target: any, key: string, fp: FieldOption) {
   let fps: IndexedObject;
   if (target.hasOwnProperty(FP_KEY)) {
     fps = target[FP_KEY];
-  }
-  else {
+  } else {
     if (FP_KEY in target) {
       fps = CloneFps(target[FP_KEY]);
       for (let k in fps) {
         let fp: FieldOption = fps[k];
         fp.id *= 100;
       }
-    }
-    else {
+    } else {
       fps = {};
     }
     Object.defineProperty(target, FP_KEY, {
@@ -126,7 +125,7 @@ function toBoolean(v: any): boolean {
 }
 
 // 填数据
-export function Decode<T>(mdl: T, params: any):T {
+export function Decode<T>(mdl: T, params: any): T {
   let fps = mdl[FP_KEY];
   if (!fps)
     return null;
@@ -139,41 +138,35 @@ export function Decode<T>(mdl: T, params: any):T {
       if (fp.array) {
         let arr: any[] = [];
         if (val) {
-          if (typeof(fp.valtype) == "string") {
+          if (typeof (fp.valtype) == "string") {
             if (fp.valtype == string_t) {
               val.forEach((e: any) => {
                 arr.push(e ? e.toString() : null);
               });
-            }
-            else if (fp.valtype == integer_t) {
+            } else if (fp.valtype == integer_t) {
               val.forEach((e: any) => {
                 arr.push(e ? toInt(e) : 0);
               });
-            }
-            else if (fp.valtype == double_t) {
+            } else if (fp.valtype == double_t) {
               val.forEach((e: any) => {
                 arr.push(e ? toFloat(e) : 0);
               });
-            }
-            else if (fp.valtype == boolean_t) {
+            } else if (fp.valtype == boolean_t) {
               val.forEach((e: any) => {
                 arr.push(!!e);
               });
             }
-          }
-          else {
+          } else {
             if (fp.valtype == Object) {
               val.forEach((e: any) => {
                 arr.push(e);
               });
-            }
-            else {
+            } else {
               let clz: any = fp.valtype;
               val.forEach((e: any) => {
                 if (e == null) {
                   arr.push(null);
-                }
-                else {
+                } else {
                   let t = new clz();
                   Decode(t, e);
                   arr.push(t);
@@ -183,8 +176,7 @@ export function Decode<T>(mdl: T, params: any):T {
           }
         }
         mdl[key] = arr;
-      }
-      else if (fp.map) {
+      } else if (fp.map) {
         let keyconv = (v: any) => {
           return v
         };
@@ -194,39 +186,34 @@ export function Decode<T>(mdl: T, params: any):T {
           keyconv = toFloat;
         let map = new Map();
         if (val) {
-          if (typeof(fp.valtype) == "string") {
+          if (typeof (fp.valtype) == "string") {
             if (fp.valtype == string_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 map.set(keyconv(ek), ev ? ev.toString() : null);
               }
-            }
-            else if (fp.valtype == integer_t) {
+            } else if (fp.valtype == integer_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 map.set(keyconv(ek), ev ? toInt(ev) : 0);
               }
-            }
-            else if (fp.valtype == double_t) {
+            } else if (fp.valtype == double_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 map.set(keyconv(ek), ev ? toFloat(ev) : 0);
               }
-            }
-            else if (fp.valtype == boolean_t)
+            } else if (fp.valtype == boolean_t)
               for (let ek in val) {
                 let ev = val[ek];
                 map.set(keyconv(ek), !!ev);
               }
-          }
-          else {
+          } else {
             let clz: any = fp.valtype;
             for (let ek in val) {
               let ev = val[ek];
               if (ev == null) {
                 map.set(keyconv(ek), null);
-              }
-              else {
+              } else {
                 let t = new clz();
                 Decode(t, ev);
                 map.set(keyconv(ek), t);
@@ -235,8 +222,7 @@ export function Decode<T>(mdl: T, params: any):T {
           }
         }
         mdl[key] = map;
-      }
-      else if (fp.multimap) {
+      } else if (fp.multimap) {
         let keyconv = (v: any) => {
           return v
         };
@@ -246,32 +232,28 @@ export function Decode<T>(mdl: T, params: any):T {
           keyconv = toFloat;
         let mmap = new MultiMap();
         if (val) {
-          if (typeof(fp.valtype) == "string") {
+          if (typeof (fp.valtype) == "string") {
             if (fp.valtype == string_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => asString(e)));
               }
-            }
-            else if (fp.valtype == integer_t) {
+            } else if (fp.valtype == integer_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => toInt(e)));
               }
-            }
-            else if (fp.valtype == double_t) {
+            } else if (fp.valtype == double_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => toFloat(e)));
               }
-            }
-            else if (fp.valtype == boolean_t)
+            } else if (fp.valtype == boolean_t)
               for (let ek in val) {
                 let ev = val[ek];
                 mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => !!e));
               }
-          }
-          else {
+          } else {
             let clz: any = fp.valtype;
             for (let ek in val) {
               let ev = val[ek];
@@ -284,21 +266,17 @@ export function Decode<T>(mdl: T, params: any):T {
           }
         }
         mdl[key] = mmap;
-      }
-      else if (fp.enum) {
+      } else if (fp.enum) {
         mdl[key] = val ? parseInt(val) : 0;
-      }
-      else if (fp.valtype == Object) {
+      } else if (fp.valtype == Object) {
         mdl[key] = val;
-      }
-      else if (val) {
+      } else if (val) {
         let clz: any = fp.valtype;
         let t = new clz();
         Decode(t, val);
         mdl[key] = t;
       }
-    }
-    else {
+    } else {
       if (fp.string)
         mdl[key] = val ? val.toString() : null;
       else if (fp.integer)
@@ -357,10 +335,9 @@ function Output(mdl: any): any {
     if (fp.valtype) {
       if (fp.array) {
         // 通用类型，则直接可以输出
-        if (typeof(fp.valtype) == "string") {
+        if (typeof (fp.valtype) == "string") {
           r[fk] = val;
-        }
-        else {
+        } else {
           // 特殊类型，需要迭代进去
           let arr: any[] = [];
           val && val.forEach((e: any) => {
@@ -368,47 +345,40 @@ function Output(mdl: any): any {
           });
           r[fk] = arr;
         }
-      }
-      else if (fp.map) {
+      } else if (fp.map) {
         let m: IndexedObject = {};
         if (val) {
-          if (typeof(fp.valtype) == "string") {
+          if (typeof (fp.valtype) == "string") {
             val.forEach((v: any, k: any) => {
               m[k] = v;
             });
-          }
-          else {
+          } else {
             val.forEach((v: any, k: any) => {
               m[k] = Output(v);
             });
           }
         }
         r[fk] = m;
-      }
-      else if (fp.multimap) {
+      } else if (fp.multimap) {
         let m: IndexedObject = {};
         if (val) {
-          if (typeof(fp.valtype) == "string") {
+          if (typeof (fp.valtype) == "string") {
             val.forEach((v: any, k: any) => {
               m[k] = v;
             });
-          }
-          else {
+          } else {
             val.forEach((v: any, k: any) => {
               m[k] = ArrayT.Convert(v, e => Output(e));
             });
           }
         }
         r[fk] = m;
-      }
-      else if (fp.valtype == Object) {
+      } else if (fp.valtype == Object) {
         r[fk] = val;
-      }
-      else {
+      } else {
         r[fk] = Output(val);
       }
-    }
-    else {
+    } else {
       r[fk] = val;
     }
   }
@@ -602,6 +572,21 @@ export abstract class Base extends Model {
     };
   }
 
+  static filter(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
+    let fp: FieldOption = {
+      id: id,
+      val: "",
+      input: opts.indexOf(Base.input) != -1,
+      output: opts.indexOf(Base.output) != -1,
+      optional: opts.indexOf(Base.optional) != -1,
+      filter: true,
+      comment: comment
+    };
+    return (target: any, key: string) => {
+      DefineFp(target, key, fp);
+    };
+  }
+
   fields(): KvObject<string> {
     return Encode(this);
   }
@@ -654,8 +639,7 @@ export class SocketConnector extends WebSocketConnector {
           break;
       }
       return;
-    }
-    else {
+    } else {
       // 尝试重连
       if (this.autoReconnect) {
         Delay(this._reconnect_counter++, () => {

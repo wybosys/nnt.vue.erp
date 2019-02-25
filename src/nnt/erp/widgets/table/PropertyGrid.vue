@@ -44,7 +44,10 @@ export default {
     },
     actSave(scope) {
       let row: IProperty = scope.row
-      this.$emit('save', row)
+      this.$emit('save', row, () => {
+        if (!row.readonly)
+          row.value = row.tmp
+      })
     },
     btnEditLabel(scope) {
       let row: IProperty = scope.row
