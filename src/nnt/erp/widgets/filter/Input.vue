@@ -24,6 +24,7 @@
       </el-select>
 
       <el-date-picker v-if="it().datetime"
+                      type="datetime"
                       placeholder="日期"
                       align="right"
                       slot="append"
