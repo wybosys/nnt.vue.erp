@@ -16,8 +16,8 @@
 
 <script lang="ts">
 
-import {Application} from "../../nnt/erp/Application";
-import {TreeNode} from "../../nnt/erp/ModuleTree";
+import {Application} from "../nnt/erp/Application";
+import {TreeNode} from "../nnt/erp/ModuleTree";
 
 export default {
   name: "MainContainer",
@@ -60,9 +60,10 @@ export default {
     top: 0;
     bottom: 0;
     box-sizing: border-box;
+    overflow-y: scroll;
 
     .main-content {
-      padding: 0 50px;
+      padding: 0 15px;
     }
   }
 </style>

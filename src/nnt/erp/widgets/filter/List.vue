@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="filter-list">
     <erp-filter-input v-for="(each,index) in model" :model="each" :key="index"></erp-filter-input>
   </div>
 </template>
@@ -14,3 +14,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .filter-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+</style>

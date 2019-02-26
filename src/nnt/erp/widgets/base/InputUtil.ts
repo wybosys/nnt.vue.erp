@@ -1,10 +1,11 @@
 import {IProperty} from "../../../model/base/Property";
-import {StrictValue, VariantType} from "../../../core/Variant";
+import {VariantType} from "../../../core/Variant";
 
 export class InputType {
   input: boolean;
   label: boolean;
   datetime: boolean;
+  switch: boolean;
 
   static Detect(model: IProperty): InputType {
     let r = new InputType();
@@ -12,7 +13,11 @@ export class InputType {
       if (model.readonly || !model.editing) {
         r.label = true;
       } else {
-        r.input = true;
+        if (model.type == VariantType.DATETIME) {
+          r.datetime = true;
+        } else {
+          r.input = true;
+        }
       }
     }
     return r;
@@ -20,16 +25,6 @@ export class InputType {
 }
 
 export class InputUtil {
-
-  static PropertyChanged(model: IProperty) {
-    // 恢复空的
-    if (model.tmp == '') {
-      model.tmp = model.value;
-    } else {
-      // 修正tmp的类型
-      model.tmp = StrictValue(model.tmp, model.type);
-    }
-  }
 
   static PropertyIsReadonly(model: IProperty): boolean {
     if (!model)

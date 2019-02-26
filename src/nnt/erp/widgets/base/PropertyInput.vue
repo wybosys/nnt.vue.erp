@@ -5,7 +5,6 @@
     :placeholder="placeholder"
     ref="input"
     v-model="model.tmp"
-    @change="cbChanged"
     :readonly="isReadonly()"
     :suffix-icon="suffixIcon()"
   >
@@ -21,6 +20,11 @@
                   :readonly="isReadonly()"
   >
   </el-date-picker>
+
+  <el-switch v-else-if="it().switch"
+             :readonly="isReadonly()"
+  >
+  </el-switch>
 </template>
 
 <script lang="ts">
@@ -45,9 +49,6 @@ export default {
   methods: {
     it() {
       return InputType.Detect(this.model)
-    },
-    cbChanged() {
-      InputUtil.PropertyChanged(this.model)
     },
     isReadonly() {
       return InputUtil.PropertyIsReadonly(this.model)

@@ -33,10 +33,10 @@ export class Filter extends Property implements IFilter {
     r.and = and;
 
     filters.forEach(e => {
-      if (e.tmp == null)
+      if (e.tmp == null || e.tmp == '')
         return;
       let q: IndexedObject = {};
-      q[e.variable] = indexed(e.operator, e.tmp);
+      q[e.variable] = indexed(e.operator, e.current);
       and.push(q);
     });
 

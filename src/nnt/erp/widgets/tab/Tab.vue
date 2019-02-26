@@ -71,7 +71,6 @@
 
 <style lang='scss' scoped>
   .el-tabs /deep/ {
-    background-color: #E9EEF3;
     .el-tabs__item {
       transition: .5s;
     }

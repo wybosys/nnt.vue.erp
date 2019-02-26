@@ -8,7 +8,7 @@ export class Cell extends Property implements Cell {
 
   static Value(value: any): Cell {
     let r = new this();
-    r.value = r.tmp = value;
+    r.value = value;
     return r;
   }
 

@@ -1,16 +1,20 @@
 <template>
-  <div class="wrap">
+  <span class="wrap">
     <span style="padding: 0 1em">{{model.label}}</span>
     <el-input
       type="input"
       :placeholder="placeholder"
       ref="input"
       v-model="model.tmp"
-      @change="cbChanged"
       :readonly="isReadonly()"
       :suffix-icon="suffixIcon()"
     >
-      <el-select placeholder="比较" v-model="model.operator" slot="prepend" class="input-with-select">
+
+      <el-select placeholder="比较"
+                 v-model="model.operator"
+                 slot="prepend"
+                 class="input-with-select"
+      >
         <el-option label=">" value="gt"></el-option>
         <el-option label=">=" value="gte"></el-option>
         <el-option label="=" value="eq"></el-option>
@@ -18,14 +22,23 @@
         <el-option label="<" value="lt"></el-option>
         <el-option label="<=" value="lte"></el-option>
       </el-select>
+
+      <el-date-picker v-if="it().datetime"
+                      placeholder="日期"
+                      align="right"
+                      slot="append"
+                      value-format="yyyy-MM-dd HH:mm:ss"
+                      v-model="model.tmp"
+      >
+      </el-date-picker>
     </el-input>
-  </div>
+  </span>
 </template>
 
 <script lang="ts">
 
 import {Filter} from "../../../model/filter/Filter";
-import {InputUtil} from "../base/InputUtil";
+import {InputType, InputUtil} from "../base/InputUtil";
 
 export default {
   name: 'Input',
@@ -42,8 +55,8 @@ export default {
     }
   },
   methods: {
-    cbChanged() {
-      InputUtil.PropertyChanged(this.model)
+    it() {
+      return InputType.Detect(this.model)
     },
     isReadonly() {
       return InputUtil.PropertyIsReadonly(this.model)
@@ -57,9 +70,10 @@ export default {
 
 <style lang="scss" scoped>
   .wrap /deep/ {
+    margin: 20px;
+    width: auto;
     display: flex;
     align-items: center;
-    min-width: 100em;
 
     .el-select .el-input {
       width: 90px;
@@ -72,7 +86,6 @@ export default {
 
   .el-input {
     width: auto;
-    flex: 1;
   }
 
 </style>

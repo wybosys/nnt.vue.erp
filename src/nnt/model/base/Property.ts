@@ -20,7 +20,10 @@ export interface IProperty {
   // 属性值
   value: any;
 
-  // 正在修改的临时属性值
+  // 当前值
+  current: any;
+
+  // 正在修改的临时属性值(注意：通常为UI组件默认得类型，可以通过current来获得和value一样类型的临时属性值)
   tmp: any;
 
   // 引用的对象
@@ -33,7 +36,10 @@ export interface IProperty {
   editing: boolean;
 }
 
-export class Property implements IProperty {
+export class Property implements IProperty /*IPropertyEditable*/ {
+
+  static _IMP_VariantToUIValue: (val: any, typ: VariantType) => any;
+  static _IMP_UIValToVariant: (val: any, typ: VariantType) => any;
 
   // 索引
   index: number = 0;
@@ -53,8 +59,13 @@ export class Property implements IProperty {
   // 属性值
   value: any = null;
 
-  // 正在修改的临时属性值
+  // 正在修改的临时属性值(注意：通常为UI组件默认得类型，可以通过current来获得和value一样类型的临时属性值)
   tmp: any = null;
+
+  // 当前值
+  get current(): any {
+    return Property._IMP_UIValToVariant(this.tmp, this.type);
+  }
 
   // 引用的对象
   ref: any = null;
@@ -91,6 +102,7 @@ export class Property implements IProperty {
   strictAs(r: IProperty): this {
     this.readonly = r.readonly;
     this.type = r.type;
+    this.tmp = Property._IMP_VariantToUIValue(this.value, this.type);
     return this;
   }
 }

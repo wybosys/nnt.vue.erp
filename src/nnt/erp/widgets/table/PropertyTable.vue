@@ -4,6 +4,7 @@
             fit
             stripe
             :data="model.rows"
+
   >
     <el-table-column v-for="(col,index) in model.columns"
                      :key="index"
@@ -42,7 +43,7 @@ export default {
   props: {
     model: {
       type: Object // IPropertyTable
-    }
+    },
   },
   data() {
     return {
