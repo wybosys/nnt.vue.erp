@@ -7,6 +7,9 @@ export function VariantToUIValue(val: any, typ: VariantType): any {
     case VariantType.DATETIME:
       r = new DateTime(val).toString('yyyy-MM-dd HH:mm:ss');
       break;
+    case VariantType.BOOLEAN:
+      r = val ? 'true' : 'false';
+      break;
     default:
       r = val;
       break;
@@ -27,7 +30,7 @@ export function UIValToVariant(val: any, typ: VariantType): any {
       r = toNumber(val);
       break;
     case VariantType.DOUBLE:
-      r = toFloat(val);
+      r = val == 'true' ? true : false;
       break;
     case VariantType.BOOLEAN:
       r = toBoolean(val);
