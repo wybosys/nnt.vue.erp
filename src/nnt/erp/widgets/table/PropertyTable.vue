@@ -17,6 +17,7 @@
     </el-table-column>
     <el-table-column width="300">
       <template slot="header" slot-scope="header">
+        <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
         <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
       </template>
       <template slot-scope="control">
@@ -34,7 +35,6 @@
 <script lang="ts">
 import {Cell, ICell} from "../../../model/table/Cell";
 import {ArrayT} from "../../../core/Kernel";
-import {Empty} from "../../../model/base/Empty";
 import {DefaultValue} from "../../../core/Variant";
 
 export default {
@@ -115,6 +115,9 @@ export default {
       this.model.rows.push(nw)
       this.createdRows.push(nw)
       // 保存后才真正调用增加的event
+    },
+    actRefresh(scope) {
+      this.$emit('refresh')
     },
     btnEditLabel(scope) {
       let row: ICell[] = scope.row

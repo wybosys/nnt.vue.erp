@@ -464,6 +464,10 @@ export class DateTime {
     return new Date().getTime() / 1000;
   }
 
+  static Current(): number {
+    return (new Date().getTime() / 1000) >> 0;
+  }
+
   /** 当前的时间戳 */
   static Timestamp(): number {
     return (new Date().getTime() / 1000) >> 0;

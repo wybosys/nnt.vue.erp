@@ -54,7 +54,7 @@ export function DefaultValue(typ: VariantType) {
       r = new MultiMap();
       break;
     case VariantType.DATETIME:
-      r = new Date().getTime();
+      r = DateTime.Current();
       break;
   }
   return r;
@@ -102,7 +102,7 @@ export function StrictValue(val: any, typ: VariantType): any {
       }
       break;
     case VariantType.DATETIME:
-      r = new DateTime(toInt(val));
+      r = new DateTime(toInt(val) * 1000);
       break;
   }
   return r;
