@@ -1,5 +1,23 @@
 import {IProperty} from "../../../model/base/Property";
-import {StrictValue} from "../../../core/Variant";
+import {StrictValue, VariantType} from "../../../core/Variant";
+
+export class InputType {
+  input: boolean;
+  label: boolean;
+  datetime: boolean;
+
+  static Detect(model: IProperty): InputType {
+    let r = new InputType();
+    if (model) {
+      if (model.readonly || !model.editing) {
+        r.label = true;
+      } else {
+        r.input = true;
+      }
+    }
+    return r;
+  }
+}
 
 export class InputUtil {
 

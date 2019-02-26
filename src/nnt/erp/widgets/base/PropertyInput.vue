@@ -1,5 +1,6 @@
 <template>
   <el-input
+    v-if="it().input"
     type="input"
     :placeholder="placeholder"
     ref="input"
@@ -9,12 +10,23 @@
     :suffix-icon="suffixIcon()"
   >
   </el-input>
+
+  <label v-else-if="it().label">
+    {{model.tmp}}
+  </label>
+
+  <el-date-picker v-else-if="it().datetime"
+                  placeholder="日期"
+                  align="right"
+                  :readonly="isReadonly()"
+  >
+  </el-date-picker>
 </template>
 
 <script lang="ts">
 
 import {Property} from "../../../model/base/Property";
-import {InputUtil} from "./InputUtil";
+import {InputType, InputUtil} from "./InputUtil";
 
 export default {
   name: "PropertyInput",
@@ -31,6 +43,9 @@ export default {
     }
   },
   methods: {
+    it() {
+      return InputType.Detect(this.model)
+    },
     cbChanged() {
       InputUtil.PropertyChanged(this.model)
     },
