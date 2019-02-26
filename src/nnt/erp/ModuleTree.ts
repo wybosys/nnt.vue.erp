@@ -68,7 +68,7 @@ export class ModuleTree {
     // 添加新的
     let id = 0;
     router.routes.forEach(e => {
-      if (!e.module)
+      if (!e.module || e.hide)
         return;
 
       let fnd = this.root.find(e.path, true);

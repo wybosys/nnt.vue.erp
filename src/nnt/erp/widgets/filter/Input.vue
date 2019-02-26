@@ -62,7 +62,7 @@ export default {
     min-width: 100em;
 
     .el-select .el-input {
-      width: 130px;
+      width: 90px;
     }
 
     .el-input-group__prepend {

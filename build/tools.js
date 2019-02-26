@@ -56,6 +56,8 @@ function GenRoutes(outputfile, ...srcdirs) {
           arr.push("\n      module: true")
           arr.push("\n      priority: " + cfg.priority)
           arr.push("\n      label: '" + cfg.label + "'")
+          if (cfg.hide)
+            arr.push("\n      hide: true")
         }
 
         def += arr.join(',') + "\n    }"
@@ -150,7 +152,7 @@ function ListRoutesInDirectory(dir, cur, result, site) {
 
     // 如果定义了path，则使用config的定义
     if (cfgobj.path)
-      curpath = cfgobj.path
+      curpath = cfgobj.path;
 
     if (fs.existsSync(dir + '/' + rootname + '.vue')) {
       SetObjectValue(result, curpath, 'file', cur + '/' + rootname + '.vue')
@@ -161,6 +163,9 @@ function ListRoutesInDirectory(dir, cur, result, site) {
       SetObjectValue(result, curpath, 'priority', cfgobj.priority >= 0 ? cfgobj.priority : 9999)
       SetObjectValue(result, curpath, 'label', cfgobj.label ? cfgobj.label : rootname)
       SetObjectValue(result, curpath, 'module', true)
+
+      if (cfgobj.hide)
+        SetObjectValue(result, curpath, 'hide', true)
     }
   }
 

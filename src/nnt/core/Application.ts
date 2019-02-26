@@ -18,6 +18,7 @@ export interface IRoute {
   label?: string,
   module?: boolean,
   priority?: number
+  hide?: boolean;
 }
 
 export interface IApplicationRouter {
