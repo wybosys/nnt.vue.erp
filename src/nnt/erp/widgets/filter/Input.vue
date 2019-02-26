@@ -29,6 +29,9 @@
                       align="right"
                       slot="append"
                       value-format="yyyy-MM-dd HH:mm:ss"
+                      clearable="false"
+                      editable="false"
+                      size="mini"
                       v-model="model.tmp"
       >
       </el-date-picker>
