@@ -13,6 +13,9 @@
       </template>
     </el-table-column>
     <el-table-column width="180">
+      <template slot="header" slot-scope="header">
+        <el-button size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
+      </template>
       <template slot-scope="control">
         <el-button size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}</el-button>
         <el-button size="mini" type="danger" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
@@ -58,6 +61,9 @@ export default {
     btnSaveDisabled(scope) {
       let row: IProperty = scope.row
       return row.tmp == row.value
+    },
+    actRefresh(scope) {
+      this.$emit('refresh')
     }
   }
 }
