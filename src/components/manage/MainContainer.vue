@@ -60,10 +60,15 @@ export default {
     top: 0;
     bottom: 0;
     box-sizing: border-box;
-    overflow-y: scroll;
 
     .main-content {
       padding: 0 15px;
+      position: absolute;
+      left: 0;
+      top: 100px;
+      bottom: 0;
+      right: 0;
+      overflow-y: scroll;
     }
   }
 </style>

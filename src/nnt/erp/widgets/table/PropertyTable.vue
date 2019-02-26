@@ -1,5 +1,5 @@
 <template>
-  <el-table style="width: 100%"
+  <el-table :style="{ width:tableWidth}"
             border
             fit
             stripe
@@ -7,6 +7,7 @@
 
   >
     <el-table-column v-for="(col,index) in model.columns"
+                     :fixed="index == 0"
                      :key="index"
                      :prop="col.variable"
                      :label="col.label"
@@ -16,7 +17,7 @@
         <erp-input-property :model="input.row[index]"></erp-input-property>
       </template>
     </el-table-column>
-    <el-table-column width="300">
+    <el-table-column width="300" fixed="right">
       <template slot="header" slot-scope="header">
         <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
         <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
@@ -47,7 +48,12 @@ export default {
   },
   data() {
     return {
-      createdRows: []
+      createdRows: [],
+    }
+  },
+  computed:{
+    tableWidth(){
+      return this.model.columns.length * 181 + 300 +'px'
     }
   },
   methods: {
