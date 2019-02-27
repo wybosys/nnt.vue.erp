@@ -38,6 +38,9 @@ import {Cell, ICell} from "../../../model/table/Cell";
 import {ArrayT} from "../../../core/Kernel";
 import {DefaultValue} from "../../../core/Variant";
 
+const TABLE_CHAR_WIDTH = 14
+const TABLE_SPACE = 22
+
 export default {
   name: "PropertyTable",
   props: {
@@ -53,15 +56,15 @@ export default {
   computed: {
     tableWidth() {
       let len = 0;
-      this.model.columns.forEach(column => {
-        len += column.label.length * column.multiple * 30;
+      this.model.columns.forEach(col => {
+        len += col.label.length * col.multiple * TABLE_CHAR_WIDTH + TABLE_SPACE
       });
       return len + 260 + 'px'
     }
   },
   filters: {
-    columnWidth(column) {
-      return column.label.length * column.multiple * 26
+    columnWidth(col) {
+      return col.label.length * col.multiple * TABLE_CHAR_WIDTH + TABLE_SPACE
     }
   },
   methods: {
