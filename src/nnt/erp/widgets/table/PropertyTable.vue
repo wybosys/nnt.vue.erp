@@ -16,7 +16,7 @@
         <erp-input-property :model="input.row[index]"></erp-input-property>
       </template>
     </el-table-column>
-    <el-table-column min-width="260" fixed="right">
+    <el-table-column :width="editWidth(model)" fixed="right">
       <template slot="header" slot-scope="header">
         <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
         <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
@@ -41,6 +41,8 @@ import {DefaultValue} from "../../../core/Variant";
 const TABLE_CHAR_WIDTH = 14
 const TABLE_SPACE = 22
 const TABLE_SKIP_SCROll = 10
+const BUTTON_WIDTH = 56
+const BUTTON_MARGIN = 10
 
 export default {
   name: "PropertyTable",
@@ -52,6 +54,7 @@ export default {
   data() {
     return {
       createdRows: [],
+      editAreaWidth: 0,
     }
   },
   computed: {
@@ -60,7 +63,7 @@ export default {
       this.model.columns.forEach(col => {
         len += col.label.length * col.multiple * TABLE_CHAR_WIDTH + TABLE_SPACE
       });
-      return len + 260 + TABLE_SKIP_SCROll + 'px'
+      return len + TABLE_SKIP_SCROll + this.editAreaWidth + 'px'
     }
   },
   filters: {
@@ -69,6 +72,15 @@ export default {
     }
   },
   methods: {
+    editWidth() {
+      let count = 0;
+      if (this.model.editable)
+        count += 2;
+      if (this.model.removable)
+        count++;
+      this.editAreaWidth = BUTTON_WIDTH * count + count * BUTTON_MARGIN - BUTTON_MARGIN + TABLE_SPACE + TABLE_SKIP_SCROll;
+      return this.editAreaWidth;
+    },
     actToggleEdit(scope) {
       let row: ICell[] = scope.row
       row.forEach(e => {
