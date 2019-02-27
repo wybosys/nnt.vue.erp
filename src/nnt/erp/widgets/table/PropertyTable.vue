@@ -40,6 +40,7 @@ import {DefaultValue} from "../../../core/Variant";
 
 const TABLE_CHAR_WIDTH = 14
 const TABLE_SPACE = 22
+const TABLE_SKIP_SCROll = 10
 
 export default {
   name: "PropertyTable",
@@ -59,7 +60,7 @@ export default {
       this.model.columns.forEach(col => {
         len += col.label.length * col.multiple * TABLE_CHAR_WIDTH + TABLE_SPACE
       });
-      return len + 260 + 'px'
+      return len + 260 + TABLE_SKIP_SCROll + 'px'
     }
   },
   filters: {
