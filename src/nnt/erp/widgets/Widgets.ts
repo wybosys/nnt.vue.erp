@@ -1,6 +1,7 @@
 import Button from "./base/Button.vue";
 import Input from "./base/Input.vue";
 import PropertyInput from "./base/PropertyInput.vue";
+import ReadonlyCheckbox from "./base/ReadonlyCheckbox.vue";
 import Form from "./base/Form.vue";
 import FormItem from "./base/FormItem.vue";
 import Chart from "./chart/Chart.vue";
@@ -21,6 +22,7 @@ export default {
     Vue.component('erp-button', Button);
     Vue.component('erp-input', Input);
     Vue.component('erp-input-property', PropertyInput);
+    Vue.component('erp-checkbox-readonly', ReadonlyCheckbox);
     Vue.component('erp-form', Form);
     Vue.component('erp-form-item', FormItem);
     Vue.component('erp-chart', Chart);

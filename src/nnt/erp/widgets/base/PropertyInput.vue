@@ -17,14 +17,20 @@
   <el-date-picker v-else-if="it().datetime"
                   placeholder="日期"
                   align="right"
-                  :readonly="isReadonly()"
-  >
+                  :readonly="isReadonly()">
   </el-date-picker>
 
   <el-switch v-else-if="it().switch"
-             :readonly="isReadonly()"
-  >
+             :readonly="isReadonly()">
   </el-switch>
+
+  <erp-checkbox-readonly v-else-if="it().rocheck"
+                         :value="model.tmp">
+  </erp-checkbox-readonly>
+
+  <el-checkbox v-else-if="it().rwcheck"
+               :value="model.tmp">
+  </el-checkbox>
 </template>
 
 <script lang="ts">

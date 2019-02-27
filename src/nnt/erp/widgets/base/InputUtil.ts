@@ -6,15 +6,22 @@ export class InputType {
   label: boolean;
   datetime: boolean;
   switch: boolean;
+  rocheck: boolean;
+  rwcheck: boolean;
 
   static Detect(model: IProperty): InputType {
     let r = new InputType();
     if (model) {
       if (model.readonly || !model.editing) {
-        r.label = true;
+        if (model.type == VariantType.BOOLEAN)
+          r.rocheck = true;
+        else
+          r.label = true;
       } else {
         if (model.type == VariantType.DATETIME) {
           r.datetime = true;
+        } else if (model.type == VariantType.BOOLEAN) {
+          r.rwcheck = true;
         } else {
           r.input = true;
         }
