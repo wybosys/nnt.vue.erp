@@ -7,8 +7,6 @@
 
 <script lang="ts">
 
-import {IListItem, ListItem} from "../../../../nnt/model/List";
-
 export default {
   name: "Sample",
   components: {},
@@ -16,13 +14,11 @@ export default {
     return {
       title: "反馈 ",
       items: [
-        ListItem.Text("控制反馈"),
-        ListItem.Text("页面反馈")
       ]
     }
   },
   methods: {
-    clickItem(item: IListItem) {
+    clickItem(item) {
       console.log(`点击了第${item.index}按钮${item.label}`)
     }
   }

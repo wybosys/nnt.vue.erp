@@ -16,8 +16,8 @@
 
 <script lang="ts">
 
-import {Application} from "../nnt/erp/Application";
-import {TreeNode} from "../nnt/erp/ModuleTree";
+import {Application} from "../../nnt/erp/Application";
+import {TreeNode} from "../../nnt/erp/ModuleTree";
 
 export default {
   name: "MainContainer",
