@@ -4,7 +4,7 @@
       <erp-navigation-list :currentNode="currentNode" :naviTree="naviTree" @changeActiveTab="changeCurrentNode"></erp-navigation-list>
     </aside>
     <main class="main" @click.right.prevent="">
-      <erp-tab :currentNode="currentNode" @changeActiveTab="changeCurrentNode"></erp-tab>
+      <erp-tab class="main-tab" :currentNode="currentNode" @changeActiveTab="changeCurrentNode"></erp-tab>
       <div class="main-content">
         <keep-alive>
           <component :is="currentNode ? currentNode.route.component: ''"></component>
@@ -61,14 +61,18 @@ export default {
     bottom: 0;
     box-sizing: border-box;
 
+    .main-tab {
+      background: #fff;
+    }
+
     .main-content {
       padding: 0 15px;
       position: absolute;
       left: 0;
-      top: 100px;
+      top: 80px;
       bottom: 0;
       right: 0;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
   }
 </style>
