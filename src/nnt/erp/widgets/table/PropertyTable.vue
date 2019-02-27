@@ -4,7 +4,6 @@
             fit
             stripe
             :data="model.rows"
-
   >
     <el-table-column v-for="(col,index) in model.columns"
                      :fixed="index == 0"
@@ -12,12 +11,12 @@
                      :prop="col.variable"
                      :label="col.label"
                      :sortable="col.sort == 1 || col.sort == 2"
-                     width="180">
+                     :min-width="col | columnWidth">
       <template slot-scope="input">
         <erp-input-property :model="input.row[index]"></erp-input-property>
       </template>
     </el-table-column>
-    <el-table-column width="300" fixed="right">
+    <el-table-column min-width="260" fixed="right">
       <template slot="header" slot-scope="header">
         <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
         <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
@@ -51,9 +50,18 @@ export default {
       createdRows: [],
     }
   },
-  computed:{
-    tableWidth(){
-      return this.model.columns.length * 181 + 300 +'px'
+  computed: {
+    tableWidth() {
+      let len = 0;
+      this.model.columns.forEach(column => {
+        len += column.label.length * column.multiple * 30;
+      });
+      return len + 260 + 'px'
+    }
+  },
+  filters: {
+    columnWidth(column) {
+      return column.label.length * column.multiple * 26
     }
   },
   methods: {

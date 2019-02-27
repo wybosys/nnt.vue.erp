@@ -34,6 +34,7 @@ export interface IProperty {
 
   // 是否正在修改
   editing: boolean;
+
 }
 
 export class Property implements IProperty /*IPropertyEditable*/ {

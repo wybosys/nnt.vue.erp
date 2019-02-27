@@ -20,6 +20,7 @@ export interface IPropertyTable {
 
   // 是否可以刷新
   refreshable: boolean;
+
 }
 
 export class PropertyTable implements IPropertyTable {
@@ -41,4 +42,8 @@ export class PropertyTable implements IPropertyTable {
 
   // 是否可以刷新
   refreshable: boolean = true;
+
+  // 当前表格宽度扩展几倍
+  multiple: number = 1;
+
 }

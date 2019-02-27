@@ -1,5 +1,5 @@
 <template>
-  <div class="m-table" @click.right.prevent="">
+  <div class="m-table">
     <el-table
       :data="tableData"
       :border="true"
