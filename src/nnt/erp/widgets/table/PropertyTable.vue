@@ -1,36 +1,38 @@
 <template>
-  <el-table :style="{ width:tableWidth}"
-            border
-            fit
-            stripe
-            :data="model.rows"
-  >
-    <el-table-column v-for="(col,index) in model.columns"
-                     :fixed="index == 0"
-                     :key="index"
-                     :prop="col.variable"
-                     :label="col.label"
-                     :sortable="col.sort == 1 || col.sort == 2"
-                     :min-width="col | columnWidth">
-      <template slot-scope="input">
-        <erp-input-property :model="input.row[index]"></erp-input-property>
-      </template>
-    </el-table-column>
-    <el-table-column :width="editWidth(model)" fixed="right">
-      <template slot="header" slot-scope="header">
-        <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
-        <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
-      </template>
-      <template slot-scope="control">
-        <el-button v-if="model.editable" size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}
-        </el-button>
-        <el-button size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
-        </el-button>
-        <el-button v-if="model.removable" size="mini" type="danger" @click="actRemove(control)">删除
-        </el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div id="table">
+    <el-table :style="{width:tableWidth}"
+              border
+              fit
+              stripe
+              :data="model.rows"
+    >
+      <el-table-column v-for="(col,index) in model.columns"
+                       :fixed="index == 0"
+                       :key="index"
+                       :prop="col.variable"
+                       :label="col.label"
+                       :sortable="col.sort == 1 || col.sort == 2"
+                       :min-width="col | columnWidth">
+        <template slot-scope="input">
+          <erp-input-property :model="input.row[index]"></erp-input-property>
+        </template>
+      </el-table-column>
+      <el-table-column :width="editWidth(model)" fixed="right">
+        <template slot="header" slot-scope="header">
+          <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
+          <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
+        </template>
+        <template slot-scope="control">
+          <el-button v-if="model.editable" size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}
+          </el-button>
+          <el-button size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
+          </el-button>
+          <el-button v-if="model.removable" size="mini" type="danger" @click="actRemove(control)">删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script lang="ts">
@@ -63,7 +65,11 @@ export default {
       this.model.columns.forEach(col => {
         len += col.label.length * col.multiple * TABLE_CHAR_WIDTH + TABLE_SPACE
       });
-      return len + TABLE_SKIP_SCROll + this.editAreaWidth + 'px'
+      len += TABLE_SKIP_SCROll + this.editAreaWidth
+      let main = document.body.querySelector('#table');
+      if (main && len < main.clientWidth)
+        len = main.clientWidth
+      return len + 'px'
     }
   },
   filters: {

@@ -22,7 +22,6 @@
       </el-table-column>
       <slot></slot>
     </el-table>
-
   </div>
 </template>
 
