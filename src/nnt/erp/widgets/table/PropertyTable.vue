@@ -114,16 +114,20 @@ export default {
 
           // 同步数据
           row.forEach(e => {
-            if (!e.readonly)
+            if (!e.readonly) {
               e.value = e.tmp
+              e.editing = false
+            }
           })
         })
       } else {
         this.$emit('save', row, () => {
           // 保存成功
           row.forEach(e => {
-            if (!e.readonly)
+            if (!e.readonly) {
               e.value = e.tmp
+              e.editing = false
+            }
           })
         })
       }
