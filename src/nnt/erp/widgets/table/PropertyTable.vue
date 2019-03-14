@@ -79,11 +79,17 @@ export default {
   },
   methods: {
     editWidth() {
-      let count = 0;
+      let rowscnt = 0;
       if (this.model.editable)
-        count += 2;
+        rowscnt += 2;
       if (this.model.removable)
-        count++;
+        rowscnt++;
+      let headscnt = 0;
+      if (this.model.refreshable)
+        headscnt += 1;
+      if (this.model.creatable)
+        headscnt += 1;
+      let count = Math.max(rowscnt, headscnt);
       this.editAreaWidth = BUTTON_WIDTH * count + count * BUTTON_MARGIN - BUTTON_MARGIN + TABLE_SPACE + TABLE_SKIP_SCROll;
       return this.editAreaWidth;
     },
