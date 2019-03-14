@@ -153,7 +153,10 @@ export default {
       // 添加一行新的
       let nw: ICell[] = []
       this.model.columns.forEach(col => {
-        nw.push(Cell.Value(DefaultValue(col.type)).strictAs(col))
+        let c = Cell.Value(DefaultValue(col.type)).strictAs(col)
+        if (!c.readonly)
+          c.editing = true
+        nw.push(c)
       })
       this.model.rows.push(nw)
       this.createdRows.push(nw)
