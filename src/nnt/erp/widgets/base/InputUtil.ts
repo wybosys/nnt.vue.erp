@@ -4,6 +4,7 @@ import {VariantType} from "../../../core/Variant";
 export class InputType {
   input: boolean;
   label: boolean;
+  date: boolean;
   datetime: boolean;
   switch: boolean;
   rocheck: boolean;
@@ -13,13 +14,16 @@ export class InputType {
     let r = new InputType();
     if (model) {
       if (model.readonly || !model.editing) {
-        if (model.type == VariantType.BOOLEAN)
+        if (model.type == VariantType.BOOLEAN) {
           r.rocheck = true;
-        else
+        } else {
           r.label = true;
+        }
       } else {
         if (model.type == VariantType.DATETIME) {
           r.datetime = true;
+        } else if (model.type == VariantType.DATE) {
+          r.date = true;
         } else if (model.type == VariantType.BOOLEAN) {
           r.rwcheck = true;
         } else {

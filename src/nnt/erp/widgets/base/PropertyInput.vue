@@ -15,6 +15,12 @@
   </label>
 
   <el-date-picker v-else-if="it().datetime"
+                  placeholder="日期时间"
+                  align="right"
+                  :readonly="isReadonly()">
+  </el-date-picker>
+
+  <el-date-picker v-else-if="it().date"
                   placeholder="日期"
                   align="right"
                   :readonly="isReadonly()">

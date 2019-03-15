@@ -25,7 +25,7 @@
 
       <el-date-picker v-if="it().datetime"
                       type="datetime"
-                      placeholder="日期"
+                      placeholder="日期时间"
                       align="right"
                       slot="append"
                       value-format="yyyy-MM-dd HH:mm:ss"
@@ -35,6 +35,20 @@
                       v-model="model.tmp"
       >
       </el-date-picker>
+
+      <el-date-picker v-if="it().date"
+                            type="date"
+                            placeholder="日期"
+                            align="right"
+                            slot="append"
+                            value-format="yyyy-MM-dd"
+                            :clearable="false"
+                            :editable="false"
+                            size="mini"
+                            v-model="model.tmp"
+            >
+      </el-date-picker>
+
     </el-input>
   </span>
 </template>
