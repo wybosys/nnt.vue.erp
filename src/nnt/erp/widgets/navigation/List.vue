@@ -21,22 +21,23 @@
 
 <script lang="ts">
 
-  import {TreeNode} from "../../ModuleTree";
+import {TreeNode} from "../../ModuleTree";
 
-  export default {
-    name: "NavigationList",
-    props: ['currentNode', 'naviTree'],
-    methods: {
-      changeCurrentNode(currentNode: TreeNode) {
-        this.$emit("changeActiveTab", currentNode)
-      }
+export default {
+  name: "NavigationList",
+  props: ['currentNode', 'naviTree'],
+  methods: {
+    changeCurrentNode(currentNode: TreeNode) {
+      this.$emit("changeActiveTab", currentNode)
     }
   }
+}
 </script>
 
 <style lang='scss' scoped>
   .nav {
     text-align: left;
+
     .subItem {
       text-indent: 2em;
     }

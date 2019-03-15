@@ -46,8 +46,10 @@ export class InputUtil {
   static PropertySuffixIcon(model: IProperty): string {
     if (model.readonly)
       return null;
+    /*
     if (model.editing)
       return 'el-icon-edit';
+      */
     return null;
   }
 }
