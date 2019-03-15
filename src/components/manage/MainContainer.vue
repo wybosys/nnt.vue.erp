@@ -51,6 +51,7 @@ export default {
     line-height: 200px;
     width: 300px;
     height: 100%;
+    oevrflow-y: auto;
   }
 
   .main {
