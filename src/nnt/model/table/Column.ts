@@ -7,7 +7,7 @@ export interface IColumn extends IProperty {
   sort: VariantSortType;
 
   // 当前表格宽度扩展几倍
-  multiple: number;
+  widthfactor: number;
 }
 
 export class Column extends Property implements IColumn {
@@ -16,10 +16,10 @@ export class Column extends Property implements IColumn {
   sort: VariantSortType = VariantSortType.NONE;
 
   // 当前表格宽度扩展几倍
-  multiple: number = 1;
+  widthfactor: number = 1;
 
-  setMultiple(v: number): this {
-    this.multiple = v;
+  setWidthFactor(v: number): this {
+    this.widthfactor = v;
     return this;
   }
 
@@ -28,13 +28,12 @@ export class Column extends Property implements IColumn {
     return this;
   }
 
-  static Header(label: string, variable: string, type: VariantType, multiple: number = 1, sort = VariantSortType.NONE): Column {
+  static Header(label: string, variable: string, type: VariantType, sort: VariantSortType = VariantSortType.NONE): Column {
     let r = new this();
     r.label = label;
     r.variable = variable;
     r.type = type;
     r.sort = sort;
-    r.multiple = multiple;
     return r;
   }
 }

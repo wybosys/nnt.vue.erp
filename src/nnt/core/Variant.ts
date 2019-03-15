@@ -1,4 +1,4 @@
-import {ArrayT, asString, DateTime, MultiMap, StringT, toBoolean, toFloat, toInt, toJson, toJsonObject} from "./Kernel";
+import {asString, DateTime, MultiMap, StringT, toBoolean, toFloat, toInt, toJson, toJsonObject} from "./Kernel";
 
 export enum VariantType {
   ANY = 0,
@@ -14,6 +14,7 @@ export enum VariantType {
   MULTIMAP = 10,
   PASSWORD = 11,
   DATETIME = 12,
+  DATE = 13,
 }
 
 export enum VariantSortType {
@@ -54,6 +55,7 @@ export function DefaultValue(typ: VariantType) {
       r = new MultiMap();
       break;
     case VariantType.DATETIME:
+    case VariantType.DATE:
       r = DateTime.Current();
       break;
   }
@@ -102,6 +104,7 @@ export function StrictValue(val: any, typ: VariantType): any {
       }
       break;
     case VariantType.DATETIME:
+    case VariantType.DATE:
       r = new DateTime(toInt(val) * 1000);
       break;
   }

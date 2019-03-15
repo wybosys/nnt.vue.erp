@@ -39,6 +39,8 @@
 import {Cell, ICell} from "../../../model/table/Cell";
 import {ArrayT} from "../../../core/Kernel";
 import {DefaultValue} from "../../../core/Variant";
+import {PropertyTable} from "../../../model/table/PropertyTable";
+import {IColumn} from "../../../model/table/Column";
 
 const TABLE_CHAR_WIDTH = 14
 const TABLE_SPACE = 22
@@ -50,7 +52,7 @@ export default {
   name: "PropertyTable",
   props: {
     model: {
-      type: Object // IPropertyTable
+      default: new PropertyTable()
     },
   },
   data() {
@@ -62,9 +64,9 @@ export default {
   computed: {
     tableWidth() {
       let len = 0;
-      this.model.columns.forEach(col => {
-        len += col.label.length * col.multiple * TABLE_CHAR_WIDTH + TABLE_SPACE
-      });
+      this.model.columns.forEach((col: IColumn) => {
+        len += col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
+      })
       len += TABLE_SKIP_SCROll + this.editAreaWidth
       let main = document.body.querySelector('#table');
       if (main && len < main.clientWidth)
@@ -73,8 +75,8 @@ export default {
     }
   },
   filters: {
-    columnWidth(col) {
-      return col.label.length * col.multiple * TABLE_CHAR_WIDTH + TABLE_SPACE
+    columnWidth(col: IColumn) {
+      return col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
     }
   },
   methods: {
