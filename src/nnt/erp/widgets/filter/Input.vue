@@ -7,14 +7,12 @@
       ref="input"
       v-model="model.tmp"
       :readonly="isReadonly()"
-      :suffix-icon="suffixIcon()"
-    >
+      :suffix-icon="suffixIcon()">
 
       <el-select placeholder="比较"
                  v-model="model.operator"
                  slot="prepend"
-                 class="input-with-select"
-      >
+                 class="input-with-select">
         <el-option label=">" value="gt"></el-option>
         <el-option label=">=" value="gte"></el-option>
         <el-option label="=" value="eq"></el-option>
@@ -32,23 +30,20 @@
                       :clearable="false"
                       :editable="false"
                       size="mini"
-                      v-model="model.tmp"
-      >
+                      v-model="model.tmp">
       </el-date-picker>
 
       <el-date-picker v-if="it().date"
-                            type="date"
-                            placeholder="日期"
-                            align="right"
-                            slot="append"
-                            value-format="yyyy-MM-dd"
-                            :clearable="false"
-                            :editable="false"
-                            size="mini"
-                            v-model="model.tmp"
-            >
+                      type="date"
+                      placeholder="日期"
+                      align="right"
+                      slot="append"
+                      value-format="yyyy-MM-dd"
+                      :clearable="false"
+                      :editable="false"
+                      size="mini"
+                      v-model="model.tmp">
       </el-date-picker>
-
     </el-input>
   </span>
 </template>

@@ -3,6 +3,7 @@ import {VariantType} from "../../../core/Variant";
 
 export class InputType {
   input: boolean;
+  number: boolean;
   label: boolean;
   date: boolean;
   datetime: boolean;
@@ -20,14 +21,28 @@ export class InputType {
           r.label = true;
         }
       } else {
-        if (model.type == VariantType.DATETIME) {
-          r.datetime = true;
-        } else if (model.type == VariantType.DATE) {
-          r.date = true;
-        } else if (model.type == VariantType.BOOLEAN) {
-          r.rwcheck = true;
-        } else {
-          r.input = true;
+        switch (model.type) {
+          case VariantType.DATETIME: {
+            r.datetime = true;
+          }
+            break;
+          case VariantType.DATE: {
+            r.date = true;
+          }
+            break;
+          case VariantType.BOOLEAN: {
+            r.rwcheck = true;
+          }
+            break;
+          case VariantType.INTEGER:
+          case VariantType.DOUBLE: {
+            r.number = true;
+          }
+            break;
+          default: {
+            r.input = true;
+          }
+            break;
         }
       }
     }
