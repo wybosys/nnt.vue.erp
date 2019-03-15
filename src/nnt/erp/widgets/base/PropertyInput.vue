@@ -1,6 +1,6 @@
 <template>
   <el-input
-    v-if="it().input"
+    v-if="it().input || it().number"
     type="input"
     :placeholder="placeholder"
     ref="input"
@@ -36,10 +36,7 @@
   <el-checkbox v-else-if="it().rwcheck"
                :value="model.tmp">
   </el-checkbox>
-
-  <el-input-number v-else-if="it().number"
-                   v-model="model.tmp">
-  </el-input-number>
+  
 </template>
 
 <script lang="ts">
