@@ -3,7 +3,7 @@ import {
   asString,
   DateTime,
   Delay,
-  IndexedObject,
+  IndexedObject, MapT,
   MultiMap,
   StringT,
   toFloat,
@@ -313,10 +313,13 @@ function Encode(mdl: any): any {
     if (v == null)
       continue;
     // 如果是对象，则需要在encode一次
-    if (fp.valtype && !fp.enum && typeof fp.valtype != "string")
+    if (fp.valtype && !fp.enum && typeof fp.valtype != "string") {
       r[key] = JSON.stringify(Encode(v));
-    else
+    } else if (fp.map) {
+      r[key] = JSON.stringify(MapT.ToObject(v));
+    } else {
       r[key] = v;
+    }
   }
   return r;
 }

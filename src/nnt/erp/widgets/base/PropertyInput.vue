@@ -36,7 +36,7 @@
   <el-checkbox v-else-if="it().rwcheck"
                :value="model.tmp">
   </el-checkbox>
-  
+
 </template>
 
 <script lang="ts">

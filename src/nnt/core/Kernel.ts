@@ -4,6 +4,54 @@ import {Invoke1} from "./Typescript";
 import {printf} from "./Compat";
 import {Signals} from "./Signals";
 
+export type tuple<A, B> = { 0: A, 1: B };
+export type tuple2<A, B> = { 0: A, 1: B };
+export type tuple3<A, B, C> = { 0: A, 1: B, 2: C };
+export type tuple4<A, B, C, D> = { 0: A, 1: B, 2: C, 3: D };
+
+export function make_tuple<A, B>(a: A, b: B): tuple<A, B> {
+  return {0: a, 1: b};
+}
+
+export function make_tuple2<A, B>(a: A, b: B): tuple<A, B> {
+  return {0: a, 1: b};
+}
+
+export function make_tuple3<A, B, C>(a: A, b: B, c: C): tuple3<A, B, C> {
+  return {0: a, 1: b, 2: c};
+}
+
+export function make_tuple4<A, B, C, D>(a: A, b: B, c: C, d: D): tuple4<A, B, C, D> {
+  return {0: a, 1: b, 2: c, 3: d};
+}
+
+export function use<T>(v: T, proc: (v: T) => void): T {
+  proc(v);
+  return v;
+}
+
+function _istuple(obj: any, len = 2): boolean {
+  if (!(typeof obj == "object"))
+    return false;
+  for (let i = 0; i < len; ++i) {
+    if (obj.hasOwnProperty(i) == false)
+      return false;
+  }
+  return true;
+}
+
+export function IsTuple(obj: any): boolean {
+  return _istuple(obj, 2);
+}
+
+export function IsTuple3(obj: any): boolean {
+  return _istuple(obj, 3);
+}
+
+export function IsTuple4(obj: any): boolean {
+  return _istuple(obj, 4);
+}
+
 export type IndexedKeyType = string | number | boolean;
 export type IndexedObject = {
   [key: string]: any
@@ -747,8 +795,144 @@ export class DateTime {
   }
 }
 
+export const MAX_LONG = Number.MAX_SAFE_INTEGER;
+export const MIN_LONG = Number.MIN_SAFE_INTEGER;
+export const MAX_INT = 0x7fffffff;
+export const MIN_INT = -MAX_INT;
+
+export enum COMPARERESULT {
+  EQUAL = 0,
+  GREATER = 1,
+  LESS = -1,
+}
+
+export class NumberT {
+
+  /** 任一数字的科学计数读法
+   @return 数字部分和e的部分
+   */
+  static SciNot(v: number): [number, number] {
+    let n = NumberT.log(v, 10);
+    let l = v / Math.pow(10, n);
+    return [l, n];
+  }
+
+  /** 方根 */
+  static radical(v: number, x: number, n: number) {
+    return Math.exp(1 / n * Math.log(x));
+  }
+
+  /** 对数 */
+  static log(v: number, n: number): number {
+    let r = Math.log(v) / Math.log(n) + 0.0000001;
+    return r >> 0;
+  }
+
+  /** 修正为无符号 */
+  static Unsigned(v: number): number {
+    if (v < 0)
+      return 0xFFFFFFFF + v + 1;
+    return v;
+  }
+
+  /** 映射到以m为底的数 */
+  static MapToBase(v: number, base: number): number {
+    if (v % base == 0)
+      return base;
+    return v % base;
+  }
+
+  /** 运算，避免为null时候变成nan */
+  static Add(v: number, r: number): number {
+    if (v == null)
+      v = 0;
+    if (r == null)
+      r = 0;
+    return v + r;
+  }
+
+  static Sub(v: number, r: number): number {
+    if (v == null)
+      v = 0;
+    if (r == null)
+      r = 0;
+    return v - r;
+  }
+
+  static Multiply(v: number, r: number): number {
+    if (v == null)
+      v = 0;
+    if (r == null)
+      r = 0;
+    return v * r;
+  }
+
+  static Div(v: number, r: number, of: number = MAX_INT): number {
+    if (v == null)
+      v = 0;
+    if (r == null || r == 0)
+      return of;
+    return v / r;
+  }
+
+  static HANMAPS = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+
+  /** 中文化数字 */
+  static Hanlize(v: number): string {
+    let neg;
+    if (v < 0) {
+      neg = true;
+      v = -v;
+    }
+    let r = neg ? '负' : '';
+    if (v <= 10)
+      r += this.HANMAPS[v];
+    return r;
+  }
+
+  static ToRange<T>(v: T, l: T, r: T, def: T): T {
+    if (v >= l && v <= r)
+      return v;
+    return def;
+  }
+
+  // 设置小数精度
+  // length 小数点后的位数
+  static TrimFloat(v: number, length: number): number {
+    let p = Math.pow(10, length);
+    return Math.round(v * p) / p;
+  }
+
+  // 整数拆分
+  static SplitInteger(v: number, base: number): [number, number] {
+    let n = (v / base) >> 0;
+    return [n, v - n * base];
+  }
+}
+
 /** 提供操作基础对象的工具函数 */
 export class ObjectT {
+
+  // 任意对象的比较
+  static Compare(l: any, r: any): COMPARERESULT {
+    if (l > r)
+      return COMPARERESULT.GREATER;
+    if (l < r)
+      return COMPARERESULT.LESS;
+    return COMPARERESULT.EQUAL;
+  }
+
+  static Minus(l: any, r: any): number {
+    return l - r;
+  }
+
+  static Max<T>(l: T, r: T): T {
+    return ObjectT.Compare(l, r) == COMPARERESULT.GREATER ? l : r;
+  }
+
+  static Min<T>(l: T, r: T): T {
+    return ObjectT.Compare(l, r) == COMPARERESULT.LESS ? l : r;
+  }
 
   /** 获取 */
   static Get<V>(m: KvObject<V>, k: IndexedKeyType): V {
@@ -1630,6 +1814,179 @@ export class SetT {
     let ns: any = SetT.Clone(s);
     s.clear();
     ns.forEach(cb, ctx);
+  }
+}
+
+export class MapT {
+
+  // 对某个key
+  static Inc<K, V>(m: Map<K, V>, key: K, v: V): V {
+    if (m.has(key)) {
+      let cur = <any>m.get(key);
+      cur += v;
+      m.set(key, cur);
+      return cur;
+    }
+    m.set(key, v);
+    return v;
+  }
+
+  static Sum<K, V, R>(m: Map<K, V>, proc: (v: V, k: K) => R): R {
+    let r: any = null;
+    let idx = 0;
+    m.forEach((v, k) => {
+      if (idx++ == 0)
+        r = proc(v, k);
+      else
+        r += proc(v, k);
+    });
+    return r;
+  }
+
+  static Max<K, V>(m: Map<K, V>, proc: (v: V, k: K) => V): V {
+    let cur: V;
+    let obj: V;
+    let idx = 0;
+    m.forEach((v, k) => {
+      if (idx++ == 0) {
+        cur = proc(v, k);
+        obj = v;
+        return;
+      }
+      let t = proc(v, k);
+      if (ObjectT.Compare(cur, t) == COMPARERESULT.LESS) {
+        cur = t;
+        obj = v;
+      }
+    });
+    return obj;
+  }
+
+  static Min<K, V>(m: Map<K, V>, proc: (v: V, k: K) => V): V {
+    let cur: V;
+    let obj: V;
+    let idx = 0;
+    m.forEach((v, k) => {
+      if (idx++ == 0) {
+        cur = proc(v, k);
+        obj = v;
+        return;
+      }
+      let t = proc(v, k);
+      if (ObjectT.Compare(t, cur) == COMPARERESULT.LESS) {
+        cur = t;
+        obj = v;
+      }
+    });
+    return obj;
+  }
+
+  static Foreach<K, V>(m: Map<K, V>, proc: (v: V, k: K) => boolean): boolean {
+    let iter = m.entries();
+    let each = iter.next();
+    while (!each.done) {
+      if (!proc(each.value[1], each.value[0]))
+        return false;
+      each = iter.next();
+    }
+    return true;
+  }
+
+  static SeqForeach<K, V, R>(m: Map<K, V>, proc: (v: V, k: K, next: (ret?: R) => void) => void, complete: (ret?: R) => void) {
+    let iter = m.entries();
+
+    function next(ret?: R) {
+      let val = iter.next();
+      if (!val.done) {
+        proc(val.value[1], val.value[0], next);
+      } else {
+        complete(ret);
+      }
+    }
+
+    next();
+  }
+
+  static QueryObjects<K, V>(m: Map<K, V>, proc: (v: V, k: K) => boolean): Array<V> {
+    let r = new Array();
+    m.forEach((v, k) => {
+      if (proc(v, k))
+        r.push(v);
+    });
+    return r;
+  }
+
+  static Keys<K, V>(m: Map<K, V>): K[] {
+    let r = new Array<K>();
+    m.forEach((v, k) => {
+      r.push(k);
+    });
+    return r;
+  }
+
+  static Values<K, V, R>(m: Map<K, V>, proc?: (v: V, k: K) => R, skipnull = false): R[] {
+    let r = new Array<R>();
+    if (proc) {
+      m.forEach((v, k) => {
+        let t = proc(v, k);
+        if (skipnull && !t)
+          return;
+        r.push(t);
+      });
+    } else {
+      m.forEach((v) => {
+        r.push(<any>v);
+      });
+    }
+    return r;
+  }
+
+  static ValueAtIndex<K, V>(m: Map<K, V>, idx: number, def?: V): V {
+    let iter = m.values();
+    let cur = iter.next();
+    while (!cur.done && idx--) {
+      cur = iter.next();
+    }
+    return (idx > 0 || cur.done) ? def : cur.value;
+  }
+
+  static Sort<K, V>(m: Map<K, V>, proc?: (l: V, r: V) => number): tuple<K, V>[] {
+    let tps = MapT.ToTuples(m);
+    if (proc) {
+      tps.sort((l, r) => {
+        return proc(l[1], r[1]);
+      });
+    } else {
+      tps.sort((l, r) => {
+        return ObjectT.Minus(l[1], r[1]);
+      });
+    }
+    return tps;
+  }
+
+  static ToTuples<K, V>(m: Map<K, V>): tuple<K, V>[] {
+    let r = new Array();
+    m.forEach((v, k) => {
+      r.push(make_tuple(k, v));
+    });
+    return r;
+  }
+
+  static ToObject<K, V>(m: Map<K, V>): IndexedObject {
+    let r: IndexedObject = {};
+    m.forEach((v, k: any) => {
+      r[k] = v;
+    });
+    return r;
+  }
+
+  static FromArray<K, V, R>(arr: R[], proc: (map: Map<K, V>, obj: R, idx?: number) => void, inm?: Map<K, V>): Map<K, V> {
+    if (!inm)
+      inm = new Map<K, V>();
+    arr.forEach((e, idx) => {
+      proc(inm, e, idx);
+    });
+    return inm;
   }
 }
 

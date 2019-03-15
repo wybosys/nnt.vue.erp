@@ -35,6 +35,8 @@ export interface IProperty {
   // 是否正在修改
   editing: boolean;
 
+  // 是否被修改
+  isModified(): boolean;
 }
 
 export class Property implements IProperty /*IPropertyEditable*/ {
@@ -76,6 +78,10 @@ export class Property implements IProperty /*IPropertyEditable*/ {
 
   // 是否正在修改
   editing: boolean = false;
+
+  isModified(): boolean {
+    return this.current != this.value;
+  }
 
   static Simple(index: number, label: string, value: any, type: VariantType): Property {
     let r = new this();
