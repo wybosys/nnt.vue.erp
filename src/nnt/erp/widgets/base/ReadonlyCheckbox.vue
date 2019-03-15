@@ -10,6 +10,9 @@ export default {
   props: {
     value: {type: Boolean}
   },
+  mounted() {
+    this.tmp = this.value
+  },
   data() {
     return {
       tmp: true
