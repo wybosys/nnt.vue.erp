@@ -3,12 +3,14 @@ import {
   asString,
   DateTime,
   Delay,
-  IndexedObject, MapT,
+  IndexedObject,
+  MapT,
   MultiMap,
   StringT,
-  toFloat,
+  toDouble,
   toInt,
-  toJsonObject
+  toJsonObject,
+  toNumber
 } from "./Kernel";
 import {KvObject} from "./Stl";
 import {Model} from "./ApiModel";
@@ -40,6 +42,7 @@ interface FieldOption {
   string?: boolean;
   integer?: boolean;
   double?: boolean;
+  number?: boolean;
   boolean?: boolean;
   enum?: boolean;
   file?: boolean;
@@ -114,6 +117,7 @@ function DefineFp(target: any, key: string, fp: FieldOption) {
 const string_t = "string";
 const integer_t = "integer";
 const double_t = "double";
+const number_t = "number";
 const boolean_t = "boolean";
 
 function toBoolean(v: any): boolean {
@@ -141,15 +145,19 @@ export function Decode<T>(mdl: T, params: any): T {
           if (typeof (fp.valtype) == "string") {
             if (fp.valtype == string_t) {
               val.forEach((e: any) => {
-                arr.push(e ? e.toString() : null);
+                arr.push(asString(e));
               });
             } else if (fp.valtype == integer_t) {
               val.forEach((e: any) => {
-                arr.push(e ? toInt(e) : 0);
+                arr.push(toInt(e));
               });
             } else if (fp.valtype == double_t) {
               val.forEach((e: any) => {
-                arr.push(e ? toFloat(e) : 0);
+                arr.push(toDouble(e));
+              });
+            } else if (fp.valtype == number_t) {
+              val.forEach((e: any) => {
+                arr.push(toNumber(e));
               });
             } else if (fp.valtype == boolean_t) {
               val.forEach((e: any) => {
@@ -183,30 +191,38 @@ export function Decode<T>(mdl: T, params: any): T {
         if (fp.keytype == integer_t)
           keyconv = toInt;
         else if (fp.keytype == double_t)
-          keyconv = toFloat;
+          keyconv = toDouble;
+        else if (fp.keytype == number_t)
+          keyconv = toNumber;
         let map = new Map();
         if (val) {
           if (typeof (fp.valtype) == "string") {
             if (fp.valtype == string_t) {
               for (let ek in val) {
                 let ev = val[ek];
-                map.set(keyconv(ek), ev ? ev.toString() : null);
+                map.set(keyconv(ek), asString(ev));
               }
             } else if (fp.valtype == integer_t) {
               for (let ek in val) {
                 let ev = val[ek];
-                map.set(keyconv(ek), ev ? toInt(ev) : 0);
+                map.set(keyconv(ek), toInt(ev));
               }
             } else if (fp.valtype == double_t) {
               for (let ek in val) {
                 let ev = val[ek];
-                map.set(keyconv(ek), ev ? toFloat(ev) : 0);
+                map.set(keyconv(ek), toDouble(ev));
               }
-            } else if (fp.valtype == boolean_t)
+            } else if (fp.valtype == number_t) {
+              for (let ek in val) {
+                let ev = val[ek];
+                map.set(keyconv(ek), toNumber(ev));
+              }
+            } else if (fp.valtype == boolean_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 map.set(keyconv(ek), !!ev);
               }
+            }
           } else {
             let clz: any = fp.valtype;
             for (let ek in val) {
@@ -229,7 +245,9 @@ export function Decode<T>(mdl: T, params: any): T {
         if (fp.keytype == integer_t)
           keyconv = toInt;
         else if (fp.keytype == double_t)
-          keyconv = toFloat;
+          keyconv = toDouble;
+        else if (fp.keytype == number_t)
+          keyconv = toNumber;
         let mmap = new MultiMap();
         if (val) {
           if (typeof (fp.valtype) == "string") {
@@ -246,13 +264,19 @@ export function Decode<T>(mdl: T, params: any): T {
             } else if (fp.valtype == double_t) {
               for (let ek in val) {
                 let ev = val[ek];
-                mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => toFloat(e)));
+                mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => toDouble(e)));
               }
-            } else if (fp.valtype == boolean_t)
+            } else if (fp.valtype == number_t) {
+              for (let ek in val) {
+                let ev = val[ek];
+                mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => toNumber(e)));
+              }
+            } else if (fp.valtype == boolean_t) {
               for (let ek in val) {
                 let ev = val[ek];
                 mmap.replace(keyconv(ek), ArrayT.Convert(ev, e => !!e));
               }
+            }
           } else {
             let clz: any = fp.valtype;
             for (let ek in val) {
@@ -278,11 +302,13 @@ export function Decode<T>(mdl: T, params: any): T {
       }
     } else {
       if (fp.string)
-        mdl[key] = val ? val.toString() : null;
+        mdl[key] = asString(val);
       else if (fp.integer)
-        mdl[key] = val ? toInt(val) : 0;
+        mdl[key] = toInt(val);
       else if (fp.double)
-        mdl[key] = val ? toFloat(val) : 0;
+        mdl[key] = toDouble(val);
+      else if (fp.number)
+        mdl[key] = toNumber(val);
       else if (fp.boolean)
         mdl[key] = toBoolean(val);
       else if (fp.json)
@@ -393,6 +419,7 @@ export abstract class Base extends Model {
   static string_t = "string";
   static integer_t = "integer";
   static double_t = "double";
+  static number_t = "number";
   static boolean_t = "boolean";
 
   // 可选的参数
@@ -458,6 +485,21 @@ export abstract class Base extends Model {
       output: opts.indexOf(Base.output) != -1,
       optional: opts.indexOf(Base.optional) != -1,
       double: true,
+      comment: comment
+    };
+    return (target: any, key: string) => {
+      DefineFp(target, key, fp);
+    };
+  }
+
+  static number(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
+    let fp: FieldOption = {
+      id: id,
+      val: 0.,
+      input: opts.indexOf(Base.input) != -1,
+      output: opts.indexOf(Base.output) != -1,
+      optional: opts.indexOf(Base.optional) != -1,
+      number: true,
       comment: comment
     };
     return (target: any, key: string) => {

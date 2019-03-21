@@ -1,5 +1,5 @@
 import {VariantType} from "../core/Variant";
-import {DateTime, toFloat, toInt, toNumber} from "../core/Kernel";
+import {DateTime, toDouble, toInt, toNumber} from "../core/Kernel";
 
 export function VariantToUIValue(val: any, typ: VariantType): any {
   let r: any = null;
@@ -31,7 +31,7 @@ export function UIValToVariant(val: any, typ: VariantType): any {
       r = toNumber(val);
       break;
     case VariantType.DOUBLE:
-      r = toFloat(val);
+      r = toDouble(val);
       break;
     default:
       r = val;

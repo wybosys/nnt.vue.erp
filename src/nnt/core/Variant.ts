@@ -1,4 +1,15 @@
-import {asString, DateTime, MultiMap, StringT, toBoolean, toFloat, toInt, toJson, toJsonObject} from "./Kernel";
+import {
+  asString,
+  DateTime,
+  MultiMap,
+  StringT,
+  toBoolean,
+  toDouble,
+  toInt,
+  toJson,
+  toJsonObject,
+  toNumber
+} from "./Kernel";
 
 export enum VariantType {
   ANY = 0,
@@ -69,8 +80,10 @@ export function StrictValue(val: any, typ: VariantType): any {
       r = toInt(val);
       break;
     case VariantType.DOUBLE:
+      r = toDouble(val);
+      break;
     case VariantType.NUMBER:
-      r = toFloat(val);
+      r = toNumber(val);
       break;
     case VariantType.BOOLEAN:
       r = toBoolean(val);
