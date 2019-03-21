@@ -2,6 +2,7 @@ import Button from "./base/Button.vue";
 import Input from "./base/Input.vue";
 import PropertyInput from "./base/PropertyInput.vue";
 import ReadonlyCheckbox from "./base/ReadonlyCheckbox.vue";
+import Select from "./base/Select.vue";
 import Form from "./base/Form.vue";
 import FormItem from "./base/FormItem.vue";
 import Chart from "./chart/Chart.vue";
@@ -20,6 +21,7 @@ import PropertyTable from "./table/PropertyTable.vue";
 export default {
   install: (Vue) => {
     Vue.component('erp-button', Button);
+    Vue.component('erp-select', Select);
     Vue.component('erp-input', Input);
     Vue.component('erp-input-property', PropertyInput);
     Vue.component('erp-checkbox-readonly', ReadonlyCheckbox);
