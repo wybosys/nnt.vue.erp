@@ -4,6 +4,7 @@
               border
               fit
               stripe
+              highlight-current-row
               :data="model.rows"
     >
       <el-table-column v-for="(col,index) in model.columns"
