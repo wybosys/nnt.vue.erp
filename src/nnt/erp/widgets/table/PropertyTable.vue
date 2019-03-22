@@ -25,7 +25,7 @@
         <template slot-scope="control">
           <el-button v-if="model.editable" size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}
           </el-button>
-          <el-button size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
+          <el-button v-if="model.editable" size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
           </el-button>
           <el-button v-if="model.removable" size="mini" type="danger" @click="actRemove(control)">删除
           </el-button>

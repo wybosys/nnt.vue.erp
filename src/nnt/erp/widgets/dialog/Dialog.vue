@@ -1,65 +1,46 @@
 <template>
-  <div class="message-box">
-    <div class="content">
-      <div class="flex-between-container header">
-        <span>{{text}}</span>
-        <span @click="exit">×</span>
-      </div>
-      <slot></slot>
-      <div class="flex-around-container">
-        <el-button type="primary" @click="sure">确定</el-button>
-        <el-button type="warning" @click="exit">取消</el-button>
-      </div>
-    </div>
-  </div>
+  <el-dialog :visible.sync="model.visible"
+             :title="title"
+             center>
+    <slot></slot>
+    <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="confirm">确认</el-button>
+      <el-button @click="cancel">取消</el-button>
+    </span>
+  </el-dialog>
 </template>
 
 <script lang="ts">
+
+import {Dialog} from "../../../model/dialog/IDialog";
+
 export default {
   name: "Dialog",
-  props: ["text"],
-  methods: {
-    exit() {
-      this.$emit('exitDialog')
+  props: {
+    model: {
+      default: () => {
+        return new Dialog()
+      }
     },
-    sure() {
-      this.$emit('saveDialog')
+    title: {
+      type: String
+    }
+  },
+  methods: {
+    show() {
+      this.model.visible = true
+      this.$emit('open');
+    },
+    cancel() {
+      this.model.visible = false
+      this.$emit('cancel');
+      this.$emit('close');
+    },
+    confirm() {
+      this.model.visible = false
+      this.$emit('confirm');
+      this.$emit('close');
     }
   }
 }
 </script>
-
-<style lang='scss' scoped>
-  .message-box {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999999;
-
-    .content {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      background: #fff;
-      padding: 50px;
-      box-shadow: 0 0 2px $color-base;
-      border-radius: 5px;
-    }
-
-    .header {
-      font: bold 30px/60px "Microsoft YaHei UI";
-    }
-
-    .list {
-      padding-bottom: 20px;
-      font: 20px/40px "Microsoft YaHei UI";
-
-      li {
-        border-bottom: 2px solid $color-base;
-      }
-    }
-  }
-</style>

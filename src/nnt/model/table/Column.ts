@@ -8,6 +8,9 @@ export interface IColumn extends IProperty {
 
   // 当前表格宽度扩展几倍
   widthfactor: number;
+
+  // 一些情况下，设置的数据需要被转换才能显示到cell中，所以可以通过设置转换函数可以当strictAs的时候，自动转换数据
+  convert: (e: any, anydata?: any) => any;
 }
 
 export class Column extends Property implements IColumn {
@@ -18,6 +21,9 @@ export class Column extends Property implements IColumn {
   // 当前表格宽度扩展几倍
   widthfactor: number = 1;
 
+  // 一些情况下，设置的数据需要被转换才能显示到cell中，所以可以通过设置转换函数可以当strictAs的时候，自动转换数据
+  convert: (e: any, anydata?: any) => any;
+
   setWidthFactor(v: number): this {
     this.widthfactor = v;
     return this;
@@ -25,6 +31,11 @@ export class Column extends Property implements IColumn {
 
   setSort(typ: VariantSortType): this {
     this.sort = typ;
+    return this;
+  }
+
+  setConvert(convert: (e: any, anydata: any) => any): this {
+    this.convert = convert;
     return this;
   }
 

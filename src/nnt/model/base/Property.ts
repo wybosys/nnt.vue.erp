@@ -83,12 +83,20 @@ export class Property implements IProperty /*IPropertyEditable*/ {
     return this.current != this.value;
   }
 
-  static Simple(index: number, label: string, value: any, type: VariantType): Property {
+  static Simple(label: string, value: any, type: VariantType): Property {
     let r = new this();
-    r.index = index;
     r.value = r.tmp = value;
     r.label = label;
     r.type = type;
+    return r;
+  }
+
+  static Input(label: string, type: VariantType, varname?: string): Property {
+    let r = new this();
+    r.label = label;
+    r.variable = varname;
+    r.type = type;
+    r.editing = true;
     return r;
   }
 
@@ -106,7 +114,7 @@ export class Property implements IProperty /*IPropertyEditable*/ {
     return this;
   }
 
-  strictAs(r: IProperty): this {
+  strictAs(r: IProperty, anydata?: any): this {
     this.readonly = r.readonly;
     this.type = r.type;
     this.tmp = Property._IMP_VariantToUIValue(this.value, this.type);
