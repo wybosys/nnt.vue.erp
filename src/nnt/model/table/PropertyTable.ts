@@ -21,6 +21,11 @@ export interface IPropertyTable {
   // 是否可以刷新
   refreshable: boolean;
 
+  // 预设的自定义行处理按钮
+  custom0?: string;
+  custom1?: string;
+  custom2?: string;
+  custom3?: string;
 }
 
 export class PropertyTable implements IPropertyTable {
@@ -46,4 +51,9 @@ export class PropertyTable implements IPropertyTable {
   // 当前表格宽度扩展几倍
   multiple: number = 1;
 
+  // 预设的自定义行处理按钮
+  custom0?: string;
+  custom1?: string;
+  custom2?: string;
+  custom3?: string;
 }

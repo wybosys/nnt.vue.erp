@@ -18,7 +18,7 @@
           <erp-input-property :model="input.row[index]"></erp-input-property>
         </template>
       </el-table-column>
-      <el-table-column :width="editWidth(model)" fixed="right">
+      <el-table-column :width="calcEditWidth(model)" fixed="right">
         <template slot="header" slot-scope="header">
           <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
           <el-button v-if="model.creatable" size="mini" type="warning" @click="actCreate(header)">增加</el-button>
@@ -26,10 +26,18 @@
         <template slot-scope="control">
           <el-button v-if="model.editable" size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}
           </el-button>
-          <el-button v-if="model.editable" size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
+          <el-button v-if="model.editable" size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">
+            保存
           </el-button>
           <el-button v-if="model.removable" size="mini" type="danger" @click="actRemove(control)">删除
           </el-button>
+
+          <!--自定义行处理按钮-->
+          <el-button v-if="model.custom0" size="mini" @click="actCustom(0, control)">{{model.custom0}}</el-button>
+          <el-button v-if="model.custom1" size="mini" @click="actCustom(1, control)">{{model.custom1}}</el-button>
+          <el-button v-if="model.custom2" size="mini" @click="actCustom(2, control)">{{model.custom2}}</el-button>
+          <el-button v-if="model.custom3" size="mini" @click="actCustom(3, control)">{{model.custom3}}</el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -81,18 +89,33 @@ export default {
     }
   },
   methods: {
-    editWidth() {
+    calcEditWidth() {
+      // 行交互按钮
       let rowscnt = 0;
       if (this.model.editable)
         rowscnt += 2;
       if (this.model.removable)
         rowscnt++;
+      if (this.model.custom0)
+        rowscnt++;
+      if (this.model.custom1)
+        rowscnt++;
+      if (this.model.custom2)
+        rowscnt++;
+      if (this.model.custom3)
+        rowscnt++;
+
+      // 表格交互按钮
       let headscnt = 0;
       if (this.model.refreshable)
         headscnt += 1;
       if (this.model.creatable)
         headscnt += 1;
+
+      // 总大小为表格和行增加的按钮的最大数（上下会重叠）
       let count = Math.max(rowscnt, headscnt);
+
+      // 计算总大小
       this.editAreaWidth = BUTTON_WIDTH * count + count * BUTTON_MARGIN - BUTTON_MARGIN + TABLE_SPACE + TABLE_SKIP_SCROll;
       return this.editAreaWidth;
     },
@@ -193,6 +216,10 @@ export default {
         return e.tmp != e.value
       })
       return edd == null
+    },
+    actCustom(idx, scope) {
+      let row: ICell[] = scope.row
+      this.$emit('custom', row, idx)
     }
   }
 }
