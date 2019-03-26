@@ -4,6 +4,7 @@ import {
   DateTime,
   Delay,
   IndexedObject,
+  IntFloat,
   MapT,
   MultiMap,
   StringT,
@@ -48,6 +49,7 @@ interface FieldOption {
   file?: boolean;
   json?: boolean;
   filter?: boolean;
+  intfloat?: number;
 
   // 注释
   comment?: string;
@@ -315,6 +317,8 @@ export function Decode<T>(mdl: T, params: any): T {
         mdl[key] = val;
       else if (fp.file)
         mdl[key] = val;
+      else if (fp.intfloat)
+        mdl[key] = IntFloat.From(0, fp.intfloat).setValue(toNumber(val));
     }
   }
 
@@ -407,6 +411,8 @@ function Output(mdl: any): any {
       } else {
         r[fk] = Output(val);
       }
+    } else if (fp.intfloat) {
+      r[fk] = val.valueOf();
     } else {
       r[fk] = val;
     }
@@ -432,76 +438,59 @@ export abstract class Base extends Model {
   static input = "input";
   static output = "output";
 
-  static string(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
+  static field(id: number, opts: string[], comment?: string): FieldOption {
+    return {
       id: id,
-      val: "",
       input: opts.indexOf(Base.input) != -1,
       output: opts.indexOf(Base.output) != -1,
       optional: opts.indexOf(Base.optional) != -1,
-      string: true,
       comment: comment
     };
+  }
+
+  static string(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
+    let fp = this.field(id, opts, comment);
+    fp.string = true;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
   }
 
   static boolean(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      val: false,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      boolean: true,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.boolean = true;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
   }
 
   static integer(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      val: 0,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      integer: true,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.integer = true;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
   }
 
   static double(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      val: 0.,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      double: true,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.double = true;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
   }
 
   static number(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      val: 0.,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      number: true,
-      comment: comment
+    let fp = this.field(id, opts, comment);
+    fp.number = true;
+    return (target: any, key: string) => {
+      DefineFp(target, key, fp);
     };
+  }
+
+  static intfloat(id: number, scale: number, opts: string[], comment?: string): (target: any, key: string) => void {
+    let fp = this.field(id, opts, comment);
+    fp.intfloat = scale;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
@@ -509,15 +498,9 @@ export abstract class Base extends Model {
 
   // 定义数组
   static array(id: number, clz: clazz_type, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      array: true,
-      valtype: clz,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.array = true;
+    fp.valtype = clz;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
@@ -525,32 +508,20 @@ export abstract class Base extends Model {
 
   // 定义映射表
   static map(id: number, keytyp: clazz_type, valtyp: clazz_type, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      map: true,
-      keytype: keytyp,
-      valtype: valtyp,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.map = true;
+    fp.keytype = keytyp;
+    fp.valtype = valtyp;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
   }
 
   static multimap(id: number, keytyp: clazz_type, valtyp: clazz_type, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      multimap: true,
-      keytype: keytyp,
-      valtype: valtyp,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.multimap = true;
+    fp.keytype = keytyp;
+    fp.valtype = valtyp;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
@@ -558,14 +529,8 @@ export abstract class Base extends Model {
 
   // json对象
   static json(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      json: true,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.json = true;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
@@ -573,14 +538,8 @@ export abstract class Base extends Model {
 
   // 使用其他类型
   static type(id: number, clz: clazz_type, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      valtype: clz,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.valtype = clz;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
@@ -588,15 +547,9 @@ export abstract class Base extends Model {
 
   // 枚举
   static enumerate(id: number, clz: any, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      valtype: clz,
-      enum: true,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.enum = true;
+    fp.valtype = clz;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };
@@ -604,14 +557,8 @@ export abstract class Base extends Model {
 
   // 文件类型
   static file(id: number, opts: string[], comment?: string): (target: any, key: string) => void {
-    let fp: FieldOption = {
-      id: id,
-      input: opts.indexOf(Base.input) != -1,
-      output: opts.indexOf(Base.output) != -1,
-      optional: opts.indexOf(Base.optional) != -1,
-      file: true,
-      comment: comment
-    };
+    let fp = this.field(id, opts, comment);
+    fp.file = true;
     return (target: any, key: string) => {
       DefineFp(target, key, fp);
     };

@@ -85,7 +85,7 @@ export class Property implements IProperty /*IPropertyEditable*/ {
 
   static Simple(label: string, value: any, type: VariantType): Property {
     let r = new this();
-    r.value = r.tmp = value;
+    r.value = r.tmp = value & value.valueOf();
     r.label = label;
     r.type = type;
     return r;
@@ -102,7 +102,7 @@ export class Property implements IProperty /*IPropertyEditable*/ {
 
   static Extract(obj: any, label: string, variname: string, type: VariantType): Property {
     let r = new this();
-    r.value = r.tmp = obj[variname];
+    r.value = r.tmp = obj[variname] & obj[variname].valueOf();
     r.variable = variname;
     r.label = label;
     r.type = type;
