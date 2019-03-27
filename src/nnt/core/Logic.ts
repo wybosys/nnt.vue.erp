@@ -318,7 +318,7 @@ export function Decode<T>(mdl: T, params: any): T {
       else if (fp.file)
         mdl[key] = val;
       else if (fp.intfloat)
-        mdl[key] = IntFloat.From(0, fp.intfloat).setValue(toNumber(val));
+        mdl[key] = IntFloat.From(toInt(val), fp.intfloat);
     }
   }
 
@@ -347,6 +347,8 @@ function Encode(mdl: any): any {
       r[key] = JSON.stringify(Encode(v));
     } else if (fp.map) {
       r[key] = JSON.stringify(MapT.ToObject(v));
+    } else if (fp.intfloat) {
+      r[key] = IntFloat.FromValue(v, fp.intfloat).origin;
     } else {
       r[key] = v;
     }
@@ -412,7 +414,7 @@ function Output(mdl: any): any {
         r[fk] = Output(val);
       }
     } else if (fp.intfloat) {
-      r[fk] = val.valueOf();
+      r[fk] = IntFloat.Origin(val);
     } else {
       r[fk] = val;
     }

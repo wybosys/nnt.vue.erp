@@ -360,6 +360,13 @@ export class IntFloat {
     return new IntFloat(ori, scale);
   }
 
+  static FromValue(val: intfloat, scale: number): IntFloat {
+    if (val instanceof IntFloat) {
+      return new IntFloat(val.origin, scale);
+    }
+    return new IntFloat(0, scale).setValue(val);
+  }
+
   static Multiply(l: intfloat, r: number): intfloat {
     if (l instanceof IntFloat) {
       return l.clone().multiply(r);
