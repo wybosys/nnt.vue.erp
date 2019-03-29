@@ -170,7 +170,7 @@ export default {
       } else {
         let values = []
         this.model.columns.forEach((e, idx) => {
-          values.push(e.label + ':' + row[idx].value)
+          values.push(e.label + ':' + row.cellAt(idx).value)
         })
         if (confirm('确认删除 ' + values.join(', '))) {
           this.$emit('remove', row, () => {
