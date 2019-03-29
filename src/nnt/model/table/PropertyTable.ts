@@ -1,5 +1,5 @@
 import {IColumn} from "./Column";
-import {IProperty} from "../base/Property";
+import {IRow} from "./Row";
 
 export interface IPropertyTable {
 
@@ -7,7 +7,7 @@ export interface IPropertyTable {
   columns: IColumn[];
 
   // 行数据
-  rows: IProperty[][];
+  rows: IRow[];
 
   // 是否可以编辑
   editable: boolean;
@@ -34,7 +34,7 @@ export class PropertyTable implements IPropertyTable {
   columns: IColumn[] = [];
 
   // 行数据
-  rows: IProperty[][] = [];
+  rows: IRow[] = [];
 
   // 是否可以编辑
   editable: boolean = true;

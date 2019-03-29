@@ -15,7 +15,7 @@
                        :sortable="col.sort == 1 || col.sort == 2"
                        :min-width="col | columnWidth">
         <template slot-scope="input">
-          <erp-input-property :model="input.row[index]"></erp-input-property>
+          <erp-input-property :model="input.row.cells[index]"></erp-input-property>
         </template>
       </el-table-column>
       <el-table-column :width="calcEditWidth(model)" fixed="right">
@@ -45,11 +45,12 @@
 </template>
 
 <script lang="ts">
-import {Cell, ICell} from "../../../model/table/Cell";
+import {Cell} from "../../../model/table/Cell";
 import {ArrayT} from "../../../core/Kernel";
 import {DefaultValue} from "../../../core/Variant";
 import {PropertyTable} from "../../../model/table/PropertyTable";
 import {IColumn} from "../../../model/table/Column";
+import {IRow, Row} from "../../../model/table/Row";
 
 const TABLE_CHAR_WIDTH = 14
 const TABLE_SPACE = 22
@@ -120,8 +121,8 @@ export default {
       return this.editAreaWidth;
     },
     actToggleEdit(scope) {
-      let row: ICell[] = scope.row
-      row.forEach(e => {
+      let row: IRow = scope.row
+      row.cells.forEach(e => {
         if (!e.readonly) {
           e.editing = !e.editing
           if (!e.editing)
@@ -130,7 +131,7 @@ export default {
       })
     },
     actSave(scope) {
-      let row: ICell[] = scope.row
+      let row: IRow = scope.row
       // 如果是新加的，则走新增的event
       let fnd = this.createdRows.indexOf(row)
       if (fnd != -1) {
@@ -139,7 +140,7 @@ export default {
           ArrayT.RemoveObjectAtIndex(this.createdRows, fnd)
 
           // 同步数据
-          row.forEach(e => {
+          row.cells.forEach(e => {
             if (!e.readonly) {
               e.value = e.tmp
               e.editing = false
@@ -149,7 +150,7 @@ export default {
       } else {
         this.$emit('save', row, () => {
           // 保存成功
-          row.forEach(e => {
+          row.cells.forEach(e => {
             if (!e.readonly) {
               e.value = e.tmp
               e.editing = false
@@ -159,7 +160,7 @@ export default {
       }
     },
     actRemove(scope) {
-      let row: ICell[] = scope.row
+      let row: IRow = scope.row
       // 如果是新加的，则不确认，直接删除
       let fnd = this.createdRows.indexOf(row)
       if (fnd != -1) {
@@ -181,7 +182,7 @@ export default {
     },
     actCreate(scope) {
       // 添加一行新的
-      let nw: ICell[] = []
+      let nw: IRow = new Row();
       this.model.columns.forEach(col => {
         let c = Cell.Value(DefaultValue(col.type)).strictAs(col)
         if (!c.readonly)
@@ -196,29 +197,29 @@ export default {
       this.$emit('refresh')
     },
     btnEditLabel(scope) {
-      let row: ICell[] = scope.row
-      let rw = ArrayT.QueryObject(row, e => {
+      let row: IRow = scope.row
+      let rw = ArrayT.QueryObject(row.cells, e => {
         return !e.readonly
       })
       // 没有找到一个可以修改的单元
       if (rw == null)
         return '只读'
       // 找正在修改的
-      let ed = ArrayT.QueryObject(row, e => {
+      let ed = ArrayT.QueryObject(row.cells, e => {
         return e.editing
       })
       return ed ? '取消' : '修改'
     },
     btnSaveDisabled(scope) {
-      let row: ICell[] = scope.row
+      let row: IRow = scope.row
       // 如果没有不相等的，则代表没有改动，不能保存
-      let edd = ArrayT.QueryObject(row, e => {
+      let edd = ArrayT.QueryObject(row.cells, e => {
         return e.tmp != e.value
       })
       return edd == null
     },
     actCustom(idx, scope) {
-      let row: ICell[] = scope.row
+      let row: IRow = scope.row
       this.$emit('custom', row, idx)
     }
   }
