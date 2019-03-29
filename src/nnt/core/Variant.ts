@@ -24,8 +24,9 @@ export enum VariantType {
   MAP = 9,
   MULTIMAP = 10,
   PASSWORD = 11,
-  DATETIME = 12,
-  DATE = 13,
+  DATETIME = 12, // 日期时间
+  DATE = 13, // 日期
+  PERCENT = 14, // 百分数
 }
 
 export enum VariantSortType {
@@ -41,6 +42,7 @@ export function DefaultValue(typ: VariantType) {
     case VariantType.INTEGER:
     case VariantType.DOUBLE:
     case VariantType.NUMBER:
+    case VariantType.PERCENT:
       r = 0;
       break;
     case VariantType.BOOLEAN:
@@ -83,6 +85,9 @@ export function StrictValue(val: any, typ: VariantType): any {
       r = toDouble(val);
       break;
     case VariantType.NUMBER:
+      r = toNumber(val);
+      break;
+    case VariantType.PERCENT:
       r = toNumber(val);
       break;
     case VariantType.BOOLEAN:
