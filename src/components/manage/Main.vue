@@ -18,13 +18,24 @@
 
 <script lang="ts">
 
-import MainContent from "./MainContainer";
+import MainContent from "./MainContainer.vue";
+import {RestSession} from "../../nnt/core/RestSession";
+import {SignalFailed} from "../../nnt/core/Signals";
+import {Model} from "../../nnt/core/ApiModel";
 
 export default {
   name: 'Main',
   components: {MainContent},
   data() {
     return {}
+  },
+  mounted() {
+    // 显示基础错误信息
+    RestSession.signals.connect(SignalFailed, s => {
+      let data: Model = s.data;
+      let content = 'RestSession fail:\nAPI ' + data.action + ' 返回 ' + JSON.stringify(data.response);
+      alert(content);
+    }, null);
   }
 }
 </script>
