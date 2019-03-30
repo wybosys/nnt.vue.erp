@@ -44,6 +44,12 @@
                       size="mini"
                       v-model="model.tmp">
       </el-date-picker>
+
+      <erp-property-enumselect v-else-if="it().combo"
+                               slot="append"
+                               :value="model">
+      </erp-property-enumselect>
+
     </el-input>
   </span>
 </template>

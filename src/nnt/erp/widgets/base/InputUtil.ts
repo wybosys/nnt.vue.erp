@@ -1,5 +1,5 @@
 import {IProperty} from "../../../model/base/Property";
-import {VariantType} from "../../../core/Variant";
+import {VariantMajorType, VariantType} from "../../../core/Variant";
 
 export class InputType {
   input: boolean;
@@ -10,6 +10,7 @@ export class InputType {
   switch: boolean;
   rocheck: boolean;
   rwcheck: boolean;
+  combo: boolean;
 
   static Detect(model: IProperty): InputType {
     let r = new InputType();
@@ -21,27 +22,25 @@ export class InputType {
           r.label = true;
         }
       } else {
-        switch (model.type) {
-          case VariantType.DATETIME: {
+        switch (model.type.major) {
+          case VariantMajorType.DATETIME:
             r.datetime = true;
-          }
             break;
-          case VariantType.DATE: {
+          case VariantMajorType.DATE:
             r.date = true;
-          }
             break;
-          case VariantType.BOOLEAN: {
+          case VariantMajorType.BOOLEAN:
             r.rwcheck = true;
-          }
             break;
-          case VariantType.INTEGER:
-          case VariantType.DOUBLE: {
+          case VariantMajorType.INTEGER:
+          case VariantMajorType.DOUBLE:
             r.number = true;
-          }
             break;
-          default: {
+          case VariantMajorType.ENUM:
+            r.combo = true;
+            break;
+          default:
             r.input = true;
-          }
             break;
         }
       }

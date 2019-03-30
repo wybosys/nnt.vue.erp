@@ -1,17 +1,20 @@
-import {VariantType} from "../core/Variant";
-import {DateTime, formatString, StringT, toDouble, toInt, toNumber} from "../core/Kernel";
+import {VariantMajorType, VariantType} from "../core/Variant";
+import {DateTime, EnumT, formatString, StringT, toDouble, toInt, toNumber} from "../core/Kernel";
 
 export function VariantToUIValue(val: any, typ: VariantType): any {
   let r: any = null;
-  switch (typ) {
-    case VariantType.DATETIME:
+  switch (typ.major) {
+    case VariantMajorType.DATETIME:
       r = new DateTime(val).toString('yyyy-MM-dd HH:mm:ss');
       break;
-    case VariantType.DATE:
+    case VariantMajorType.DATE:
       r = new DateTime(val).toString('yyyy-MM-dd');
       break;
-    case VariantType.PERCENT:
+    case VariantMajorType.PERCENTAGE:
       r = StringT.TermFloat(formatString("%.2f", val * 100));
+      break;
+    case VariantMajorType.ENUM:
+      r = (<EnumT>typ.value).defineOf(val);
       break;
     default:
       r = val;
@@ -22,22 +25,25 @@ export function VariantToUIValue(val: any, typ: VariantType): any {
 
 export function UIValToVariant(val: any, typ: VariantType): any {
   let r: any = null;
-  switch (typ) {
-    case VariantType.DATETIME:
-    case VariantType.DATE:
+  switch (typ.major) {
+    case VariantMajorType.DATETIME:
+    case VariantMajorType.DATE:
       r = DateTime.parse(val).timestamp;
       break;
-    case VariantType.INTEGER:
+    case VariantMajorType.INTEGER:
       r = toInt(val);
       break;
-    case VariantType.NUMBER:
+    case VariantMajorType.NUMBER:
       r = toNumber(val);
       break;
-    case VariantType.DOUBLE:
+    case VariantMajorType.DOUBLE:
       r = toDouble(val);
       break;
-    case VariantType.PERCENT:
+    case VariantMajorType.PERCENTAGE:
       r = toDouble(val) / 100;
+      break;
+    case VariantMajorType.ENUM:
+      r = (<EnumT>typ.value).valueOf(val);
       break;
     default:
       r = val;

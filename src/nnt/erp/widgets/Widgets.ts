@@ -1,5 +1,6 @@
 import Button from "./base/Button.vue";
 import Input from "./base/Input.vue";
+import PropertyEnumSelect from "./base/PropertyEnumSelect.vue";
 import PropertyInput from "./base/PropertyInput.vue";
 import ReadonlyCheckbox from "./base/ReadonlyCheckbox.vue";
 import Select from "./base/Select.vue";
@@ -27,6 +28,7 @@ export default {
     Vue.component('erp-input', Input);
     Vue.component('erp-input-property', PropertyInput);
     Vue.component('erp-checkbox-readonly', ReadonlyCheckbox);
+    Vue.component('erp-property-enumselect', PropertyEnumSelect);
     Vue.component('erp-form', Form);
     Vue.component('erp-form-item', FormItem);
     Vue.component('erp-propertyfrom', PropertyForm);

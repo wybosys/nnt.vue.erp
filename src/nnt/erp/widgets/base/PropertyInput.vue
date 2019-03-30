@@ -38,6 +38,11 @@
     <el-checkbox v-else-if="it().rwcheck"
                  :value="model.tmp">
     </el-checkbox>
+
+    <erp-property-enumselect v-else-if="it().combo"
+                             :value="model">
+    </erp-property-enumselect>
+
   </span>
 </template>
 

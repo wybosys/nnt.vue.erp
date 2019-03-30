@@ -2745,6 +2745,29 @@ export class StringT {
     }
     return out;
   }
+
+  // 标准的substr只支持正向，这里实现的支持两个方向比如，substr(1, -2)
+  static SubStr(str: string, pos: number, len?: number): string {
+    if (len == null || len >= 0)
+      return str.substr(pos, len);
+    if (pos < 0)
+      pos = str.length + pos;
+    pos += len;
+    let of = 0;
+    if (pos < 0) {
+      of = pos;
+      pos = 0;
+    }
+    return str.substr(pos, -len + of);
+  }
+
+  static Repeat(str: string, count: number = 1): string {
+    let r = "";
+    while (count--) {
+      r += str;
+    }
+    return r;
+  }
 }
 
 /** 错误的类型 */
@@ -2774,4 +2797,50 @@ export interface ICodec {
 
   /** 解码 */
   decode(d: any): string;
+}
+
+// 操作枚举类型
+export class EnumT {
+
+  constructor(e: any) {
+    this._enum = e;
+    this._defines = EnumT.Defines(e);
+  }
+
+  // 如果使用的是对象模式，则直接保存的是所有的定义
+  private _defines: string[];
+
+  get defines(): string[] {
+    return this._defines;
+  }
+
+  valueOf(def: string): any {
+    return EnumT.DefineToValue(this._enum, def);
+  }
+
+  defineOf(val: any): string {
+    return EnumT.ValueToDefine(this._enum, val);
+  }
+
+  // 枚举对象
+  private _enum: any;
+
+  static DefineToValue<T>(obj: T, str: string): T {
+    return obj[str];
+  }
+
+  static ValueToDefine<T>(obj: T, val: T): string {
+    return (<any>obj)[val];
+  }
+
+  static Defines<T>(obj: T): string[] {
+    let keys = Object.keys(obj);
+    // ts生成enum，key从后半部分开始
+    return ArrayT.RangeOf(keys, keys.length / 2);
+  }
+
+  static DefineAt<T>(obj: T, idx: number): string {
+    let defs = this.Defines(obj);
+    return defs[idx];
+  }
 }
