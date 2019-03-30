@@ -51,6 +51,7 @@ import {DefaultValue} from "../../../core/Variant";
 import {PropertyTable} from "../../../model/table/PropertyTable";
 import {IColumn} from "../../../model/table/Column";
 import {IRow, Row} from "../../../model/table/Row";
+import {Property} from "../../../model/base/Property";
 
 const TABLE_CHAR_WIDTH = 14
 const TABLE_SPACE = 22
@@ -126,7 +127,7 @@ export default {
         if (!e.readonly) {
           e.editing = !e.editing
           if (!e.editing)
-            e.tmp = e.value
+            e.tmp = Property._IMP_VariantToUIValue(e.value, e.type);
         }
       })
     },

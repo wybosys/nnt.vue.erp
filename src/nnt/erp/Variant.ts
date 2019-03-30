@@ -5,7 +5,7 @@ export function VariantToUIValue(val: any, typ: VariantType): any {
   let r: any = null;
   switch (typ.major) {
     case VariantMajorType.DATETIME:
-      r = new DateTime(val).toString('yyyy-MM-dd HH:mm:ss');
+      r = val ? new DateTime(val).toString('yyyy-MM-dd HH:mm:ss') : '';
       break;
     case VariantMajorType.DATE:
       r = new DateTime(val).toString('yyyy-MM-dd');
@@ -28,7 +28,7 @@ export function UIValToVariant(val: any, typ: VariantType): any {
   switch (typ.major) {
     case VariantMajorType.DATETIME:
     case VariantMajorType.DATE:
-      r = DateTime.parse(val).timestamp;
+      r = val == '' ? null : DateTime.parse(val).timestamp;
       break;
     case VariantMajorType.INTEGER:
       r = toInt(val);
