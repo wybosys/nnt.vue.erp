@@ -71,7 +71,9 @@ class _RestSession extends SObject {
   fetch(m: Model,
         cbsuc?: (s?: Slot) => void, cbctx?: any,
         cbfail?: (s?: Slot) => void, cbend?: () => void) {
+
     m.ts = DateTime.Now();
+    m.session = this;
 
     // 为了防止正在调用 api 时，接受信号的对象析构，保护一下
     if (cbctx)

@@ -359,6 +359,8 @@ export class Model extends SObject implements ISerializable, ICacheObject {
       this._tmr_timeout.stop();
       this._tmr_timeout = undefined;
     }
+
+    this.session = null;
   }
 
   _urlreq: CHttpConnector;
