@@ -216,7 +216,7 @@ export default {
       // 如果没有不相等的，则代表没有改动，不能保存
       let edd = ArrayT.QueryObject(row.cells, e => {
         // tmp需要从ui值转回标准值，再比较有没有修改
-        return e.current != e.value
+        return e.isModified();
       })
       return edd == null
     },

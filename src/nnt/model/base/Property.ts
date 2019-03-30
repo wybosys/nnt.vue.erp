@@ -80,6 +80,8 @@ export class Property implements IProperty /*IPropertyEditable*/ {
   editing: boolean = false;
 
   isModified(): boolean {
+    if (this.readonly)
+      return false;
     return this.current != this.value;
   }
 
