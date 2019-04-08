@@ -16,6 +16,9 @@ export function VariantToUIValue(val: any, typ: VariantType): any {
     case VariantMajorType.ENUM:
       r = (<EnumT>typ.value).defineOf(val);
       break;
+    case VariantMajorType.BOOLEAN:
+      r = !!val;
+      break;
     default:
       r = val;
       break;
@@ -44,6 +47,9 @@ export function UIValToVariant(val: any, typ: VariantType): any {
       break;
     case VariantMajorType.ENUM:
       r = (<EnumT>typ.value).valueOf(val);
+      break;
+    case VariantMajorType.BOOLEAN:
+      r = !!val;
       break;
     default:
       r = val;

@@ -125,55 +125,69 @@ export function DefaultValue(typ: VariantType) {
 export function StrictValue(val: any, typ: VariantType): any {
   let r: any = null;
   switch (typ.major) {
-    case VariantMajorType.INTEGER:
+    case VariantMajorType.INTEGER: {
       r = toInt(val);
+    }
       break;
-    case VariantMajorType.DOUBLE:
+    case VariantMajorType.DOUBLE: {
       r = toDouble(val);
+    }
       break;
-    case VariantMajorType.NUMBER:
+    case VariantMajorType.NUMBER: {
       r = toNumber(val);
+    }
       break;
-    case VariantMajorType.PERCENTAGE:
+    case VariantMajorType.PERCENTAGE: {
       r = toNumber(val);
+    }
       break;
-    case VariantMajorType.BOOLEAN:
+    case VariantMajorType.BOOLEAN: {
       r = toBoolean(val);
+    }
       break;
     case VariantMajorType.PASSWORD:
-    case VariantMajorType.STRING:
+    case VariantMajorType.STRING: {
       r = asString(val);
+    }
       break;
-    case VariantMajorType.JSON:
+    case VariantMajorType.JSON: {
       r = toJson(toJsonObject(val));
+    }
       break;
-    case VariantMajorType.OBJECT:
+    case VariantMajorType.OBJECT: {
       r = toJsonObject(val);
+    }
       break;
-    case VariantMajorType.ARRAY:
+    case VariantMajorType.ARRAY: {
       r = StringT.Split(val, ',');
+    }
       break;
-    case VariantMajorType.MAP:
+    case VariantMajorType.MAP: {
       r = new Map();
       let t = toJsonObject(val);
       if (t) {
         for (let k in t)
           r.set(k, t[k]);
       }
+    }
       break;
-    case VariantMajorType.MULTIMAP:
+    case VariantMajorType.MULTIMAP: {
       r = new MultiMap();
+      let t = toJsonObject(val);
       if (t) {
         for (let k in t)
           r.replace(k, t[k]);
       }
+    }
       break;
     case VariantMajorType.DATETIME:
-    case VariantMajorType.DATE:
+    case VariantMajorType.DATE: {
       r = new DateTime(toInt(val) * 1000);
+    }
       break;
-    default:
+    default: {
       r = val;
+    }
       break;
   }
   return r;

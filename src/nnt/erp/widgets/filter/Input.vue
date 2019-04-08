@@ -50,6 +50,13 @@
                                :value="model">
       </erp-property-enumselect>
 
+      <el-checkbox v-else-if="it().rwcheck"
+                   :true-label="1"
+                   :false-label="0"
+                   slot="append"
+                   v-model="model.tmp">
+      </el-checkbox>
+
     </el-input>
   </span>
 </template>
