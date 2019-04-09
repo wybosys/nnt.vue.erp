@@ -76,4 +76,8 @@ export class Row<T = any> implements IRow<T> {
   forEach(proc: (cell: ICell, idx?: number) => void) {
     this._cells.forEach(proc);
   }
+
+  toString(): string {
+    return this._cells.join('\n');
+  }
 }

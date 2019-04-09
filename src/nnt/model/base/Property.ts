@@ -79,6 +79,10 @@ export class Property implements IProperty /*IPropertyEditable*/ {
   // 是否正在修改
   editing: boolean = false;
 
+  toString(): string {
+    return `var: ${this.variable}, value: ${this.value}, current: ${this.current}, tmp: ${this.tmp}`;
+  }
+
   isModified(): boolean {
     if (this.readonly)
       return false;

@@ -1,6 +1,7 @@
 <template>
   <span class="wrap">
     <span v-if="withlabel" style="padding: 0 1em">{{model.label}}</span>
+
     <el-input
       v-if="it().input || it().number"
       type="input"
@@ -36,7 +37,8 @@
     </erp-checkbox-readonly>
 
     <el-checkbox v-else-if="it().rwcheck"
-                 :value="model.tmp">
+                 @change="actCheckboxChanged"
+                 v-model="tmpbool">
     </el-checkbox>
 
     <erp-property-enumselect v-else-if="it().combo"
@@ -63,9 +65,12 @@ export default {
       type: Boolean
     }
   },
-  computed: {
-    value: () => {
-      return this.model.tmp
+  mounted() {
+    this.tmpbool = !!this.model.tmp
+  },
+  data() {
+    return {
+      tmpbool: false
     }
   },
   methods: {
@@ -77,6 +82,15 @@ export default {
     },
     suffixIcon() {
       return InputUtil.PropertySuffixIcon(this.model)
+    },
+    actCheckboxChanged() {
+      this.model.tmp = this.tmpbool
+    }
+  },
+  watch: {
+    // 不能用 ()=> 的形式
+    model: function (newv, oldv) {
+      this.tmpbool = !!newv.tmp
     }
   }
 }
