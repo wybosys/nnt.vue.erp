@@ -1,6 +1,6 @@
 import {IProperty, Property} from "../base/Property";
 import {VariantType} from "../../core/Variant";
-import {indexed, IndexedObject, toJson} from "../../core/Kernel";
+import {indexed, IndexedObject, IntFloat, toJson} from "../../core/Kernel";
 
 const OPERATORS = ["gt", "gte", "eq", "not", "lt", "lte"];
 
@@ -36,7 +36,13 @@ export class Filter extends Property implements IFilter {
       if (e.tmp == null || e.tmp === '')
         return;
       let q: IndexedObject = {};
-      q[e.variable] = indexed(e.operator, e.current);
+      let cur: any = e.current;
+
+      // intfloat需要传原始数据
+      if (cur instanceof IntFloat)
+        cur = cur.origin;
+
+      q[e.variable] = indexed(e.operator, cur);
       and.push(q);
     });
 

@@ -34,6 +34,7 @@ export class InputType {
             break;
           case VariantMajorType.INTEGER:
           case VariantMajorType.DOUBLE:
+          case VariantMajorType.INTFLOAT:
             r.number = true;
             break;
           case VariantMajorType.ENUM:

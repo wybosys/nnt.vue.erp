@@ -2,6 +2,7 @@ import {
   asString,
   DateTime,
   EnumT,
+  IntFloat,
   MultiMap,
   StringT,
   toBoolean,
@@ -30,6 +31,7 @@ export enum VariantMajorType {
   DATE = 13, // 日期
   PERCENTAGE = 14, // 百分数
   ENUM = 15, // 枚举
+  INTFLOAT = 16, // 使用int表示float
 }
 
 // 有些变量类型需要附加传递数据，所以数据类型定义为一个结构，而不是传统的标量类型
@@ -68,6 +70,26 @@ export class VariantType {
     r.value = new EnumT(typ);
     return r;
   }
+
+  // 当时intfloat类型时代表的缩放系数
+  scale: number;
+
+  // 用来保证intfloat传入的scale返回的都是同一个类型
+  private static __intfloats = {};
+
+  // INTFLOAT类型
+  static INTFLOAT(s: number): VariantType {
+    let fnd: VariantType = this.__intfloats[s];
+    if (!fnd) {
+      fnd = new VariantType(VariantMajorType.INTFLOAT);
+      fnd.scale = s;
+      this.__intfloats[s] = fnd;
+    }
+    return fnd;
+  }
+
+  static INTFLOAT_MONEY = VariantType.INTFLOAT(100);
+  static INTFLOAT_PERCENTAGE = VariantType.INTFLOAT(10000);
 }
 
 // 变量排序方式
@@ -86,6 +108,7 @@ export function DefaultValue(typ: VariantType) {
     case VariantMajorType.DOUBLE:
     case VariantMajorType.NUMBER:
     case VariantMajorType.PERCENTAGE:
+    case VariantMajorType.INTFLOAT:
       r = 0;
       break;
     case VariantMajorType.BOOLEAN:
@@ -135,6 +158,10 @@ export function StrictValue(val: any, typ: VariantType): any {
       break;
     case VariantMajorType.NUMBER: {
       r = toNumber(val);
+    }
+      break;
+    case VariantMajorType.INTFLOAT: {
+      r = IntFloat.From(val, typ.scale);
     }
       break;
     case VariantMajorType.PERCENTAGE: {

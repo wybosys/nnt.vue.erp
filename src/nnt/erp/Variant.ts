@@ -1,5 +1,5 @@
 import {VariantMajorType, VariantType} from "../core/Variant";
-import {DateTime, EnumT, formatString, StringT, toDouble, toInt, toNumber} from "../core/Kernel";
+import {DateTime, EnumT, formatString, IntFloat, StringT, toDouble, toInt, toNumber} from "../core/Kernel";
 
 export function VariantToUIValue(val: any, typ: VariantType): any {
   let r: any = null;
@@ -18,6 +18,9 @@ export function VariantToUIValue(val: any, typ: VariantType): any {
       break;
     case VariantMajorType.BOOLEAN:
       r = !!val;
+      break;
+    case VariantMajorType.INTFLOAT:
+      r = (<IntFloat>val).value;
       break;
     default:
       r = val;
@@ -50,6 +53,9 @@ export function UIValToVariant(val: any, typ: VariantType): any {
       break;
     case VariantMajorType.BOOLEAN:
       r = !!val;
+      break;
+    case VariantMajorType.INTFLOAT:
+      r = IntFloat.FromValue(toNumber(val), typ.scale);
       break;
     default:
       r = val;
