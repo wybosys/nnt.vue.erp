@@ -69,7 +69,7 @@ export type Interval = number;
 export type numstr = number | string | any;
 
 /** JSONOBJ+字符串 */
-export type jsonobj = string | Object;
+export type jsonobj = string | IndexedObject;
 
 /** 增加引用计数 */
 export function grab<T>(o: T): T {
@@ -247,12 +247,17 @@ export function toJson(o: any, def: string = null): string {
 }
 
 /** 转换到对象 */
-export function toJsonObject(o: jsonobj, def: string = null): Object {
+export function toJsonObject(o: jsonobj, def = null): IndexedObject {
   let t = typeof (o);
-  if (t == 'string')
-    return JSON.parse(<string>o);
+  if (t == 'string') {
+    try {
+      return JSON.parse(<string>o);
+    } catch (e) {
+      return  def;
+    }
+  }
   else if (t == 'object')
-    return o;
+    return <IndexedObject>o;
   return def;
 }
 

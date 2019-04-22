@@ -37,6 +37,9 @@ export interface IProperty {
 
   // 是否被修改
   isModified(): boolean;
+
+  // 属性依赖的数据
+  belong: any;
 }
 
 export class Property implements IProperty /*IPropertyEditable*/ {
@@ -124,6 +127,13 @@ export class Property implements IProperty /*IPropertyEditable*/ {
     this.readonly = r.readonly;
     this.type = r.type;
     this.tmp = Property._IMP_VariantToUIValue(this.value, this.type);
+    return this;
+  }
+
+  belong: any = null;
+
+  setBelong(bl: any): this {
+    this.belong = bl;
     return this;
   }
 }
