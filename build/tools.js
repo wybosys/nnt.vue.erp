@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
+// 停止dev用的web服务器
 function StopDevServer() {
   if (fs.existsSync('run/dev-server.pid')) {
     let buf = fs.readFileSync('run/dev-server.pid')
@@ -13,6 +14,7 @@ function StopDevServer() {
   }
 }
 
+// 保存dev运行的服务器信息
 function SaveDevServer() {
   if (!fs.existsSync('run'))
     fs.mkdirSync('run')
@@ -243,18 +245,22 @@ function GenSites() {
   fs.writeFileSync('src/router/index.ts', content.join('\n'))
 }
 
+// 获得当前项目配置的devops目录
 function GetDevopsDomain() {
   let devops = JSON.parse(fs.readFileSync('devops.json'))
   let path = devops.path.substr(15)
   return path
 }
 
-if (process.argv.indexOf('stop') != -1) {
-  StopDevServer()
-} else if (process.argv.indexOf('routes') != -1) {
-  GenRoutes('index', 'app', 'components')
-} else if (process.argv.indexOf('sites') != -1) {
-  GenSites()
+// 直接运行命令
+if (require.main == module) {
+  if (process.argv.indexOf('stop') != -1) {
+    StopDevServer()
+  } else if (process.argv.indexOf('routes') != -1) {
+    GenRoutes('index', 'app', 'components')
+  } else if (process.argv.indexOf('sites') != -1) {
+    GenSites()
+  }
 }
 
 module.exports = {
