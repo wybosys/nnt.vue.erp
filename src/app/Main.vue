@@ -15,10 +15,10 @@
 <script lang="ts">
 
 import MainContent from "./MainContainer.vue";
-import {RestSession} from "../../nnt/core/RestSession";
-import {SignalFailed} from "../../nnt/core/Signals";
-import {Model} from "../../nnt/core/ApiModel";
-import {Application} from "../../nnt/erp/Application";
+import {RestSession} from "../nnt/core/RestSession";
+import {SignalFailed} from "../nnt/core/Signals";
+import {Model} from "../nnt/core/ApiModel";
+import {Application} from "../nnt/erp/Application";
 
 export default {
   name: 'Main',

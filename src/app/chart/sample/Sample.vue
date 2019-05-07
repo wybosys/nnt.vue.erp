@@ -7,7 +7,7 @@
 
 <script lang="ts">
 
-import {Option} from "../../../../nnt/model/chart/Option";
+import {Option} from "../../../nnt/model/chart/Option";
 
 export default {
   name: "ChartUseSample",

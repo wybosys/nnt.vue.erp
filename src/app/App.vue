@@ -21,7 +21,7 @@
 
 <script lang="ts">
 
-import {Application} from "../../nnt/core/Application";
+import {Application} from "../nnt/core/Application";
 
 export default {
   name: "Login",
@@ -45,7 +45,7 @@ export default {
   methods: {
     async actLogin() {
       await this.$refs.login.validate()
-      Application.shared.push('/manage/main')
+      Application.shared.push('/main')
     }
   }
 }
