@@ -96,8 +96,6 @@ class RouterNode {
       p = p.parent
     }
     pnodes.reverse()
-    if (this.default)
-      pnodes.push('def')
     return pnodes.join('/')
   }
 

@@ -29,7 +29,7 @@ export default {
     {
       path: '/manage',
       component: _components_manage,
-      name: 'components/manage/def',
+      name: 'components/manage',
       label: 'Manage',
       module: true,
       priority: 9999
