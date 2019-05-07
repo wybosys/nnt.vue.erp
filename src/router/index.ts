@@ -19,7 +19,7 @@ const _components_test_test = () => import("../components/test/Test.vue")
 export default {
   routes: [
     {
-      path: 'components/manage',
+      path: '/manage',
       component: _components_manage,
       name: 'components/manage',
       label: 'Manage',
@@ -27,7 +27,7 @@ export default {
       priority: 9999
     },
     {
-      path: 'components/manage/manage',
+      path: '/manage/manage',
       component: _components_manage,
       name: 'components/manage/def',
       label: 'Manage',
@@ -35,13 +35,13 @@ export default {
       priority: 9999
     },
     {
-      path: 'components/manage/base/base/base',
+      path: '/manage/base/base',
       component: _components_manage_base_base,
       name: 'components/manage/base/base',
       label: 'Base'
     },
     {
-      path: 'components/manage/chart/chart',
+      path: '/manage/chart/chart',
       component: _components_manage_chart,
       name: 'components/manage/chart',
       label: '图表',
@@ -49,13 +49,13 @@ export default {
       priority: 2
     },
     {
-      path: 'components/manage/chart/sample/sample',
+      path: '/manage/chart/sample/sample',
       component: _components_manage_chart_sample,
       name: 'components/manage/chart/sample',
       label: '简单'
     },
     {
-      path: 'components/manage/droplist/droplist',
+      path: '/manage/droplist/droplist',
       component: _components_manage_droplist,
       name: 'components/manage/droplist',
       label: '下拉列表',
@@ -63,25 +63,25 @@ export default {
       priority: 3
     },
     {
-      path: 'components/manage/droplist/sample/sample',
+      path: '/manage/droplist/sample/sample',
       component: _components_manage_droplist_sample,
       name: 'components/manage/droplist/sample',
       label: '简单'
     },
     {
-      path: 'components/manage/manage/main',
+      path: '/manage/main',
       component: _components_manage_main,
       name: 'components/manage/main',
       label: 'Main'
     },
     {
-      path: 'components/manage/manage/maincontainer',
+      path: '/manage/maincontainer',
       component: _components_manage_maincontainer,
       name: 'components/manage/maincontainer',
       label: 'MainContainer'
     },
     {
-      path: 'components/manage/table/table',
+      path: '/manage/table/table',
       component: _components_manage_table,
       name: 'components/manage/table',
       label: '表格',
@@ -89,37 +89,37 @@ export default {
       priority: 1
     },
     {
-      path: 'components/manage/table/sample/sample',
+      path: '/manage/table/sample/sample',
       component: _components_manage_table_sample,
       name: 'components/manage/table/sample',
       label: '简单'
     },
     {
-      path: 'components/sample/sample/audiorecorder',
+      path: '/sample/audiorecorder',
       component: _components_sample_audiorecorder,
       name: 'components/sample/audiorecorder',
       label: 'AudioRecorder'
     },
     {
-      path: 'components/sample/sample/echo',
+      path: '/sample/echo',
       component: _components_sample_echo,
       name: 'components/sample/echo',
       label: 'Echo'
     },
     {
-      path: 'components/sample/sample/helloworld',
+      path: '/sample/helloworld',
       component: _components_sample_helloworld,
       name: 'components/sample/helloworld',
       label: 'HelloWorld'
     },
     {
-      path: 'components/sample/sample/sample',
+      path: '/sample/sample',
       component: _components_sample_sample,
       name: 'components/sample/sample',
       label: 'Sample'
     },
     {
-      path: 'components/test/test/test',
+      path: '/test/test',
       component: _components_test_test,
       name: 'components/test/test',
       label: 'Test'

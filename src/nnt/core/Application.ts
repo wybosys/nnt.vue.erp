@@ -40,6 +40,14 @@ class RouterWrapper {
     this._router = this.createRouter(routes)
   }
 
+  beforeEach() {
+    this._router.beforeEach.apply(this._router, arguments)
+  }
+
+  afterEach() {
+    this._router.afterEach.apply(this._router, arguments)
+  }
+
   flushRoutes(routes: IRoute[]) {
     let t = this.createRouter(routes)
     t.init(this._router.app)
