@@ -21,6 +21,104 @@ function SaveDevServer() {
   fs.writeFileSync('run/dev-server.pid', process.pid)
 }
 
+// 保存当前项目解析出的router架构
+class RouterNode {
+
+  constructor() {
+
+    // 访问路径
+    this.path = ''
+
+    // 相对路径
+    this.relv = ''
+
+    // 节点名
+    this.node = ''
+
+    // 组件实现的类
+    this.component = null
+
+    // 组件名
+    this.name = ''
+
+    // 是否为模块
+    this.module = false
+
+    // 优先级
+    this.priority = 9999
+
+    // 显示的名称
+    this.label = null
+
+    // 页面路径
+    this.page = null
+
+    // 是否是默认节点
+    this.default = false
+
+    // 是否隐藏
+    this.hide = false
+
+    // 父节点
+    this.parent = null
+
+    // 子节点
+    this.children = []
+  }
+
+  add(node) {
+    node.parent = this
+    this.children.push(node)
+  }
+
+  // 解析目录
+  static FromDirectory(dir) {
+    let r = new RouterNode()
+
+    // 解析当前节点
+    if (fs.existsSync(`${dir}/config.json`)) {
+      let cfgobj = JSON.parse(fs.readFileSync(cfg))
+      r.node = path.basename(dir)
+      if (cfgobj.path)
+        r.path = cfgobj.path
+      if (cfgobj.rpath)
+        r.relv = cfgobj.rpath
+      else
+        r.relv = r.node
+
+      // 判断是否存在实现的页面
+      let page = UppercaseFirst(r.node)
+      if (fs.existsSync(`${dir}/${page}.vue`)) {
+        r.path = `${dir}/${page}.vue`
+        if (cfgobj.default)
+          r.default = true
+
+        r.label = cfgobj.label ? cfgobj.label : page
+        r.module = true
+        if (cfgobj.priority >= 0)
+          r.priority = cfgobj.priority
+        if (cfgobj.hide)
+          r.hide = true
+      }
+    }
+
+    // 解析子节点
+    fs.readdirSync(dir).forEach(e => {
+      let st = fs.statSync(`${dir}/${e}`)
+      if (st.isDirectory()) {
+        let child = RouterNode.FromDirectory(`${dir}/${e}`)
+        r.add(child)
+      } else {
+        let c = new RouterNode()
+        c.node = c.relv = path.basename(e, '.vue').toLowerCase()
+        r.add(c)
+      }
+    })
+
+    return r
+  }
+}
+
 function SetObjectValue(result, group, key, value) {
   if (!(group in result)) {
     result[group] = {}
