@@ -120,9 +120,10 @@ class RouterNode {
 
     r.node = path.basename(dir)
     r.dir = dir
-    r.path = `${relv}/${r.node}`
+    r.path = relv
     r.rpath = r.node
-    r.label = UppercaseFirst(r.node)
+    r.label = r.page = UppercaseFirst(r.node)
+    r.module = true
 
     // 解析当前节点
     if (fs.existsSync(`src/${dir}/config.json`)) {
@@ -151,13 +152,8 @@ class RouterNode {
       let st = fs.statSync(`src/${dir}/${e}`)
       if (st.isDirectory()) {
         let c = RouterNode.FromDirectory(`${dir}/${e}`, `${relv}/${e}`)
-
-        // 构造默认的节点
-        if (c.default) {
-          let def = c.clone()
-          def.path = `${relv}/${e}`
-          r.add(def)
-        }
+        if (!c)
+          return
 
         // 原始子节点
         r.add(c)
@@ -165,8 +161,6 @@ class RouterNode {
         let c = new RouterNode()
         c.dir = dir
         c.page = c.label = path.basename(e, '.vue')
-        if (c.page == r.page)
-          return;
         c.node = c.page.toLowerCase()
         c.rpath = c.node
         c.path = `${relv}/${c.rpath}`
@@ -188,13 +182,12 @@ function GenRouters(outputfile, ...srcdirs) {
       return
     let n = RouterNode.FromDirectory(`${e}`, '')
     n.all().forEach(e => {
-      if (!e.page)
-        return
+      // 跳过根节点
+      if (e == n)
+        return;
 
       let key = e.hash()
-
-      if (!e.default)
-        imports.push(`const ${key} = () => import("../${e.dir}/${e.page}.vue")`)
+      imports.push(`const ${key} = () => import("../${e.dir}/${e.page}.vue")`)
 
       let def = "    {"
       let arr = [
