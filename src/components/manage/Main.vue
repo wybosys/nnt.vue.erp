@@ -5,11 +5,7 @@
         后台管理系统
       </div>
       <div>
-        <span>当前系统环境</span>
-        <span>
-          <span>管理组</span>
-        </span>
-        <el-button type="primary">安全退出</el-button>
+        <el-button type="primary" @click="actExit">安全退出</el-button>
       </div>
     </header>
     <main-content class="main-container"></main-content>
@@ -22,6 +18,7 @@ import MainContent from "./MainContainer.vue";
 import {RestSession} from "../../nnt/core/RestSession";
 import {SignalFailed} from "../../nnt/core/Signals";
 import {Model} from "../../nnt/core/ApiModel";
+import {Application} from "../../nnt/erp/Application";
 
 export default {
   name: 'Main',
@@ -32,10 +29,15 @@ export default {
   mounted() {
     // 显示基础错误信息
     RestSession.signals.connect(SignalFailed, s => {
-      let data: Model = s.data;
-      let content = 'RestSession fail:\nAPI ' + data.action + ' 返回 ' + JSON.stringify(data.response);
-      alert(content);
+      let data: Model = s.data
+      let content = 'RestSession fail:\nAPI ' + data.action + ' 返回 ' + JSON.stringify(data.response)
+      alert(content)
     }, null);
+  },
+  methods: {
+    actExit() {
+      Application.shared.goback()
+    }
   }
 }
 </script>
