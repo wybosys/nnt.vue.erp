@@ -96,7 +96,7 @@ class RouterNode {
       p = p.parent
     }
     pnodes.reverse()
-    return pnodes.join('/')
+    return pnodes.join('.')
   }
 
   add(node) {

@@ -21,13 +21,13 @@ export default {
     {
       path: '/app',
       component: _app_app,
-      name: 'app/app',
+      name: 'app.app',
       label: 'App'
     },
     {
       path: '/chart',
       component: _app_chart,
-      name: 'app/chart',
+      name: 'app.chart',
       label: '图表',
       module: true,
       priority: 2
@@ -35,13 +35,13 @@ export default {
     {
       path: '/chart/chart',
       component: _app_chart_chart,
-      name: 'app/chart/chart',
+      name: 'app.chart.chart',
       label: 'Chart'
     },
     {
       path: '/chart/sample',
       component: _app_chart_sample,
-      name: 'app/chart/sample',
+      name: 'app.chart.sample',
       label: '简单',
       module: true,
       priority: 0
@@ -49,13 +49,13 @@ export default {
     {
       path: '/chart/sample/sample',
       component: _app_chart_sample_sample,
-      name: 'app/chart/sample/sample',
+      name: 'app.chart.sample.sample',
       label: 'Sample'
     },
     {
       path: '/droplist',
       component: _app_droplist,
-      name: 'app/droplist',
+      name: 'app.droplist',
       label: '下拉列表',
       module: true,
       priority: 3
@@ -63,13 +63,13 @@ export default {
     {
       path: '/droplist/droplist',
       component: _app_droplist_droplist,
-      name: 'app/droplist/droplist',
+      name: 'app.droplist.droplist',
       label: 'Droplist'
     },
     {
       path: '/droplist/sample',
       component: _app_droplist_sample,
-      name: 'app/droplist/sample',
+      name: 'app.droplist.sample',
       label: '简单',
       module: true,
       priority: 0
@@ -77,25 +77,25 @@ export default {
     {
       path: '/droplist/sample/sample',
       component: _app_droplist_sample_sample,
-      name: 'app/droplist/sample/sample',
+      name: 'app.droplist.sample.sample',
       label: 'Sample'
     },
     {
       path: '/main',
       component: _app_main,
-      name: 'app/main',
+      name: 'app.main',
       label: 'Main'
     },
     {
       path: '/maincontainer',
       component: _app_maincontainer,
-      name: 'app/maincontainer',
+      name: 'app.maincontainer',
       label: 'MainContainer'
     },
     {
       path: '/table',
       component: _app_table,
-      name: 'app/table',
+      name: 'app.table',
       label: '表格',
       module: true,
       priority: 1
@@ -103,7 +103,7 @@ export default {
     {
       path: '/table/sample',
       component: _app_table_sample,
-      name: 'app/table/sample',
+      name: 'app.table.sample',
       label: '简单',
       module: true,
       priority: 0
@@ -111,13 +111,13 @@ export default {
     {
       path: '/table/sample/sample',
       component: _app_table_sample_sample,
-      name: 'app/table/sample/sample',
+      name: 'app.table.sample.sample',
       label: 'Sample'
     },
     {
       path: '/table/table',
       component: _app_table_table,
-      name: 'app/table/table',
+      name: 'app.table.table',
       label: 'Table'
     }
 ]
