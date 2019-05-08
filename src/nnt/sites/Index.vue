@@ -50,7 +50,7 @@ export default {
 
     // 加载该站点的router
     sites[site]().then(obj => {
-      let routes: IRoute[] = obj.default
+      let routes: IRoute[] = obj.default.routes
 
       // 增加新的
       this.$router.flushRoutes(routes)
