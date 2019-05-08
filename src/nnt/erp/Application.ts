@@ -1,4 +1,4 @@
-import {Application as CoreApplication} from "../core/Application";
+import {Application as CoreApplication, IApplicationRouter} from "../core/Application";
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -21,6 +21,13 @@ export class Application extends CoreApplication {
       this._tree.update(this.router);
     }
     return this._tree;
+  }
+
+  flushRouter(router: IApplicationRouter) {
+    super.flushRouter(router);
+    if (this._tree) {
+      this._tree.update(this.router);
+    }
   }
 }
 

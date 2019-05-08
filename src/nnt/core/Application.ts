@@ -174,6 +174,12 @@ export class Application {
     new Vue(opts);
   }
 
+  // 使用新的router配置刷新
+  flushRouter(router: IApplicationRouter) {
+    this._router.flushRoutes(router.routes);
+    this.router = router;
+  }
+
   // 加载一个插件
   loadPlugin(plugin: any, name: string) {
     try {

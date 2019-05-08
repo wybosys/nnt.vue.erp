@@ -52,8 +52,8 @@ export default {
     sites[site]().then(obj => {
       let routes: IRoute[] = obj.default.routes
 
-      // 增加新的
-      this.$router.flushRoutes(routes)
+      // 刷新app中使用的路由
+      Application.shared.flushRouter(obj.default);
 
       // 删除掉当前route中包含site的部分再跳转
       let path = this.$route.path
