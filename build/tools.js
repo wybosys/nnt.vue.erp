@@ -118,12 +118,17 @@ class RouterNode {
 
     r.node = path.basename(dir)
     r.dir = dir
-    r.path = relv
+    r.path = relv == '' ? '/' : relv
     r.rpath = r.node
-    r.label = r.page = UppercaseFirst(r.node)
+    r.label = UppercaseFirst(r.node)
     r.module = true
 
-    // 解析当前节点
+    // 判断是否存在实现的页面
+    if (fs.existsSync(`src/${dir}/${r.label}.vue`)) {
+      r.page = r.label
+    }
+
+    // 解析配置
     if (fs.existsSync(`src/${dir}/config.json`)) {
       let cfgobj = JSON.parse(fs.readFileSync(`src/${dir}/config.json`))
       if (cfgobj.path)
@@ -132,17 +137,12 @@ class RouterNode {
         r.rpath = cfgobj.rpath
       if (cfgobj.default)
         r.default = true
-
-      // 判断是否存在实现的页面
-      if (fs.existsSync(`src/${dir}/${r.label}.vue`)) {
-        r.page = r.label
-        if (cfgobj.label)
-          r.label = cfgobj.label
-        if (cfgobj.priority >= 0)
-          r.priority = cfgobj.priority
-        if (cfgobj.hide)
-          r.hide = true
-      }
+      if (cfgobj.label)
+        r.label = cfgobj.label
+      if (cfgobj.priority >= 0)
+        r.priority = cfgobj.priority
+      if (cfgobj.hide)
+        r.hide = true
     }
 
     // 解析子节点
@@ -180,9 +180,8 @@ function GenRouters(outputfile, ...srcdirs) {
       return
     let n = RouterNode.FromDirectory(`${e}`, '')
     n.all().forEach(e => {
-      // 跳过根节点
-      if (e == n)
-        return;
+      if (!e.page)
+        return
 
       let key = e.hash()
       imports.push(`const ${key} = () => import("../${e.dir}/${e.page}.vue")`)
