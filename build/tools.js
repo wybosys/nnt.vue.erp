@@ -314,15 +314,17 @@ function ListRoutesInDirectory(dir, cur, result, site) {
   })
 }
 
-function GenSites() {
-  dir = 'sites'
+function GenSites(dir) {
   sites = []
   defaultsite = null
-  fs.readdirSync('src/' + dir).forEach(each => {
-    let st = fs.statSync('src/' + dir + '/' + each)
+
+  fs.readdirSync(`src/${dir}`).forEach(each => {
+    let st = fs.statSync(`src/${dir}/${each}`)
     if (st.isDirectory()) {
       sites.push(each)
+
       GenRoutesInSite(dir + '/' + each, each)
+
       // 读取配置
       let cfg = 'src/' + dir + '/' + each + '/config.json'
       if (fs.existsSync(cfg)) {
@@ -383,7 +385,7 @@ if (require.main == module) {
   } else if (process.argv.indexOf('routers') != -1) {
     GenRouters('index', 'app', 'components')
   } else if (process.argv.indexOf('sites') != -1) {
-    GenSites()
+    GenSites('sites')
   }
 }
 
