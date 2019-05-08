@@ -109,6 +109,9 @@ class RouterNode {
     this.children.forEach(e => {
       r = r.concat(e.all())
     })
+    r.sort((l, r) => {
+      return l.node.localeCompare(r.node)
+    })
     return r
   }
 
