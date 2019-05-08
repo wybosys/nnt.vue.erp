@@ -17,9 +17,9 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 
-# 生成单站点模式的route文件
-npm run routes
+# 单站点模式生成路由
+npm run routers
 
-# 生成多站点模式的route文件
+# 多站点模式生成路由
 npm run sites
 ```
