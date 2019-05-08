@@ -1,0 +1,14 @@
+[
+    {
+      "path": "/",
+      "name": "test",
+      "label": "Test",
+      "module": true,
+      "priority": 9999
+    },
+    {
+      "path": "/test",
+      "name": "test.test",
+      "label": "Test"
+    }
+]

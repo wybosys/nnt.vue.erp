@@ -1,0 +1,96 @@
+[
+    {
+      "path": "/chart/chart",
+      "name": "manage.chart.chart",
+      "label": "Chart"
+    },
+    {
+      "path": "/chart",
+      "name": "manage.chart",
+      "label": "图表",
+      "module": true,
+      "priority": 2
+    },
+    {
+      "path": "/droplist",
+      "name": "manage.droplist",
+      "label": "下拉列表",
+      "module": true,
+      "priority": 3
+    },
+    {
+      "path": "/droplist/droplist",
+      "name": "manage.droplist.droplist",
+      "label": "Droplist"
+    },
+    {
+      "path": "/main",
+      "name": "manage.main",
+      "label": "Main"
+    },
+    {
+      "path": "/maincontainer",
+      "name": "manage.maincontainer",
+      "label": "MainContainer"
+    },
+    {
+      "path": "/",
+      "name": "manage",
+      "label": "Manage",
+      "module": true,
+      "priority": 9999
+    },
+    {
+      "path": "/manage",
+      "name": "manage.manage",
+      "label": "Manage"
+    },
+    {
+      "path": "/chart/sample/sample",
+      "name": "manage.chart.sample.sample",
+      "label": "Sample"
+    },
+    {
+      "path": "/droplist/sample/sample",
+      "name": "manage.droplist.sample.sample",
+      "label": "Sample"
+    },
+    {
+      "path": "/chart/sample",
+      "name": "manage.chart.sample",
+      "label": "简单",
+      "module": true,
+      "priority": 0
+    },
+    {
+      "path": "/droplist/sample",
+      "name": "manage.droplist.sample",
+      "label": "简单",
+      "module": true,
+      "priority": 0
+    },
+    {
+      "path": "/table/sample",
+      "name": "manage.table.sample",
+      "label": "简单",
+      "module": true,
+      "priority": 0
+    },
+    {
+      "path": "/table/sample/sample",
+      "name": "manage.table.sample.sample",
+      "label": "Sample"
+    },
+    {
+      "path": "/table",
+      "name": "manage.table",
+      "label": "表格",
+      "module": true,
+      "priority": 1
+    },
+    {
+      "path": "/table/table",
+      "name": "manage.table.table",
+      "label": "Table"
+    }
+]

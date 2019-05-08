@@ -1,0 +1,29 @@
+[
+    {
+      "path": "/audiorecorder",
+      "name": "sample.audiorecorder",
+      "label": "AudioRecorder"
+    },
+    {
+      "path": "/echo",
+      "name": "sample.echo",
+      "label": "Echo"
+    },
+    {
+      "path": "/helloworld",
+      "name": "sample.helloworld",
+      "label": "HelloWorld"
+    },
+    {
+      "path": "/",
+      "name": "sample",
+      "label": "Sample",
+      "module": true,
+      "priority": 9999
+    },
+    {
+      "path": "/sample",
+      "name": "sample.sample",
+      "label": "Sample"
+    }
+]

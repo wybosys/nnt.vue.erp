@@ -183,6 +183,7 @@ class RouterNode {
 function GenRouters(outputfile, ...srcdirs) {
   let imports = []
   let defs = []
+  let decls = []
 
   srcdirs.forEach(e => {
     if (!fs.existsSync(`src/${e}`))
@@ -192,26 +193,49 @@ function GenRouters(outputfile, ...srcdirs) {
       if (!e.page)
         return
 
-      let key = e.hash()
-      imports.push(`const ${key} = () => import("../${e.dir}/${e.page}.vue")`)
+      // 输出vue需要的router.ts路由描述文件
+      {
+        let key = e.hash()
+        imports.push(`const ${key} = () => import("../${e.dir}/${e.page}.vue")`)
 
-      let def = "    {"
-      let arr = [
-        `\n      path: '${e.path}'`,
-        `\n      component: ${key}`,
-        `\n      name: '${e.name()}'`,
-        `\n      label: '${e.label}'`
-      ]
+        let def = "    {"
+        let arr = [
+          `\n      path: '${e.path}'`,
+          `\n      component: ${key}`,
+          `\n      name: '${e.name()}'`,
+          `\n      label: '${e.label}'`
+        ]
 
-      if (e.module) {
-        arr.push(`\n      module: true`)
-        arr.push(`\n      priority: ${e.priority}`)
-        if (e.hide)
-          arr.push(`\n      hide: true`)
+        if (e.module) {
+          arr.push(`\n      module: true`)
+          arr.push(`\n      priority: ${e.priority}`)
+          if (e.hide)
+            arr.push(`\n      hide: true`)
+        }
+
+        def += arr.join(',') + "\n    }"
+        defs.push(def)
       }
 
-      def += arr.join(',') + "\n    }"
-      defs.push(def)
+      // 数据跨项目使用的路有描述文件
+      {
+        let decl = "    {"
+        let arr = [
+          `\n      "path": "${e.path}"`,
+          `\n      "name": "${e.name()}"`,
+          `\n      "label": "${e.label}"`
+        ]
+
+        if (e.module) {
+          arr.push(`\n      "module": true`)
+          arr.push(`\n      "priority": ${e.priority}`)
+          if (e.hide)
+            arr.push(`\n      "hide": true`)
+        }
+
+        decl += arr.join(',') + "\n    }"
+        decls.push(decl)
+      }
     })
   })
 
@@ -224,7 +248,13 @@ function GenRouters(outputfile, ...srcdirs) {
   index.push(defs.join(',\n'))
   index.push(']')
   index.push('}')
-  fs.writeFileSync('src/router/' + outputfile + '.ts', index.join('\n'))
+  fs.writeFileSync(`src/router/${outputfile}.ts`, index.join('\n'))
+
+  let json = []
+  json.push('[')
+  json.push(decls.join(',\n'))
+  json.push(']')
+  fs.writeFileSync(`src/router/${outputfile}.json`, json.join('\n'))
 }
 
 function GenSites(dir) {
