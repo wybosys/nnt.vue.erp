@@ -19,6 +19,7 @@
         <el-option label="!=" value="not"></el-option>
         <el-option label="<" value="lt"></el-option>
         <el-option label="<=" value="lte"></el-option>
+        <el-option label="🔍" value="search"></el-option>
       </el-select>
 
       <el-date-picker v-if="it().datetime"

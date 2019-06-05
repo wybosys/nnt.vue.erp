@@ -2,7 +2,7 @@ import {IProperty, Property} from "../base/Property";
 import {VariantType} from "../../core/Variant";
 import {indexed, IndexedObject, IntFloat, toJson} from "../../core/Kernel";
 
-const OPERATORS = ["gt", "gte", "eq", "not", "lt", "lte"];
+const OPERATORS = ["gt", "gte", "eq", "not", "lt", "lte", "search"];
 
 export interface IFilter extends IProperty {
 
