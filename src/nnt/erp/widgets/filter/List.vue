@@ -5,6 +5,8 @@
 </template>
 
 <script lang="ts">
+import {Filters} from "../../../model/filter/Filter";
+
 export default {
   name: "List",
   props: {

@@ -1,5 +1,6 @@
 import {ICell} from "./Cell";
 import {ArrayT} from "../../core/Kernel";
+import {FieldOption, GetModel} from "../../core/Logic";
 
 export interface IRow<T = any> {
 
@@ -63,6 +64,14 @@ export class Row<T = any> implements IRow<T> {
     });
   }
 
+  value(varnm: string): any {
+    return this.cellOfVariable(varnm).value;
+  }
+
+  current(varnm: string): any {
+    return this.cellOfVariable(varnm).current;
+  }
+
   cellAt(idx: number): ICell {
     return this._cells[idx];
   }
@@ -79,5 +88,20 @@ export class Row<T = any> implements IRow<T> {
 
   toString(): string {
     return this._cells.join('\n');
+  }
+
+  toModel<T>(model: T) {
+    let fps = GetModel(model);
+    if (!fps)
+      return;
+    for (let k in fps) {
+      let fp: FieldOption = fps[k];
+      if (!fp.input)
+        continue;
+      let cell = this.cellOfVariable(k);
+      if (!cell)
+        continue;
+      model[k] = cell.current;
+    }
   }
 }

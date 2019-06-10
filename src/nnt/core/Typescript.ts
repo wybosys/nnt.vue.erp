@@ -4,6 +4,25 @@ export class ObjectReference {
   object: any;
 }
 
+export function nonenum(obj?: any, objkey?: string): (target: any, key: string, desc?: PropertyDescriptor) => void {
+  if (obj && objkey) {
+    let info = Object.getOwnPropertyDescriptor(obj, objkey);
+    if (info) {
+      info.enumerable = false;
+      Object.defineProperty(obj, objkey, info);
+    } else {
+      Object.defineProperty(obj, objkey, {
+        enumerable: false
+      });
+    }
+    return;
+  }
+  return (target, key, desc) => {
+    // 普通函数
+    desc.enumerable = false;
+  };
+}
+
 function ObjectPrototype(o: any): any {
   if (o == null)
     return null;
@@ -103,7 +122,7 @@ export class Class<T> {
  */
 export class Instance<T> {
   constructor(o: T | Function) {
-    if (typeof(o) == 'function') {
+    if (typeof (o) == 'function') {
       this._clazz = <Function>o;
     } else {
       this._obj = <any>o;

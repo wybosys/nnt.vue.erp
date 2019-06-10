@@ -7,7 +7,8 @@ import {
   IndexedMap,
   Interval,
   ISerializable,
-  Memcache, ObjectT,
+  Memcache,
+  ObjectT,
   SObject,
   UrlT
 } from "./Kernel";
@@ -18,6 +19,7 @@ import {Hud} from "./Hud";
 import {config} from "./Config";
 
 export const ERROR_NETWORK_FAILED = -0xFFFFFFFE;
+export const ERROR_RESPONSE_FAILED = -0xFFFFFFFD;
 
 // todo 换到跟随配置
 export const VERBOSE = !config.get('DEVOPS_RELEASE');
@@ -211,11 +213,14 @@ export class Model extends SObject implements ISerializable, ICacheObject {
     let data = this._urlreq ? this._urlreq.data : e;
 
     // 判断是否需要从 json 转换回来
-    if (typeof(data) == 'string') {
+    if (typeof (data) == 'string') {
       try {
         this.response = JSON.parse(data);
       } catch (err) {
-        console.exception(err);
+        this.response = {
+          code: ERROR_RESPONSE_FAILED,
+          message: data
+        }
       }
     } else {
       this.response = data;
@@ -254,8 +259,7 @@ export class Model extends SObject implements ISerializable, ICacheObject {
       this.signals.emit(SignalSucceed);
       if (this.session)
         this.session.signals.emit(SignalSucceed, this);
-    }
-    else {
+    } else {
       if (this.timeoutAsFailed) {
         this.signals.emit(SignalFailed);
         if (this.session)
@@ -326,8 +330,7 @@ export class Model extends SObject implements ISerializable, ICacheObject {
         if (this.session)
           this.session.signals.emit(SignalSucceed, this);
       }
-    }
-    else {
+    } else {
       console.error('API ' + this.action + ' ' + this.message);
 
       let tn = new SlotTunnel();

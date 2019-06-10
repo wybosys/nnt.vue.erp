@@ -1,15 +1,48 @@
 import {HashKey} from "./Compat";
+import {nonenum} from "./Typescript";
 
 declare let Map: any;
 declare let Set: any
 export let ECMA6_NATIVE: boolean = true;
-if (typeof(Map) == 'undefined')
+if (typeof (Map) == 'undefined')
   ECMA6_NATIVE = false;
 
-export class KvObject<V> {
-  [key: string]: any
+export type Class<T> = { new(...args: any[]): T, [key: string]: any, prototype: any };
+export type AnyClass = Class<any>;
 
-  [key: number]: any
+export class KvObject<V> {
+  [key: string]: any;
+
+  [key: number]: any;
+}
+
+export class CArray<V = any> {
+  [key: number]: V;
+
+  constructor() {
+    nonenum(this, 'constructor');
+    nonenum(this, '__arr');
+  }
+
+  @nonenum()
+  get length(): number {
+    return this.__arr.length;
+  }
+
+  @nonenum()
+  push(v: V): this {
+    this[this.length] = v;
+    this.__arr.push(v);
+    return this;
+  }
+
+  @nonenum()
+  forEach(proc: (v: V, idx?: number) => void): this {
+    this.__arr.forEach(proc);
+    return this;
+  }
+
+  private __arr = [];
 }
 
 export class CMap<K, V> {

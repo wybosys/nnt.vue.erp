@@ -1,5 +1,7 @@
 import {IProperty, Property} from "../base/Property";
 import {VariantSortType, VariantType} from "../../core/Variant";
+import {AnyClass} from "../../core/Stl";
+import {FieldOption, GetModel} from "../../core/Logic";
 
 export interface IColumn extends IProperty {
 
@@ -11,6 +13,34 @@ export interface IColumn extends IProperty {
 
   // 一些情况下，设置的数据需要被转换才能显示到cell中，所以可以通过设置转换函数可以当strictAs的时候，自动转换数据
   convert: (e: any, anydata?: any) => any;
+}
+
+export class Columns {
+
+  static AddModel(columns: IColumn[], model: AnyClass) {
+    let fps = GetModel(model)
+    if (!fps)
+      return;
+
+    for (let k in fps) {
+      let fp: FieldOption = fps[k];
+      if (!fp.output)
+        continue;
+
+      let col: Column;
+
+      if (fp.integer) {
+        col = Column.Header(k, k, VariantType.INTEGER);
+      } else if (fp.string) {
+        col = Column.Header(k, k, VariantType.STRING);
+      }
+
+      if (!fp.input)
+        col.setReadonly(true);
+
+      columns.push(col);
+    }
+  }
 }
 
 export class Column extends Property implements IColumn {

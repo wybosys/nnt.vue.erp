@@ -1,6 +1,8 @@
 import {IProperty, Property} from "../base/Property";
 import {VariantType} from "../../core/Variant";
 import {indexed, IndexedObject, IntFloat, toJson} from "../../core/Kernel";
+import {AnyClass} from "../../core/Stl";
+import {FieldOption, GetModel} from "../../core/Logic";
 
 const OPERATORS = ["gt", "gte", "eq", "not", "lt", "lte", "search"];
 
@@ -8,6 +10,33 @@ export interface IFilter extends IProperty {
 
   // 运算符
   operator: string;
+}
+
+export class Filters {
+
+  // 从Model生成可筛选的条目
+  static AddModel(filters: IFilter[], model: AnyClass) {
+    let fps = GetModel(model)
+    if (!fps)
+      return;
+
+    for (let k in fps) {
+      let fp: FieldOption = fps[k];
+      if (!fp.input)
+        continue;
+
+      let f: Filter;
+      if (fp.integer) {
+        f = Filter.Label(k, k, VariantType.INTEGER, 'eq');
+      }
+
+      if (fp.string) {
+        f = Filter.Label(k, k, VariantType.STRING, 'eq');
+      }
+
+      filters.push(f);
+    }
+  }
 }
 
 export class Filter extends Property implements IFilter {

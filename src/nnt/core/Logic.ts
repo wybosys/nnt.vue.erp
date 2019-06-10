@@ -22,7 +22,7 @@ type Class<T> = { new(...args: any[]): T, [key: string]: any };
 type AnyClass = Class<any>;
 type clazz_type = AnyClass | string;
 
-interface FieldOption {
+export interface FieldOption {
   // 唯一序号，后续类似pb的协议会使用id来做数据版本兼容
   id: number;
 
@@ -128,6 +128,13 @@ function toBoolean(v: any): boolean {
   else if (v == "false")
     return false;
   return !!v;
+}
+
+// 获得模型定义
+export function GetModel(obj: any) {
+  if (typeof obj == 'function')
+    return obj.prototype[FP_KEY];
+  return obj[FP_KEY];
 }
 
 // 填数据
