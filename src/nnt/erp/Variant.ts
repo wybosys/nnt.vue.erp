@@ -33,8 +33,10 @@ export function UIValToVariant(val: any, typ: VariantType): any {
   let r: any = null;
   switch (typ.major) {
     case VariantMajorType.DATETIME:
-    case VariantMajorType.DATE:
       r = val == '' ? null : DateTime.parse(val).timestamp;
+      break;
+    case VariantMajorType.DATE:
+      r = val == '' ? null : DateTime.parse(val + ' 00:00:00').timestamp;
       break;
     case VariantMajorType.INTEGER:
       r = toInt(val);
