@@ -13,10 +13,10 @@ import {
   toJsonObject,
   toNumber
 } from "./Kernel";
-import {KvObject} from "./Stl";
-import {Model} from "./ApiModel";
-import {WebSocketConnector} from "./SocketSession";
-import {Application} from "./Application";
+import { KvObject } from "./Stl";
+import { Model } from "./ApiModel";
+import { WebSocketConnector } from "./SocketSession";
+import { Application } from "./Application";
 
 type Class<T> = { new(...args: any[]): T, [key: string]: any };
 type AnyClass = Class<any>;
@@ -170,7 +170,7 @@ export function Decode<T>(mdl: T, params: any): T {
               });
             } else if (fp.valtype == boolean_t) {
               val.forEach((e: any) => {
-                arr.push(!!e);
+                arr.push(toBoolean(e));
               });
             }
           } else {
@@ -436,6 +436,7 @@ export abstract class Base extends Model {
   static double_t = "double";
   static number_t = "number";
   static boolean_t = "boolean";
+  static object_t = Object;
 
   // 可选的参数
   static optional = "optional";
