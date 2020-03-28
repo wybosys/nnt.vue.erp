@@ -20,6 +20,8 @@ import TablePagination from "./table/Pagination.vue";
 import Table from "./table/Table.vue";
 import PropertyGrid from "./table/PropertyGrid.vue";
 import PropertyTable from "./table/PropertyTable.vue";
+import VideoPlayer from "./media/VideoPlayer.vue";
+import VideoPlayerDialog from "./dialog/VideoPlayerDialog.vue";
 
 export default {
   install: (Vue) => {
@@ -45,5 +47,7 @@ export default {
     Vue.component('erp-table', Table);
     Vue.component('erp-propertygrid', PropertyGrid);
     Vue.component('erp-propertytable', PropertyTable);
+    Vue.component('erp-videoplayer', VideoPlayer);
+    Vue.component('erp-videoplayerdialog', VideoPlayerDialog);
   }
 }

@@ -26,7 +26,8 @@
         <template slot-scope="control">
           <el-button v-if="model.editable" size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}
           </el-button>
-          <el-button v-if="model.editable" size="mini" type="success" @click="actSave(control)" :disabled="btnSaveDisabled(control)">
+          <el-button v-if="model.editable" size="mini" type="success" @click="actSave(control)"
+                     :disabled="btnSaveDisabled(control)">
             保存
           </el-button>
           <el-button v-if="model.removable" size="mini" type="danger" @click="actRemove(control)">删除
@@ -45,189 +46,186 @@
 </template>
 
 <script lang="ts">
-import {Cell} from "../../../model/table/Cell";
-import {ArrayT} from "../../../core/Kernel";
-import {DefaultValue} from "../../../core/Variant";
-import {PropertyTable} from "../../../model/table/PropertyTable";
-import {IColumn} from "../../../model/table/Column";
-import {IRow, Row} from "../../../model/table/Row";
-import {Property} from "../../../model/base/Property";
+  import {Cell} from "../../../model/table/Cell";
+  import {ArrayT} from "../../../core/Kernel";
+  import {DefaultValue} from "../../../core/Variant";
+  import {PropertyTable} from "../../../model/table/PropertyTable";
+  import {IColumn} from "../../../model/table/Column";
+  import {IRow, Row} from "../../../model/table/Row";
+  import {Property} from "../../../model/base/Property";
 
-const TABLE_CHAR_WIDTH = 14
-const TABLE_SPACE = 22
-const TABLE_SKIP_SCROll = 10
-const BUTTON_WIDTH = 56
-const BUTTON_MARGIN = 10
+  const TABLE_CHAR_WIDTH = 14
+  const TABLE_SPACE = 22
+  const TABLE_SKIP_SCROll = 10
+  const BUTTON_WIDTH = 56
+  const BUTTON_MARGIN = 10
 
-export default {
-  name: "PropertyTable",
-  props: {
-    model: {
-      default: new PropertyTable()
+  export default {
+    name: "PropertyTable",
+    props: {
+      model: {
+        default: new PropertyTable()
+      },
     },
-  },
-  data() {
-    return {
-      createdRows: [],
-      editAreaWidth: 0,
-    }
-  },
-  computed: {
-    tableWidth() {
-      let len = 0;
-      this.model.columns.forEach((col: IColumn) => {
-        len += col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
-      })
-      len += TABLE_SKIP_SCROll + this.editAreaWidth
-      let main = document.body.querySelector('#table');
-      if (main && len < main.clientWidth)
-        len = main.clientWidth
-      return len + 'px'
-    }
-  },
-  filters: {
-    columnWidth(col: IColumn) {
-      return col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
-    }
-  },
-  methods: {
-    calcEditWidth() {
-      // 行交互按钮
-      let rowscnt = 0;
-      if (this.model.editable)
-        rowscnt += 2;
-      if (this.model.removable)
-        rowscnt++;
-      if (this.model.custom0)
-        rowscnt++;
-      if (this.model.custom1)
-        rowscnt++;
-      if (this.model.custom2)
-        rowscnt++;
-      if (this.model.custom3)
-        rowscnt++;
-
-      // 表格交互按钮
-      let headscnt = 0;
-      if (this.model.refreshable)
-        headscnt += 1;
-      if (this.model.creatable)
-        headscnt += 1;
-
-      // 总大小为表格和行增加的按钮的最大数（上下会重叠）
-      let count = Math.max(rowscnt, headscnt);
-
-      // 计算总大小
-      this.editAreaWidth = BUTTON_WIDTH * count + count * BUTTON_MARGIN - BUTTON_MARGIN + TABLE_SPACE + TABLE_SKIP_SCROll;
-      return this.editAreaWidth;
+    data() {
+      return {
+        createdRows: [],
+        editAreaWidth: 0,
+      }
     },
-    actToggleEdit(scope) {
-      let row: IRow = scope.row
-      row.cells.forEach(e => {
-        if (!e.readonly) {
-          e.editing = !e.editing
-          if (!e.editing)
-            e.tmp = Property._IMP_VariantToUIValue(e.value, e.type);
+    computed: {
+      tableWidth() {
+        let len = 0;
+        this.model.columns.forEach((col: IColumn) => {
+          len += col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
+        })
+        len += TABLE_SKIP_SCROll + this.editAreaWidth
+        let main = document.body.querySelector('#table');
+        if (main && len < main.clientWidth)
+          len = main.clientWidth
+        return len + 'px'
+      }
+    },
+    filters: {
+      columnWidth(col: IColumn) {
+        return col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
+      }
+    },
+    methods: {
+      calcEditWidth() {
+        // 行交互按钮
+        let rowscnt = 0;
+        if (this.model.editable)
+          rowscnt += 2;
+        if (this.model.removable)
+          rowscnt++;
+        if (this.model.custom0)
+          rowscnt++;
+        if (this.model.custom1)
+          rowscnt++;
+        if (this.model.custom2)
+          rowscnt++;
+        if (this.model.custom3)
+          rowscnt++;
+
+        // 表格交互按钮
+        let headscnt = 0;
+        if (this.model.refreshable)
+          headscnt += 1;
+        if (this.model.creatable)
+          headscnt += 1;
+
+        // 总大小为表格和行增加的按钮的最大数（上下会重叠）
+        let count = Math.max(rowscnt, headscnt);
+
+        // 计算总大小
+        this.editAreaWidth = BUTTON_WIDTH * count + count * BUTTON_MARGIN - BUTTON_MARGIN + TABLE_SPACE + TABLE_SKIP_SCROll;
+        return this.editAreaWidth;
+      },
+      actToggleEdit(scope) {
+        let row: IRow = scope.row
+        row.cells.forEach(e => {
+          if (!e.readonly) {
+            e.editing = !e.editing
+            if (!e.editing)
+              e.tmp = Property._IMP_VariantToUIValue(e.value, e.type);
+          }
+        })
+      },
+      actSave(scope) {
+        let row: IRow = scope.row
+        // 如果是新加的，则走新增的event
+        let fnd = this.createdRows.indexOf(row)
+        if (fnd != -1) {
+          this.$emit('create', row, () => {
+            // 添加成功
+            ArrayT.RemoveObjectAtIndex(this.createdRows, fnd)
+
+            // 同步数据
+            row.cells.forEach(e => {
+              if (!e.readonly) {
+                e.value = e.tmp
+                e.editing = false
+              }
+            })
+          })
+        } else {
+          this.$emit('save', row, () => {
+            // 保存成功
+            row.cells.forEach(e => {
+              if (!e.readonly) {
+                e.value = e.tmp
+                e.editing = false
+              }
+            })
+          })
         }
-      })
-    },
-    actSave(scope) {
-      let row: IRow = scope.row
-      // 如果是新加的，则走新增的event
-      let fnd = this.createdRows.indexOf(row)
-      if (fnd != -1) {
-        this.$emit('create', row, () => {
-          // 添加成功
+      },
+      actRemove(scope) {
+        let row: IRow = scope.row
+        // 如果是新加的，则不确认，直接删除
+        let fnd = this.createdRows.indexOf(row)
+        if (fnd != -1) {
           ArrayT.RemoveObjectAtIndex(this.createdRows, fnd)
-
-          // 同步数据
-          row.cells.forEach(e => {
-            if (!e.readonly) {
-              e.value = e.tmp
-              e.editing = false
-            }
+          fnd = this.model.rows.indexOf(row)
+          ArrayT.RemoveObjectAtIndex(this.model.rows, fnd)
+        } else {
+          let values = []
+          this.model.columns.forEach((e, idx) => {
+            values.push(e.label + ':' + row.cellAt(idx).value)
           })
-        })
-      } else {
-        this.$emit('save', row, () => {
-          // 保存成功
-          row.cells.forEach(e => {
-            if (!e.readonly) {
-              e.value = e.tmp
-              e.editing = false
-            }
-          })
-        })
-      }
-    },
-    actRemove(scope) {
-      let row: IRow = scope.row
-      // 如果是新加的，则不确认，直接删除
-      let fnd = this.createdRows.indexOf(row)
-      if (fnd != -1) {
-        ArrayT.RemoveObjectAtIndex(this.createdRows, fnd)
-        fnd = this.model.rows.indexOf(row)
-        ArrayT.RemoveObjectAtIndex(this.model.rows, fnd)
-      } else {
-        let values = []
-        this.model.columns.forEach((e, idx) => {
-          values.push(e.label + ':' + row.cellAt(idx).value)
-        })
-        if (confirm('确认删除 ' + values.join(', '))) {
-          this.$emit('remove', row, () => {
-            fnd = this.model.rows.indexOf(row)
-            ArrayT.RemoveObjectAtIndex(this.model.rows, fnd)
-          })
+          if (confirm('确认删除 ' + values.join(', '))) {
+            this.$emit('remove', row, () => {
+              fnd = this.model.rows.indexOf(row)
+              ArrayT.RemoveObjectAtIndex(this.model.rows, fnd)
+            })
+          }
         }
+      },
+      actCreate(scope) {
+        // 添加一行新的
+        let nw: IRow = new Row();
+        this.model.columns.forEach(col => {
+          let c = Cell.Value(DefaultValue(col.type)).strictAs(col)
+          if (!c.readonly)
+            c.editing = true
+          nw.push(c)
+        })
+        this.model.rows.push(nw)
+        this.createdRows.push(nw)
+        // 保存后才真正调用增加的event
+      },
+      actRefresh(scope) {
+        this.$emit('refresh')
+      },
+      btnEditLabel(scope) {
+        let row: IRow = scope.row
+        let rw = ArrayT.QueryObject(row.cells, e => {
+          return !e.readonly
+        })
+        // 没有找到一个可以修改的单元
+        if (rw == null)
+          return '只读'
+        // 找正在修改的
+        let ed = ArrayT.QueryObject(row.cells, e => {
+          return e.editing
+        })
+        return ed ? '取消' : '修改'
+      },
+      btnSaveDisabled(scope) {
+        let row: IRow = scope.row
+        // 如果没有不相等的，则代表没有改动，不能保存
+        let edd = ArrayT.QueryObject(row.cells, e => {
+          // tmp需要从ui值转回标准值，再比较有没有修改
+          return e.isModified();
+        })
+        return edd == null
+      },
+      actCustom(idx, scope) {
+        let row: IRow = scope.row
+        this.$emit('custom', row, idx)
       }
-    },
-    actCreate(scope) {
-      // 添加一行新的
-      let nw: IRow = new Row();
-      this.model.columns.forEach(col => {
-        let c = Cell.Value(DefaultValue(col.type)).strictAs(col)
-        if (!c.readonly)
-          c.editing = true
-        nw.push(c)
-      })
-      this.model.rows.push(nw)
-      this.createdRows.push(nw)
-      // 保存后才真正调用增加的event
-    },
-    actRefresh(scope) {
-      this.$emit('refresh')
-    },
-    btnEditLabel(scope) {
-      let row: IRow = scope.row
-      let rw = ArrayT.QueryObject(row.cells, e => {
-        return !e.readonly
-      })
-      // 没有找到一个可以修改的单元
-      if (rw == null)
-        return '只读'
-      // 找正在修改的
-      let ed = ArrayT.QueryObject(row.cells, e => {
-        return e.editing
-      })
-      return ed ? '取消' : '修改'
-    },
-    btnSaveDisabled(scope) {
-      let row: IRow = scope.row
-      // 如果没有不相等的，则代表没有改动，不能保存
-      let edd = ArrayT.QueryObject(row.cells, e => {
-        // tmp需要从ui值转回标准值，再比较有没有修改
-        return e.isModified();
-      })
-      return edd == null
-    },
-    actCustom(idx, scope) {
-      let row: IRow = scope.row
-      this.$emit('custom', row, idx)
     }
   }
-}
 </script>
 
-<style lang="scss" scoped>
-
-</style>

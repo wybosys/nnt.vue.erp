@@ -1,7 +1,7 @@
 {
-  "name": "nnt.vue",
+  "name": "nnt.vue.erp",
   "version": "1.0.0",
-  "description": "nnt.vue.erp 标准项目",
+  "description": "nnt前端框架",
   "author": "wybosys",
   "private": true,
   "scripts": {
@@ -20,7 +20,8 @@
     "element-ui": "^2.8.2",
     "js-md5": "^0.7.3",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.6"
+    "vue-router": "^3.0.6",
+    "vue-dplayer": "^0.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",

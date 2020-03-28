@@ -27,49 +27,45 @@
 
 <script lang="ts">
 
-import {IProperty} from "../../../model/base/Property";
+  import {IProperty} from "../../../model/base/Property";
 
-export default {
-  name: "PropertyGrid",
-  props: {
-    model: {
-      type: Array // IProperty[]
-    }
-  },
-  methods: {
-    actToggleEdit(scope) {
-      let row: IProperty = scope.row
-      if (!row.readonly) {
-        row.editing = !row.editing
-        if (!row.editing)
-          row.tmp = row.value
+  export default {
+    name: "PropertyGrid",
+    props: {
+      model: {
+        type: Array // IProperty[]
       }
     },
-    actSave(scope) {
-      let row: IProperty = scope.row
-      this.$emit('save', row, () => {
-        if (!row.readonly)
-          row.value = row.tmp
-      })
-    },
-    btnEditLabel(scope) {
-      let row: IProperty = scope.row
-      if (row.readonly)
-        return '只读'
-      return row.editing ? '取消' : '修改'
-    },
-    btnSaveDisabled(scope) {
-      let row: IProperty = scope.row
-      return row.tmp == row.value
-    },
-    actRefresh(scope) {
-      this.$emit('refresh')
+    methods: {
+      actToggleEdit(scope) {
+        let row: IProperty = scope.row
+        if (!row.readonly) {
+          row.editing = !row.editing
+          if (!row.editing)
+            row.tmp = row.value
+        }
+      },
+      actSave(scope) {
+        let row: IProperty = scope.row
+        this.$emit('save', row, () => {
+          if (!row.readonly)
+            row.value = row.tmp
+        })
+      },
+      btnEditLabel(scope) {
+        let row: IProperty = scope.row
+        if (row.readonly)
+          return '只读'
+        return row.editing ? '取消' : '修改'
+      },
+      btnSaveDisabled(scope) {
+        let row: IProperty = scope.row
+        return row.tmp == row.value
+      },
+      actRefresh(scope) {
+        this.$emit('refresh')
+      }
     }
   }
-}
 
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -2,6 +2,7 @@
   <erp-dialog ref="dlg"
               :title="title"
               @open="$emit('open', $event)"
+              @opened="$emit('opened', $event)"
               @cancel="$emit('cancel', $event)"
               @confirm="$emit('confirm', $event)"
               @close="$emit('close', $event)">
@@ -11,31 +12,31 @@
 
 <script lang="ts">
 
-import {PropertyDialog} from "../../../model/dialog/IPropertyDialog";
+  import {PropertyDialog} from "../../../model/dialog/IPropertyDialog";
 
-export default {
-  name: "PropertyDialog",
-  props: {
-    model: {
-      type: Object,
-      default: () => {
-        return new PropertyDialog()
+  export default {
+    name: "PropertyDialog",
+    props: {
+      model: {
+        type: Object,
+        default: () => {
+          return new PropertyDialog()
+        }
+      },
+      title: {
+        type: String
       }
     },
-    title: {
-      type: String
-    }
-  },
-  methods: {
-    show() {
-      this.$refs.dlg.show()
-    },
-    cancel() {
-      this.$refs.dlg.cancel()
-    },
-    confirm() {
-      this.$refs.dlg.confirm()
+    methods: {
+      show() {
+        this.$refs.dlg.show()
+      },
+      cancel() {
+        this.$refs.dlg.cancel()
+      },
+      confirm() {
+        this.$refs.dlg.confirm()
+      }
     }
   }
-}
 </script>
