@@ -1,9 +1,9 @@
-import {Storage} from './Storage';
-import {loadScript, uuid} from "./Compat";
+import { Storage } from './Storage';
+import { loadScript, uuid } from "./Compat";
 import Vue from 'vue'
 import Router from 'vue-router'
-import {IndexedObject, IndexedType} from "./Kernel";
-import {config} from "./Config";
+import { IndexedObject, IndexedType } from "./Kernel";
+import { config } from "./Config";
 import "babel-polyfill";
 
 Vue.config.productionTip = false
@@ -57,7 +57,7 @@ class RouterWrapper {
   private createRouter(routes: IRoute[]) {
     // 如果存在DEVOPS_DOMAIN，则需从path中剔除掉domain再进行跳转
     let domain = process.env.DEVOPS_DOMAIN
-    let produ = process.env.NODE_ENV != 'development'
+    // let produ = process.env.NODE_ENV != 'development'    
 
     let t: any = new Router({
       mode: 'history',
@@ -65,16 +65,18 @@ class RouterWrapper {
       base: domain
     })
 
-    // 对path进行修改
-    t.beforeEach((to, from, next) => {
-      let path = to.path
-      if (path.indexOf(domain) == 0) {
-        path = path.replace(domain, '')
-        next(path)
-      } else {
-        next()
-      }
-    })
+    if (domain != '') {
+      // 对path进行修改
+      t.beforeEach((to, from, next) => {
+        let path = to.path
+        if (path.indexOf(domain) == 0) {
+          path = path.replace(domain, '')
+          next(path)
+        } else {
+          next()
+        }
+      })
+    }
 
     return t
   }
