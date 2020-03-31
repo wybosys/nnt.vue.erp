@@ -8,8 +8,7 @@ function StopDevServer() {
     let pid = buf.toString()
     try {
       process.kill(parseInt(pid))
-    } catch (err) {
-    }
+    } catch (err) {}
     fs.unlinkSync('run/dev-server.pid')
   }
 }
@@ -317,6 +316,8 @@ function GenSites(dir) {
 // 获得当前项目配置的devops目录
 function GetDevopsDomain() {
   let devops = JSON.parse(fs.readFileSync('devops.json'))
+  if (devops.standalone)
+    return ''
   let path = devops.path.substr(15)
   return path
 }
