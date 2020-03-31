@@ -316,8 +316,6 @@ function GenSites(dir) {
 // 获得当前项目配置的devops目录
 function GetDevopsDomain() {
   let devops = JSON.parse(fs.readFileSync('devops.json'))
-  if (devops.standalone)
-    return ''
   let path = devops.path.substr(15)
   return path
 }
