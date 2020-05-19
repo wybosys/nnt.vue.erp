@@ -51,11 +51,11 @@ const webpackConfig = merge(baseWebpackConfig, {
     //取代 new webpack.NoEmitOnErrorsPlugin()，编译错误时不打印输出资源。
     noEmitOnErrors: true,
     splitChunks: {
-      chunks: "async", // 必须三选一： "initial" | "all"(默认就是all) | "async"
-      minSize: 102400, // 最小尺寸，默认0
-      minChunks: 3, // 最小 chunk ，默认1
-      maxAsyncRequests: 5, // 最大异步请求数， 默认1
-      maxInitialRequests: 3, // 最大初始化请求书，默认1
+      chunks: "initial", // 必须三选一： "initial" | "all"(默认就是all) | "async"
+      minSize: 0, // 最小尺寸，默认0
+      minChunks: 1, // 最小 chunk ，默认1
+      maxAsyncRequests: 1, // 最大异步请求数， 默认1
+      maxInitialRequests: 1, // 最大初始化请求书，默认1
       cacheGroups: {
         commons: {
           chunks: 'all',
