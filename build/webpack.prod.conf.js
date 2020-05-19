@@ -9,8 +9,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const {VueLoaderPlugin} = require('vue-loader')
+const TerserPlugin = require('terser-webpack-plugin');
+const {
+  VueLoaderPlugin
+} = require('vue-loader')
 
 const env = require('../config/prod.env')
 
@@ -33,7 +35,12 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   optimization: {
-    // minimizer: true,
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+      }),
+    ],
     providedExports: true,
     usedExports: true,
     //识别package.json中的sideEffects以剔除无用的模块，用来做tree-shake
@@ -44,13 +51,12 @@ const webpackConfig = merge(baseWebpackConfig, {
     //取代 new webpack.NoEmitOnErrorsPlugin()，编译错误时不打印输出资源。
     noEmitOnErrors: true,
     splitChunks: {
-      chunks: "initial", // 必须三选一： "initial" | "all"(默认就是all) | "async"
-      minSize: 0, // 最小尺寸，默认0
-      minChunks: 1, // 最小 chunk ，默认1
-      maxAsyncRequests: 1, // 最大异步请求数， 默认1
-      maxInitialRequests: 1, // 最大初始化请求书，默认1
+      chunks: "async", // 必须三选一： "initial" | "all"(默认就是all) | "async"
+      minSize: 102400, // 最小尺寸，默认0
+      minChunks: 3, // 最小 chunk ，默认1
+      maxAsyncRequests: 5, // 最大异步请求数， 默认1
+      maxInitialRequests: 3, // 最大初始化请求书，默认1
       cacheGroups: {
-        // test: path.resolve(__dirname, '../node_modules'),
         commons: {
           chunks: 'all',
           minChunks: 2,
@@ -71,13 +77,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        warnings: false
-      },
-      sourceMap: config.build.productionSourceMap,
-      parallel: true
-    }),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[md5:contenthash:hex:20].css'),
@@ -90,9 +89,14 @@ const webpackConfig = merge(baseWebpackConfig, {
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
-      cssProcessorOptions: config.build.productionSourceMap
-        ? {safe: true, map: {inline: false}}
-        : {safe: true}
+      cssProcessorOptions: config.build.productionSourceMap ? {
+        safe: true,
+        map: {
+          inline: false
+        }
+      } : {
+        safe: true
+      }
     }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
@@ -114,8 +118,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
+    new CopyWebpackPlugin([{
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
