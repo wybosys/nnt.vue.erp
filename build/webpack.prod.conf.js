@@ -98,17 +98,20 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency'
     }),
     new webpack.HashedModuleIdsPlugin(),
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../static'),
-      to: config.build.assetsSubDirectory
-    }], {
-      ignore: ['.*']
-    }),
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../src/router'),
-      to: config.build.assetsSubDirectory
-    }], {
-      ignore: ['**/*.ts']
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: path.resolve(__dirname, '../static'),
+        to: config.build.assetsSubDirectory,
+        globOptions: {
+          ignore: ['.*']
+        }
+      }, {
+        from: path.resolve(__dirname, '../src/router'),
+        to: config.build.assetsSubDirectory,
+        globOptions: {
+          ignore: ['**/*.ts']
+        }
+      }]
     })
   ]
 })
