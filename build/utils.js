@@ -29,11 +29,13 @@ exports.cssLoaders = function (options) {
 
   var px2remLoader = {
     loader: 'px2rem-loader',
+    // loader: 'postcss-px2rem',
     options: {
       remUnit: 75
     }
   };
 
+  // generate loader string to be used with extract text plugin
   function generateLoaders(loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
@@ -46,6 +48,8 @@ exports.cssLoaders = function (options) {
       });
     }
 
+    // Extract CSS when that option is specified
+    // (which is the case during production build)
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
@@ -104,10 +108,13 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
+    // sass: generateLoaders('sass', { indentedSyntax: true }),
+    // scss: generateLoaders('sass'),
     sass: generateSassResourceLoader(),
     scss: generateSassResourceLoader(),
     stylus: generateLoaders('stylus'),
@@ -115,6 +122,7 @@ exports.cssLoaders = function (options) {
   };
 };
 
+// Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
   const output = [];
   const loaders = exports.cssLoaders(options);
