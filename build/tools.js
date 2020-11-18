@@ -18,10 +18,10 @@ if ('PORT' in process.env)
   CONFIG.CONFIG_DEV.port = parseInt(process.env.PORT);
 
 if ('VERBOSE' in process.env)
-  CONFIG.verbose = process.env.VERBOSE!='false';
+  CONFIG.verbose = process.env.VERBOSE !== 'false';
 
 if ('SOURCEMAP' in process.env)
-  CONFIG.sourcemap = process.env.SOURCEMAP!='false';
+  CONFIG.sourcemap = process.env.SOURCEMAP !== 'false';
 
 // 停止dev用的web服务器
 function StopDevServer() {
@@ -30,7 +30,8 @@ function StopDevServer() {
     let pid = buf.toString();
     try {
       process.kill(parseInt(pid));
-    } catch (err) {}
+    } catch (err) {
+    }
     fs.unlinkSync('run/dev-server.pid');
   }
 }
@@ -39,11 +40,11 @@ function StopDevServer() {
 function SaveDevServer() {
   if (!fs.existsSync('run'))
     fs.mkdirSync('run');
-  fs.writeFileSync('run/dev-server.pid', process.pid);
+  fs.writeFileSync('run/dev-server.pid', process.pid.toString());
 }
 
 function UppercaseFirst(str) {
-  if (!str || str.length == 0)
+  if (!str || str.length === 0)
     return str;
   return str[0].toUpperCase() + str.substr(1);
 }
@@ -148,7 +149,7 @@ class RouterNode {
 
     r.node = path.basename(dir);
     r.dir = dir;
-    r.path = relv == '' ? '/' : relv;
+    r.path = relv === '' ? '/' : relv;
     r.rpath = r.node;
     r.label = UppercaseFirst(r.node);
     r.module = true;
@@ -196,7 +197,7 @@ class RouterNode {
       }
     });
 
-    r.module = r.children.length != 0;
+    r.module = r.children.length !== 0;
     return r;
   }
 }
@@ -340,17 +341,16 @@ function GetDevopsDomain() {
   let devops = JSON.parse(fs.readFileSync('devops.json'));
   if (devops.standalone)
     return '';
-  let path = devops.path.substr(15);
-  return path;
+  return devops.path.substr(15);
 }
 
 // 直接运行命令
-if (require.main == module) {
-  if (process.argv.indexOf('stop') != -1) {
+if (require.main === module) {
+  if (process.argv.indexOf('stop') !== -1) {
     StopDevServer();
-  } else if (process.argv.indexOf('routers') != -1) {
+  } else if (process.argv.indexOf('routers') !== -1) {
     GenRouters('index', 'app', 'components');
-  } else if (process.argv.indexOf('sites') != -1) {
+  } else if (process.argv.indexOf('sites') !== -1) {
     GenSites('sites');
   }
 }
