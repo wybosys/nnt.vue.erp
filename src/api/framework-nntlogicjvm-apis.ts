@@ -183,7 +183,10 @@ export class Echoo extends ApiModel {
       json:Object;
   
       @Model.map(5, Model.string_t, Model.integer_t, [Model.output])
-      map:Map<string,number>;
+      map:Map<string, number>;
+  
+      @Model.intfloat(12, 100, [Model.input, Model.output])
+      money:number;
   
       @Model.type(8, Null, [Model.output])
       nullval:Null;
