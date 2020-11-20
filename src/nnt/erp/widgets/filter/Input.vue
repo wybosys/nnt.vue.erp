@@ -1,6 +1,6 @@
 <template>
   <span class="wrap">
-    <span style="padding: 0 1em">{{ model.label }}</span>
+    <span style="padding: 0 1em; font-size:1.3em">{{ model.label }}</span>
 
     <el-input
       type="input"
@@ -186,7 +186,8 @@ export default {
   }
 
   .erp-filter-input .el-input--mini .el-input__inner {
-    height: 30pt
+    height: 30pt;
+    font-size: 1.2em;
   }
 }
 
