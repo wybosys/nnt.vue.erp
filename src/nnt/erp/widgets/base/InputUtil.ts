@@ -2,14 +2,27 @@ import {IProperty} from "../../../model/base/Property";
 import {VariantMajorType, VariantType} from "../../../core/Variant";
 
 export class InputType {
+
+  // 文字输入
   input: boolean;
+
+  // 数字输入
   number: boolean;
+
+  // 只读文字
   label: boolean;
+
+  // 日期输入
   date: boolean;
+
+  // 日期时间输入
   datetime: boolean;
-  switch: boolean;
+
+  // bool开关
   rocheck: boolean;
   rwcheck: boolean;
+
+  // 列表
   combo: boolean;
 
   static Detect(model: IProperty): InputType {

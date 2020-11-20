@@ -1,6 +1,7 @@
 <template>
   <span class="wrap">
     <span style="padding: 0 1em">{{ model.label }}</span>
+
     <el-input
       type="input"
       :placeholder="placeholder"
@@ -8,12 +9,33 @@
       v-model="model.tmp"
       :readonly="isReadonly()"
       :suffix-icon="suffixIcon()"
+      v-if="it().input || it().number || it().label"
+      class="erp-filter-input"
     >
       <el-select
         placeholder="比较"
         v-model="model.operator"
         slot="prepend"
-        class="input-with-select"
+        class="erp-filter-input-select"
+      >
+        <el-option label=">" value="gt"></el-option>
+        <el-option label=">=" value="gte"></el-option>
+        <el-option label="=" value="eq"></el-option>
+        <el-option label="!=" value="not"></el-option>
+        <el-option label="<" value="lt"></el-option>
+        <el-option label="<=" value="lte"></el-option>
+        <el-option label="🔍" value="search"></el-option>
+      </el-select>
+    </el-input>
+
+    <span
+      v-if="it().datetime"
+      class="erp-filter-input"
+    >
+      <el-select
+        placeholder="比较"
+        v-model="model.operator"
+        class="erp-filter-input-select"
       >
         <el-option label=">" value="gt"></el-option>
         <el-option label=">=" value="gte"></el-option>
@@ -25,55 +47,100 @@
       </el-select>
 
       <el-date-picker
-        v-if="it().datetime"
         type="datetime"
         placeholder="日期时间"
         align="right"
-        slot="append"
         value-format="yyyy-MM-dd HH:mm:ss"
-        :clearable="false"
-        :editable="false"
         size="mini"
         v-model="model.tmp"
       >
       </el-date-picker>
+    </span>
+
+    <span
+      v-if="it().date"
+      class="erp-filter-input"
+    >
+       <el-select
+         placeholder="比较"
+         v-model="model.operator"
+         class="erp-filter-input-select"
+       >
+        <el-option label=">" value="gt"></el-option>
+        <el-option label=">=" value="gte"></el-option>
+        <el-option label="=" value="eq"></el-option>
+        <el-option label="!=" value="not"></el-option>
+        <el-option label="<" value="lt"></el-option>
+        <el-option label="<=" value="lte"></el-option>
+        <el-option label="🔍" value="search"></el-option>
+      </el-select>
 
       <el-date-picker
-        v-if="it().date"
         type="date"
         placeholder="日期"
         align="right"
-        slot="append"
         value-format="yyyy-MM-dd"
-        :clearable="false"
-        :editable="false"
         size="mini"
         v-model="model.tmp"
       >
       </el-date-picker>
+    </span>
+
+    <span
+      v-if="it().combo"
+      class="erp-filter-input"
+    >
+      <el-select
+        placeholder="比较"
+        v-model="model.operator"
+        class="erp-filter-input-select"
+      >
+        <el-option label=">" value="gt"></el-option>
+        <el-option label=">=" value="gte"></el-option>
+        <el-option label="=" value="eq"></el-option>
+        <el-option label="!=" value="not"></el-option>
+        <el-option label="<" value="lt"></el-option>
+        <el-option label="<=" value="lte"></el-option>
+        <el-option label="🔍" value="search"></el-option>
+      </el-select>
 
       <erp-property-enumselect
-        v-else-if="it().combo"
-        slot="append"
-        :value="model"
-      >
+        :value="model">
       </erp-property-enumselect>
+    </span>
+
+    <span
+      v-if="it().rwcheck"
+      class="erp-filter-input"
+    >
+      <el-select
+        placeholder="比较"
+        v-model="model.operator"
+        class="erp-filter-input-select"
+      >
+        <el-option label=">" value="gt"></el-option>
+        <el-option label=">=" value="gte"></el-option>
+        <el-option label="=" value="eq"></el-option>
+        <el-option label="!=" value="not"></el-option>
+        <el-option label="<" value="lt"></el-option>
+        <el-option label="<=" value="lte"></el-option>
+        <el-option label="🔍" value="search"></el-option>
+      </el-select>
 
       <el-checkbox
-        v-else-if="it().rwcheck"
         :true-label="1"
         :false-label="0"
-        slot="append"
         v-model="model.tmp"
       >
       </el-checkbox>
-    </el-input>
+    </span>
+
   </span>
 </template>
 
 <script lang="ts">
-import { Filter } from "../../../model/filter/Filter";
-import { InputType, InputUtil } from "../base/InputUtil";
+import {Filter} from "../../../model/filter/Filter";
+import {InputType, InputUtil} from "../base/InputUtil";
 
 export default {
   name: "Input",
@@ -110,12 +177,16 @@ export default {
   display: flex;
   align-items: center;
 
-  .el-select .el-input {
+  .erp-filter-input-select .el-input {
     width: 90px;
   }
 
-  .el-input-group__prepend {
+  .erp-filter-input .el-input-group__prepend {
     background-color: #fff;
+  }
+
+  .erp-filter-input .el-input--mini .el-input__inner {
+    height: 30pt
   }
 }
 

@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <el-select v-model="value.tmp">
-      <el-option
-        v-for="(item,idx) in getOptions()"
-        :key="idx"
-        :label="item"
-        :value="item">
-      </el-option>
-    </el-select>
-  </div>
+  <el-select v-model="value.tmp" clearable>
+    <el-option
+      v-for="(item,idx) in getOptions()"
+      :key="idx"
+      :label="item"
+      :value="item">
+    </el-option>
+  </el-select>
 </template>
 
 <script lang="ts">
@@ -32,7 +30,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
