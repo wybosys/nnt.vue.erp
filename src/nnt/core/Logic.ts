@@ -1,22 +1,14 @@
-import {
-  ArrayT,
-  asString,
-  DateTime,
-  Delay,
-  IndexedObject,
-  IntFloat,
-  MapT,
-  MultiMap,
-  StringT,
-  toDouble,
-  toInt,
-  toJsonObject,
-  toNumber
-} from "./Kernel";
-import { KvObject } from "./Stl";
-import { Model } from "./ApiModel";
-import { WebSocketConnector } from "./SocketSession";
-import { Application } from "./Application";
+import {asString, Delay, IndexedObject, toDouble, toInt, toJsonObject, toNumber} from "./Kernel";
+import {KvObject} from "./Stl";
+import {Model} from "./ApiModel";
+import {WebSocketConnector} from "./SocketSession";
+import {Application} from "./Application";
+import {StringT} from "./StringT";
+import {MultiMap} from "./MultiMap";
+import {ArrayT} from "./ArrayT";
+import {IntFloat} from "./IntFloat";
+import {MapT} from "./MapT";
+import {DateTime} from "./DateTime";
 
 type Class<T> = { new(...args: any[]): T, [key: string]: any };
 type AnyClass = Class<any>;

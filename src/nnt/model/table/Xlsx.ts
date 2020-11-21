@@ -1,5 +1,5 @@
 import {IPropertyTable} from "./PropertyTable";
-import {ArrayT} from "../../core/Kernel";
+import {ArrayT} from "../../core/ArrayT";
 import {SendToDownload, StringToBlob} from "../../core/Dom";
 
 const xlsx = require('xlsx');

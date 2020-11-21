@@ -9,8 +9,9 @@
       v-model="model.tmp"
       :readonly="isReadonly()"
       :suffix-icon="suffixIcon()"
-      v-if="it().input || it().number || it().label"
+      v-if="it().input || it().label"
       class="erp-filter-input"
+      clearable
     >
       <el-select
         placeholder="比较"
@@ -28,6 +29,33 @@
       </el-select>
     </el-input>
 
+    <el-input-number
+      type="input"
+      :placeholder="placeholder"
+      ref="input"
+      v-model="model.tmp"
+      :readonly="isReadonly()"
+      :suffix-icon="suffixIcon()"
+      v-if="it().number"
+      class="erp-filter-input"
+      clearable
+      controls-position="right"
+    >
+      <el-select
+        placeholder="比较"
+        v-model="model.operator"
+        slot="prepend"
+        class="erp-filter-input-select"
+      >
+        <el-option label=">" value="gt"></el-option>
+        <el-option label=">=" value="gte"></el-option>
+        <el-option label="=" value="eq"></el-option>
+        <el-option label="!=" value="not"></el-option>
+        <el-option label="<" value="lt"></el-option>
+        <el-option label="<=" value="lte"></el-option>
+      </el-select>
+    </el-input-number>
+
     <span
       v-if="it().datetime"
       class="erp-filter-input"
@@ -43,7 +71,6 @@
         <el-option label="!=" value="not"></el-option>
         <el-option label="<" value="lt"></el-option>
         <el-option label="<=" value="lte"></el-option>
-        <el-option label="🔍" value="search"></el-option>
       </el-select>
 
       <el-date-picker
@@ -72,7 +99,6 @@
         <el-option label="!=" value="not"></el-option>
         <el-option label="<" value="lt"></el-option>
         <el-option label="<=" value="lte"></el-option>
-        <el-option label="🔍" value="search"></el-option>
       </el-select>
 
       <el-date-picker
@@ -95,13 +121,8 @@
         v-model="model.operator"
         class="erp-filter-input-select"
       >
-        <el-option label=">" value="gt"></el-option>
-        <el-option label=">=" value="gte"></el-option>
         <el-option label="=" value="eq"></el-option>
         <el-option label="!=" value="not"></el-option>
-        <el-option label="<" value="lt"></el-option>
-        <el-option label="<=" value="lte"></el-option>
-        <el-option label="🔍" value="search"></el-option>
       </el-select>
 
       <erp-property-enumselect
@@ -118,21 +139,14 @@
         v-model="model.operator"
         class="erp-filter-input-select"
       >
-        <el-option label=">" value="gt"></el-option>
-        <el-option label=">=" value="gte"></el-option>
         <el-option label="=" value="eq"></el-option>
         <el-option label="!=" value="not"></el-option>
-        <el-option label="<" value="lt"></el-option>
-        <el-option label="<=" value="lte"></el-option>
-        <el-option label="🔍" value="search"></el-option>
       </el-select>
 
-      <el-checkbox
-        :true-label="1"
-        :false-label="0"
-        v-model="model.tmp"
+      <erp-checkbox
+        :value="model"
       >
-      </el-checkbox>
+      </erp-checkbox>
     </span>
 
   </span>

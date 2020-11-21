@@ -17,7 +17,7 @@
                        :width="tableData[0][item.type] | width"
       >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{scope.row[item.type]}}</span>
+          <span style="margin-left: 10px">{{ scope.row[item.type] }}</span>
         </template>
       </el-table-column>
       <slot></slot>
@@ -98,27 +98,27 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .op {
-    padding-bottom: 20px;
-  }
+.op {
+  padding-bottom: 20px;
+}
 
-  .el-dropdown {
-    line-height: 30px;
-  }
+.el-dropdown {
+  line-height: 30px;
+}
 
-  .el-table {
-    background: none;
-  }
+.el-table {
+  background: none;
+}
 
-  .m-table {
-    width: 100%;
-    height: 100%;
-  }
+.m-table {
+  width: 100%;
+  height: 100%;
+}
 
-  .navPage {
-    position: fixed;
-    left: 50%;
-    bottom: 100px;
-  }
+.navPage {
+  position: fixed;
+  left: 50%;
+  bottom: 100px;
+}
 
 </style>

@@ -17,7 +17,7 @@
         <el-button size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
       </template>
       <template slot-scope="control">
-        <el-button size="mini" @click="actToggleEdit(control)">{{btnEditLabel(control)}}</el-button>
+        <el-button size="mini" @click="actToggleEdit(control)">{{ btnEditLabel(control) }}</el-button>
         <el-button size="mini" type="danger" @click="actSave(control)" :disabled="btnSaveDisabled(control)">保存
         </el-button>
       </template>
@@ -27,45 +27,45 @@
 
 <script lang="ts">
 
-  import {IProperty} from "../../../model/base/Property";
+import {IProperty} from "../../../model/base/Property";
 
-  export default {
-    name: "PropertyGrid",
-    props: {
-      model: {
-        type: Array // IProperty[]
+export default {
+  name: "PropertyGrid",
+  props: {
+    model: {
+      type: Array // IProperty[]
+    }
+  },
+  methods: {
+    actToggleEdit(scope) {
+      let row: IProperty = scope.row
+      if (!row.readonly) {
+        row.editing = !row.editing
+        if (!row.editing)
+          row.tmp = row.value
       }
     },
-    methods: {
-      actToggleEdit(scope) {
-        let row: IProperty = scope.row
-        if (!row.readonly) {
-          row.editing = !row.editing
-          if (!row.editing)
-            row.tmp = row.value
-        }
-      },
-      actSave(scope) {
-        let row: IProperty = scope.row
-        this.$emit('save', row, () => {
-          if (!row.readonly)
-            row.value = row.tmp
-        })
-      },
-      btnEditLabel(scope) {
-        let row: IProperty = scope.row
-        if (row.readonly)
-          return '只读'
-        return row.editing ? '取消' : '修改'
-      },
-      btnSaveDisabled(scope) {
-        let row: IProperty = scope.row
-        return row.tmp == row.value
-      },
-      actRefresh(scope) {
-        this.$emit('refresh')
-      }
+    actSave(scope) {
+      let row: IProperty = scope.row
+      this.$emit('save', row, () => {
+        if (!row.readonly)
+          row.value = row.tmp
+      })
+    },
+    btnEditLabel(scope) {
+      let row: IProperty = scope.row
+      if (row.readonly)
+        return '只读'
+      return row.editing ? '取消' : '修改'
+    },
+    btnSaveDisabled(scope) {
+      let row: IProperty = scope.row
+      return row.tmp == row.value
+    },
+    actRefresh(scope) {
+      this.$emit('refresh')
     }
   }
+}
 
 </script>

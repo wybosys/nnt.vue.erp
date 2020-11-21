@@ -6,7 +6,7 @@
       </el-button>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="(item,index) in nowTab" :key="index" :command="index">
-          <i class="el-icon-check" v-if="item.hidden"></i> {{item.title}}
+          <i class="el-icon-check" v-if="item.hidden"></i> {{ item.title }}
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -36,6 +36,3 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-
-</style>

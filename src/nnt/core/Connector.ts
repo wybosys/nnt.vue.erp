@@ -1,15 +1,9 @@
-import {Failed, IndexedObject, SObject, UrlT} from "./Kernel";
-import {
-  SignalChanged,
-  SignalClose,
-  SignalDataChanged,
-  SignalDone,
-  SignalEnd,
-  SignalFailed,
-  SignalOpen, SignalTimeout
-} from "./Signals";
+import {Failed, IndexedObject} from "./Kernel";
+import {SignalChanged, SignalClose, SignalDataChanged, SignalDone, SignalEnd, SignalFailed, SignalOpen, SignalTimeout} from "./Signals";
 import {KvObject} from "./Stl";
 import {Media} from "./Media";
+import {SObject} from "./SObject";
+import {UrlT} from "./UrlT";
 
 export enum HttpMethod {
   GET,

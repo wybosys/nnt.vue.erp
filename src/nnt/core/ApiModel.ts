@@ -1,22 +1,16 @@
 // 网络连接错误
-import {
-  ArrayT,
-  Delay,
-  drop,
-  ICacheObject,
-  IndexedMap,
-  Interval,
-  ISerializable,
-  Memcache,
-  ObjectT,
-  SObject,
-  UrlT
-} from "./Kernel";
+import {Delay, drop, ICacheObject, Interval, ISerializable} from "./Kernel";
 import {SignalEnd, SignalFailed, SignalStart, SignalSucceed, SignalTimeout, Slot, SlotTunnel} from "./Signals";
 import {KvObject} from "./Stl";
 import {CHttpConnector, HttpMethod} from "./Connector";
 import {Hud} from "./Hud";
 import {config} from "./Config";
+import {ObjectT} from "./ObjectT";
+import {SObject} from "./SObject";
+import {UrlT} from "./UrlT";
+import {Memcache} from "./Memcache";
+import {IndexedMap} from "./IndexedMap";
+import {ArrayT} from "./ArrayT";
 
 export const ERROR_NETWORK_FAILED = -0xFFFFFFFE;
 export const ERROR_RESPONSE_FAILED = -0xFFFFFFFD;

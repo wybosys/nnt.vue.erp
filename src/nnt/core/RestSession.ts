@@ -1,9 +1,12 @@
 import {Model, VERBOSE} from "./ApiModel";
-import {DateTime, IndexedObject, ISObject, Memcache, SObject} from "./Kernel";
+import {ISObject} from "./Kernel";
 import {SignalDone, SignalEnd, SignalFailed, SignalStart, SignalSucceed, SignalTimeout, Slot} from "./Signals";
-import {HttpConnector, HttpMethod} from "./Connector";
+import {HttpConnector} from "./Connector";
 import {config} from "./Config";
 import {storagable} from "./Storage";
+import {SObject} from "./SObject";
+import {DateTime} from "./DateTime";
+import {Memcache} from "./Memcache";
 
 export class _CrossLoader {
   private static _regID: number = 0;

@@ -1,5 +1,6 @@
 import {IApplicationRouter, IRoute} from "../core/Application";
-import {ArrayT, StringT} from "../core/Kernel";
+import {ArrayT} from "../core/ArrayT";
+import {StringT} from "../core/StringT";
 
 export class TreeNode {
   id: number;

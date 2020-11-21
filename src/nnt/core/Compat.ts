@@ -1,14 +1,13 @@
-var __PROTO: any = Date.prototype;
-__PROTO.pattern = function (fmt: string) {
+export function formatDate(date: Date, fmt: string): string {
   var o: any = {
-    "M+": this.getMonth() + 1,
-    "d+": this.getDate(),
-    "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12,
-    "H+": this.getHours(),
-    "m+": this.getMinutes(),
-    "s+": this.getSeconds(),
-    "q+": Math.floor((this.getMonth() + 3) / 3),
-    "S": this.getMilliseconds()
+    "M+": date.getMonth() + 1,
+    "d+": date.getDate(),
+    "h+": date.getHours() % 12 == 0 ? 12 : date.getHours() % 12,
+    "H+": date.getHours(),
+    "m+": date.getMinutes(),
+    "s+": date.getSeconds(),
+    "q+": Math.floor((date.getMonth() + 3) / 3),
+    "S": date.getMilliseconds()
   };
   var week: any = {
     "0": "/u65e5",
@@ -20,10 +19,10 @@ __PROTO.pattern = function (fmt: string) {
     "6": "/u516d"
   };
   if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
   }
   if (/(E+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
+    fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[date.getDay() + ""]);
   }
   for (var k in o) {
     if (new RegExp("(" + k + ")").test(fmt)) {
@@ -31,6 +30,11 @@ __PROTO.pattern = function (fmt: string) {
     }
   }
   return fmt;
+}
+
+var __PROTO: any = Date.prototype;
+__PROTO.pattern = function (fmt: string) {
+  return formatDate(this, fmt);
 };
 
 export var HashKey = function (o: any) {

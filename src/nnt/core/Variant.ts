@@ -1,17 +1,9 @@
-import {
-  asString,
-  DateTime,
-  EnumT,
-  IntFloat,
-  MultiMap,
-  StringT,
-  toBoolean,
-  toDouble,
-  toInt,
-  toJson,
-  toJsonObject,
-  toNumber
-} from "./Kernel";
+import {asString, toBoolean, toDouble, toInt, toJson, toJsonObject, toNumber} from "./Kernel";
+import {EnumT} from "./EnumT";
+import {MultiMap} from "./MultiMap";
+import {DateTime} from "./DateTime";
+import {IntFloat} from "./IntFloat";
+import {StringT} from "./StringT";
 
 // 系统中支持的变量数据主类型
 export enum VariantMajorType {
@@ -31,7 +23,9 @@ export enum VariantMajorType {
   DATE = 13, // 日期
   PERCENTAGE = 14, // 百分数
   ENUM = 15, // 枚举
-  INTFLOAT = 16, // 使用int表示float
+  INTFLOAT = 16, // 使用int表示float,
+  DATETIME_RANGE = 17, // 日期时间区间
+  DATE_RANGE = 18, // 日期区间
 }
 
 // 有些变量类型需要附加传递数据，所以数据类型定义为一个结构，而不是传统的标量类型
@@ -63,6 +57,8 @@ export class VariantType {
   static DATETIME = new VariantType(VariantMajorType.DATETIME);
   static DATE = new VariantType(VariantMajorType.DATE);
   static PERCENTAGE = new VariantType(VariantMajorType.PERCENTAGE);
+  static DATETIME_RANGE = new VariantType(VariantMajorType.DATETIME_RANGE);
+  static DATE_RANGE = new VariantType(VariantMajorType.DATE_RANGE);
 
   // 枚举类型
   static ENUM(typ: any): VariantType {

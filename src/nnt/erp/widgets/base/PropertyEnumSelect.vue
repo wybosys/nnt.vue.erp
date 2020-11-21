@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import {EnumT} from "../../../core/Kernel";
+import {EnumT} from "../../../core/EnumT";
 import {VariantMajorType} from "../../../core/Variant";
 
 export default {

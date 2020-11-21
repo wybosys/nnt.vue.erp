@@ -1,4 +1,5 @@
-import {ArrayT, drop} from "./Kernel";
+import {drop} from "./Kernel";
+import {ArrayT} from "./ArrayT";
 
 export class ObjectReference {
   object: any;

@@ -1,5 +1,5 @@
 import {IProperty, Property} from "../base/Property";
-import {ObjectT} from "../../core/Kernel";
+import {ObjectT} from "../../core/ObjectT";
 import {IColumn} from "./Column";
 
 export interface ICell extends IProperty {

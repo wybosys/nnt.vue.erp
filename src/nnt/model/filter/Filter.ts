@@ -1,8 +1,9 @@
 import {IProperty, Property} from "../base/Property";
 import {VariantType} from "../../core/Variant";
-import {indexed, IndexedObject, IntFloat, toJson} from "../../core/Kernel";
+import {indexed, IndexedObject, toJson} from "../../core/Kernel";
 import {AnyClass} from "../../core/Stl";
 import {FieldOption, GetModel} from "../../core/Logic";
+import {IntFloat} from "../../core/IntFloat";
 
 const OPERATORS = ["gt", "gte", "eq", "not", "lt", "lte", "search"];
 

@@ -14,9 +14,11 @@ export class InputType {
 
   // 日期输入
   date: boolean;
+  date_range: boolean;
 
   // 日期时间输入
   datetime: boolean;
+  datetime_range: boolean;
 
   // bool开关
   rocheck: boolean;
@@ -39,8 +41,14 @@ export class InputType {
           case VariantMajorType.DATETIME:
             r.datetime = true;
             break;
+          case VariantMajorType.DATETIME_RANGE:
+            r.datetime_range = true;
+            break;
           case VariantMajorType.DATE:
             r.date = true;
+            break;
+          case VariantMajorType.DATE_RANGE:
+            r.date_range = true;
             break;
           case VariantMajorType.BOOLEAN:
             r.rwcheck = true;

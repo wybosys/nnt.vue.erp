@@ -12,6 +12,8 @@ import Dialog from "./dialog/Dialog.vue";
 import PropertyDialog from "./dialog/PropertyDialog.vue";
 import FilterInput from "./filter/Input.vue";
 import FilterList from "./filter/List.vue";
+import ParameterInput from "./parameter/Input.vue";
+import ParameterList from "./parameter/List.vue";
 import NavigationList from "./navigation/List.vue";
 import PickerDropList from "./picker/DropList.vue";
 import Tab from "./tab/Tab.vue";
@@ -22,11 +24,13 @@ import PropertyGrid from "./table/PropertyGrid.vue";
 import PropertyTable from "./table/PropertyTable.vue";
 import VideoPlayer from "./media/VideoPlayer.vue";
 import VideoPlayerDialog from "./dialog/VideoPlayerDialog.vue";
+import Checkbox from "./base/Checkbox.vue";
 
 export default {
   install: (Vue) => {
     Vue.component('erp-button', Button);
     Vue.component('erp-select', Select);
+    Vue.component('erp-checkbox', Checkbox);
     Vue.component('erp-input', Input);
     Vue.component('erp-input-property', PropertyInput);
     Vue.component('erp-checkbox-readonly', ReadonlyCheckbox);
@@ -39,6 +43,8 @@ export default {
     Vue.component('erp-propertydialog', PropertyDialog);
     Vue.component('erp-filter-input', FilterInput);
     Vue.component('erp-filter-list', FilterList);
+    Vue.component('erp-parameter-input', ParameterInput);
+    Vue.component('erp-parameter-list', ParameterList);
     Vue.component('erp-navigation-list', NavigationList);
     Vue.component('erp-picker-droplist', PickerDropList);
     Vue.component('erp-tab', Tab);

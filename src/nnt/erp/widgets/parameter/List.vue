@@ -1,30 +1,30 @@
 <template>
-  <div class="erp-filter-list">
-    <erp-filter-input
+  <div class="erp-parameter-list">
+    <erp-parameter-input
       v-for="(each,index) in model"
       :model="each"
       :key="index">
-    </erp-filter-input>
+    </erp-parameter-input>
   </div>
 </template>
 
 <script lang="ts">
 
-import {IFilter} from "../../../model/filter/Filter";
+import {IParameter} from "../../../model/parameter/Parameter";
 
 export default {
   name: "List",
   props: {
     model: {
-      type: Array, // IFilter,
-      default: new Array<IFilter>()
+      type: Array,
+      default: new Array<IParameter>()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.erp-filter-list {
+.erp-parameter-list {
   display: flex;
   flex-wrap: wrap;
 }

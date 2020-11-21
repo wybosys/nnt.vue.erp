@@ -1,18 +1,11 @@
 // connect解析返回数据时必须实现的接口
 import {CSocketConnector} from "./Connector";
-import {ISObject, SObject, StringT, toJson, toJsonObject} from "./Kernel";
-import {
-  SignalClose,
-  SignalConnected,
-  SignalDataChanged,
-  SignalEnd,
-  SignalFailed,
-  SignalOpen,
-  SignalSucceed, SignalTimeout,
-  Slot
-} from "./Signals";
+import {ISObject, toJson, toJsonObject} from "./Kernel";
+import {SignalClose, SignalConnected, SignalDataChanged, SignalEnd, SignalFailed, SignalOpen, SignalSucceed, SignalTimeout, Slot} from "./Signals";
 import {Model} from "./ApiModel";
 import {CMap} from "./Stl";
+import {StringT} from "./StringT";
+import {SObject} from "./SObject";
 
 export interface ISocketResponse {
 

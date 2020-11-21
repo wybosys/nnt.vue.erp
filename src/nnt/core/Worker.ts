@@ -1,4 +1,5 @@
-import {IndexedObject, StringT} from "./Kernel";
+import {IndexedObject} from "./Kernel";
+import {StringT} from "./StringT";
 
 export function WorkerFromString(str: string): Worker {
   let b = new Blob([str], {type: 'application/javascript'});
@@ -19,8 +20,7 @@ export function StartService(url: string, cb: (w: Worker) => void) {
     let work = new Worker(url);
     services[key] = work;
     cb(work);
-  }
-  catch (err) {
+  } catch (err) {
     services[key] = null;
     cb(null);
   }

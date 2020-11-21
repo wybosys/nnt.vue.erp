@@ -1,7 +1,9 @@
-// 用于穿透整个emit流程的对象
 import {CSet, KvObject} from "./Stl";
-import {ArrayT, ObjectT, SetT} from "./Kernel";
+import {ArrayT} from "./ArrayT";
+import {ObjectT} from "./ObjectT";
+import {SetT} from "./SetT";
 
+// 用于穿透整个emit流程的对象
 export class SlotTunnel {
   /** 是否请求中断了emit过程 */
   veto: boolean;
@@ -387,7 +389,7 @@ export class Signals {
       sig2 = params[1];
       target = params[2];
     } else if (params.length == 2) {
-      if (typeof(params[1]) == 'string') {
+      if (typeof (params[1]) == 'string') {
         sig2 = params[1];
         target = this.owner;
       } else {
@@ -492,8 +494,7 @@ export class Signals {
         if (!this.isConnectedOfTarget(target))
           this.__inv_disconnect(target);
       }, this);
-    }
-    else {
+    } else {
       // 先清除对应的slot，再判断是否存在和target相连的插槽，如过不存在，则断开反向连接
       if (ss.disconnect(cb, target) &&
         target && !this.isConnectedOfTarget(target)) {

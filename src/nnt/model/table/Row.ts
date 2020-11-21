@@ -1,5 +1,5 @@
 import {ICell} from "./Cell";
-import {ArrayT} from "../../core/Kernel";
+import {ArrayT} from "../../core/ArrayT";
 import {FieldOption, GetModel} from "../../core/Logic";
 
 export interface IRow<T = any> {
