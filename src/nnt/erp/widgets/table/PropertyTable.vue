@@ -1,23 +1,25 @@
 <template>
-  <div id="table">
-    <el-table :style="{width:tableWidth}"
-              border
-              fit
-              stripe
-              highlight-current-row
-              :data="model.rows"
+  <div ref="table">
+    <el-table
+      :style="{width:tableWidth}"
+      border
+      fit
+      stripe
+      highlight-current-row
+      :data="model.rows"
     >
       <el-table-column v-for="(col,index) in model.columns"
-                       :fixed="index == 0"
+                       :fixed="index === 0"
                        :key="index"
                        :prop="col.variable"
                        :label="col.label"
-                       :sortable="col.sort == 1 || col.sort == 2"
+                       :sortable="col.sort === 1 || col.sort === 2"
                        :min-width="col | columnWidth">
         <template slot-scope="input">
           <erp-input-property :model="input.row.cells[index]"></erp-input-property>
         </template>
       </el-table-column>
+
       <el-table-column :width="calcEditWidth(model)" fixed="right">
         <template slot="header" slot-scope="header">
           <el-button v-if="model.refreshable" size="mini" type="success" @click="actRefresh(header)">刷新</el-button>
@@ -41,11 +43,13 @@
 
         </template>
       </el-table-column>
+
     </el-table>
   </div>
 </template>
 
 <script lang="ts">
+
 import {Cell} from "../../../model/table/Cell";
 import {DefaultValue} from "../../../core/Variant";
 import {PropertyTable} from "../../../model/table/PropertyTable";
@@ -54,11 +58,16 @@ import {IRow, Row} from "../../../model/table/Row";
 import {Property} from "../../../model/base/Property";
 import {ArrayT} from "../../../core/ArrayT";
 
-const TABLE_CHAR_WIDTH = 14
-const TABLE_SPACE = 22
+const TABLE_CHAR_WIDTH = 6
+const TABLE_SPACE = 6
 const TABLE_SKIP_SCROll = 10
 const BUTTON_WIDTH = 56
 const BUTTON_MARGIN = 10
+
+export function CalcColumnWidth(col: IColumn) {
+  let buf = Buffer.from(col.label)
+  return buf.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
+}
 
 export default {
   name: "PropertyTable",
@@ -77,10 +86,10 @@ export default {
     tableWidth() {
       let len = 0;
       this.model.columns.forEach((col: IColumn) => {
-        len += col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
+        len += CalcColumnWidth(col)
       })
       len += TABLE_SKIP_SCROll + this.editAreaWidth
-      let main = document.body.querySelector('#table');
+      let main = this.$refs.table
       if (main && len < main.clientWidth)
         len = main.clientWidth
       return len + 'px'
@@ -88,7 +97,7 @@ export default {
   },
   filters: {
     columnWidth(col: IColumn) {
-      return col.label.length * col.widthfactor * TABLE_CHAR_WIDTH + TABLE_SPACE
+      return CalcColumnWidth(col)
     }
   },
   methods: {

@@ -1,4 +1,16 @@
+import {Serie} from "./Serie";
+
 export class Series {
-  name: string;  // 该数据名称
-  type: string;  //该数据api中对应的参数  /* {name: '总分享次数',type: 'allcount'}  */
+
+  protected _series: Serie[] = [];
+
+  clear(): this {
+    this._series = [];
+    return this;
+  }
+
+  add(s: Serie): this {
+    this._series.push(s);
+    return this;
+  }
 }
