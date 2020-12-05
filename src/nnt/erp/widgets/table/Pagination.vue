@@ -24,6 +24,15 @@ export default {
       return Math.ceil(this.model.total / this.model.limit)
     },
     currentPage() {
+      let max = this.totalpages()
+      if (max == 0) {
+        this.model.page = 0
+        return 1
+      }
+      if (this.model.page >= max) {
+        this.model.page = max - 1
+        return max
+      }
       return this.model.page + 1
     },
     cbPageChanged(cur) {
