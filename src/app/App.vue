@@ -22,6 +22,8 @@
 <script lang="ts">
 
 import {Application} from "../nnt/core/Application";
+import {TestClient} from "../api/logic-grpc/dubbo/TestServiceClientPb";
+import {ReqTestEcho} from "../api/logic-grpc/dubbo/test_pb";
 
 export default {
   name: "Login",
@@ -49,6 +51,15 @@ export default {
     }
   }
 }
+
+// 测试grpc接口访问
+let cli = new TestClient('http://localhost:8094', null, null)
+let req = new ReqTestEcho()
+req.setInput('js-hello')
+cli.echo(req, null).then(resp=>{
+  alert(resp.getOutput())
+})
+
 </script>
 
 <style lang="scss" scoped>
