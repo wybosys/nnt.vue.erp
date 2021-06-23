@@ -5,9 +5,10 @@
 ## 准备工作
 
 ### nodejs环境
+
 - node 8 以上
 - cnpm https://cnpmjs.org/
-
+- typescript
 
 ### 开发简易指南
 
@@ -25,4 +26,3 @@
 
 5，多站点模式刷新路由表
 > npm run sites
-
