@@ -2,24 +2,27 @@
 
 > 基于nnt.vue开发ERP类标准项目
 
-## Build Setup
+## 准备工作
 
-``` bash
-# install dependencies
-npm install
+### nodejs环境
+- node 8 以上
+- cnpm https://cnpmjs.org/
 
-# serve with hot reload at localhost:8080
-npm run dev
 
-# build for production with minification
-npm run build
+### 开发简易指南
 
-# build for production and view the bundle analyzer report
-npm run build --report
+1, 进入项目目录安装依赖库
+> cnpm install
 
-# 单站点模式生成路由
-npm run routers
+2，启动开发服务
+> npm run dev
 
-# 多站点模式生成路由
-npm run sites
-```
+3，打包发布版至dist文件夹
+> npm run build
+
+4，单站点模式刷新路由表
+> npm run routers
+
+5，多站点模式刷新路由表
+> npm run sites
+
