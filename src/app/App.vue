@@ -55,7 +55,7 @@ export default {
 // 测试grpc接口访问，服务通过 github.com/wybosys/nnt.logic.jvm 提供支持
 let cli = new TestClient('http://localhost:8094', null, null)
 let req = new ReqTestEcho()
-req.setInput(new Date().toDateString())
+req.setInput(`grpc-test: ${new Date()}`)
 cli.echo(req, null).then(resp=>{
   console.info(resp.getOutput())
 })
