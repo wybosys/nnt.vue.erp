@@ -2,8 +2,10 @@
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
+const {
+  merge
+} = require('webpack-merge')
 const config = require('../config')
-const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -43,13 +45,15 @@ const webpackConfig = merge(baseWebpackConfig, {
     ],
     providedExports: true,
     usedExports: true,
-    //识别package.json中的sideEffects以剔除无用的模块，用来做tree-shake
-    //依赖于optimization.providedExports和optimization.usedExports
+    // 识别package.json中的sideEffects以剔除无用的模块，用来做tree-shake
+    // 依赖于optimization.providedExports和optimization.usedExports
     sideEffects: true,
-    //取代 new webpack.optimize.ModuleConcatenationPlugin()
+    // 取代 new ModuleConcatenationPlugin()
     concatenateModules: true,
-    //取代 new webpack.NoEmitOnErrorsPlugin()，编译错误时不打印输出资源。
+    // 取代 new NoEmitOnErrorsPlugin()
     noEmitOnErrors: true,
+    // 取代 new HashedModulesPlugin()
+    moduleIds: 'hashed',
     splitChunks: {
       chunks: "initial", // 必须三选一： "initial" | "all"(默认就是all) | "async"
       minSize: 0, // 最小尺寸，默认0
@@ -115,14 +119,12 @@ const webpackConfig = merge(baseWebpackConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
-    // keep module.id stable when vendor modules does not change
-    new webpack.HashedModuleIdsPlugin(),
     // copy custom static assets
     new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../static'),
-      to: config.build.assetsSubDirectory,
-      ignore: ['.*']
-    },
+        from: path.resolve(__dirname, '../static'),
+        to: config.build.assetsSubDirectory,
+        ignore: ['.*']
+      },
       {
         from: path.resolve(__dirname, '../src/router'),
         to: config.dev.assetsSubDirectory,
@@ -134,7 +136,6 @@ const webpackConfig = merge(baseWebpackConfig, {
 
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
-
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
       asset: '[path].gz[query]',

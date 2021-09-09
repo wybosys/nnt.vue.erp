@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "esnext",
+    "sourceMap": false,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "lib": [
+      "esnext",
+      "dom"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}
