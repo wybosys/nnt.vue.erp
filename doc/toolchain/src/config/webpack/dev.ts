@@ -1,16 +1,16 @@
-import webpack from 'webpack'
-import webpackDevServer from 'webpack-dev-server'
+import webpack = require('webpack')
+import webpackDevServer = require('webpack-dev-server')
 import { merge } from 'webpack-merge'
 import baseWebpackConfig from './base'
 import config from '../../config'
 import config_dev from '../../config/dev'
 import { StyleLoaders, FriendlyErrorsHandler } from '../../utils'
-import path from 'path'
+import path = require('path')
 import { VueLoaderPlugin } from 'vue-loader'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import portfinder from 'portfinder'
-import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
+import HtmlWebpackPlugin = require('html-webpack-plugin')
+import CopyWebpackPlugin = require('copy-webpack-plugin')
+import portfinder = require('portfinder')
+import FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)

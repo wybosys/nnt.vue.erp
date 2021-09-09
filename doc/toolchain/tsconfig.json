@@ -5,7 +5,7 @@
     "sourceMap": false,
     "strict": true,    
     "removeComments": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "resolveJsonModule": false,

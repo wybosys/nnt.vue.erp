@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ -e tmp ]; then
+    rm -rf tmp
+fi
+
 tsc
 
 if [ -e ../../build ]; then
@@ -7,4 +11,4 @@ if [ -e ../../build ]; then
 fi
 
 mkdir ../../build
-cp -r tmp/src/* ../../build
+cp -rf tmp/* ../../build

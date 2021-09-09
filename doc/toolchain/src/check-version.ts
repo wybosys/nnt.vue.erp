@@ -1,14 +1,14 @@
-import child_process from 'child_process'
+import child_process = require('child_process')
 import { clean, satisfies } from 'semver'
-import shell from 'shelljs'
-import chalk from 'chalk'
+import shell = require('shelljs')
+import chalk = require('chalk')
 import { LoadJson } from './utils'
-
-let package_json = LoadJson('../package.json')
 
 function exec(cmd: string) {
   return child_process.execSync(cmd).toString().trim()
 }
+
+let package_json = LoadJson(__dirname, '../package.json')
 
 const VersionRequirements = [
   {

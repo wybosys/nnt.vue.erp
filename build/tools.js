@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetDevopsDomain = exports.GenSites = exports.GenRouters = exports.RouterNode = exports.UppercaseFirst = exports.SaveDevServer = exports.StopDevServer = exports.CONFIG = void 0;
-const fs_1 = require("fs");
-const path_1 = require("path");
+const fs = require("fs");
+const path = require("path");
 exports.CONFIG = {
     CONFIG_DEV: {
         host: 'localhost',
@@ -20,22 +20,22 @@ if ('VERBOSE' in process.env)
 if ('SOURCEMAP' in process.env)
     exports.CONFIG.sourcemap = process.env.SOURCEMAP !== 'false';
 function StopDevServer() {
-    if (fs_1.default.existsSync('run/dev-server.pid')) {
-        let buf = fs_1.default.readFileSync('run/dev-server.pid');
+    if (fs.existsSync('run/dev-server.pid')) {
+        let buf = fs.readFileSync('run/dev-server.pid');
         let pid = buf.toString();
         try {
             process.kill(parseInt(pid));
         }
         catch (err) {
         }
-        fs_1.default.unlinkSync('run/dev-server.pid');
+        fs.unlinkSync('run/dev-server.pid');
     }
 }
 exports.StopDevServer = StopDevServer;
 function SaveDevServer() {
-    if (!fs_1.default.existsSync('run'))
-        fs_1.default.mkdirSync('run');
-    fs_1.default.writeFileSync('run/dev-server.pid', process.pid.toString());
+    if (!fs.existsSync('run'))
+        fs.mkdirSync('run');
+    fs.writeFileSync('run/dev-server.pid', process.pid.toString());
 }
 exports.SaveDevServer = SaveDevServer;
 function UppercaseFirst(str) {
@@ -106,17 +106,17 @@ class RouterNode {
     }
     static FromDirectory(dir, relv) {
         let r = new RouterNode();
-        r.node = path_1.default.basename(dir);
+        r.node = path.basename(dir);
         r.dir = dir;
         r.path = relv === '' ? '/' : relv;
         r.rpath = r.node;
         r.label = UppercaseFirst(r.node);
         r.module = true;
-        if (fs_1.default.existsSync(`src/${dir}/${r.label}.vue`)) {
+        if (fs.existsSync(`src/${dir}/${r.label}.vue`)) {
             r.page = r.label;
         }
-        if (fs_1.default.existsSync(`src/${dir}/config.json`)) {
-            let cfgobj = JSON.parse(fs_1.default.readFileSync(`src/${dir}/config.json`).toLocaleString());
+        if (fs.existsSync(`src/${dir}/config.json`)) {
+            let cfgobj = JSON.parse(fs.readFileSync(`src/${dir}/config.json`).toLocaleString());
             if (cfgobj.path)
                 r.path = cfgobj.path;
             if (cfgobj.rpath)
@@ -130,8 +130,8 @@ class RouterNode {
             if (cfgobj.hide)
                 r.hide = true;
         }
-        fs_1.default.readdirSync(`src/${dir}`).forEach(e => {
-            let st = fs_1.default.statSync(`src/${dir}/${e}`);
+        fs.readdirSync(`src/${dir}`).forEach(e => {
+            let st = fs.statSync(`src/${dir}/${e}`);
             if (st.isDirectory()) {
                 let c = RouterNode.FromDirectory(`${dir}/${e}`, `${relv}/${e}`);
                 if (!c)
@@ -141,7 +141,7 @@ class RouterNode {
             else if (e.endsWith('.vue')) {
                 let c = new RouterNode();
                 c.dir = dir;
-                c.page = c.label = path_1.default.basename(e, '.vue');
+                c.page = c.label = path.basename(e, '.vue');
                 c.node = c.page.toLowerCase();
                 c.rpath = c.node;
                 c.path = `${relv}/${c.rpath}`;
@@ -158,7 +158,7 @@ function GenRouters(outputfile, ...srcdirs) {
     let defs = [];
     let decls = [];
     srcdirs.forEach(e => {
-        if (!fs_1.default.existsSync(`src/${e}`))
+        if (!fs.existsSync(`src/${e}`))
             return;
         let n = RouterNode.FromDirectory(`${e}`, '');
         n.all().forEach(e => {
@@ -210,26 +210,26 @@ function GenRouters(outputfile, ...srcdirs) {
     index.push(defs.join(',\n'));
     index.push(']');
     index.push('}');
-    fs_1.default.writeFileSync(`src/router/${outputfile}.ts`, index.join('\n'));
+    fs.writeFileSync(`src/router/${outputfile}.ts`, index.join('\n'));
     let json = [];
     json.push('[');
     json.push(decls.join(',\n'));
     json.push(']');
-    fs_1.default.writeFileSync(`src/router/${outputfile}.json`, json.join('\n'));
+    fs.writeFileSync(`src/router/${outputfile}.json`, json.join('\n'));
 }
 exports.GenRouters = GenRouters;
 function GenSites(dir) {
     let sites = [];
     let defaultsite = null;
-    fs_1.default.readdirSync(`src/${dir}`).forEach(e => {
-        let st = fs_1.default.statSync(`src/${dir}/${e}`);
+    fs.readdirSync(`src/${dir}`).forEach(e => {
+        let st = fs.statSync(`src/${dir}/${e}`);
         if (!st.isDirectory())
             return;
         sites.push(e);
         GenRouters(`${e}`, `sites/${e}`);
         let cfg = 'src/' + dir + '/' + e + '/config.json';
-        if (fs_1.default.existsSync(cfg)) {
-            let cfgobj = JSON.parse(fs_1.default.readFileSync(cfg).toLocaleString());
+        if (fs.existsSync(cfg)) {
+            let cfgobj = JSON.parse(fs.readFileSync(cfg).toLocaleString());
             if (cfgobj.default)
                 defaultsite = e;
         }
@@ -257,11 +257,11 @@ function GenSites(dir) {
     index.push(sitecontents.join(',\n'));
     index.push('  }');
     index.push('}');
-    fs_1.default.writeFileSync('src/router/index.ts', index.join('\n'));
+    fs.writeFileSync('src/router/index.ts', index.join('\n'));
 }
 exports.GenSites = GenSites;
 function GetDevopsDomain() {
-    let devops = JSON.parse(fs_1.default.readFileSync('devops.json').toLocaleString());
+    let devops = JSON.parse(fs.readFileSync('devops.json').toLocaleString());
     if (devops.standalone)
         return '';
     return devops.path.substr(15);

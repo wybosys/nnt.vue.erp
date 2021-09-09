@@ -1,16 +1,17 @@
-import path from 'path'
+import path = require('path')
 import config from './config'
-import fs from 'fs'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import notifier from 'node-notifier'
+import fs = require('fs')
+import ExtractTextPlugin = require('extract-text-webpack-plugin')
+import notifier = require('node-notifier')
 import { RuleSetRule } from 'webpack'
 import { Severity } from 'friendly-errors-webpack-plugin'
 
-export function LoadJson(file: string) {
-    return JSON.parse(fs.readFileSync(file).toLocaleString())
+export function LoadJson(dir: string, file: string) {
+    let af = path.resolve(dir, file)
+    return JSON.parse(fs.readFileSync(af).toLocaleString())
 }
 
-let package_json = LoadJson('../package.json')
+let package_json = LoadJson(__dirname, '../package.json')
 
 interface NewLoader {
     loader: string;

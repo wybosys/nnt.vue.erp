@@ -1,17 +1,17 @@
-import path from 'path'
+import path = require('path')
 import { merge } from 'webpack-merge'
 import baseWebpackConfig from './base'
 import { StyleLoaders, AssetsPath } from '../../utils'
 import config from '../../config'
-import TerserPlugin from 'terser-webpack-plugin'
+import TerserPlugin = require('terser-webpack-plugin')
 import { VueLoaderPlugin } from 'vue-loader'
-import webpack from 'webpack'
+import webpack = require('webpack')
 import config_produ from '../../config/produ'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import OptimizeCSSPlugin from 'optimize-css-assets-webpack-plugin'
-import CompressionWebpackPlugin from 'compression-webpack-plugin'
+import ExtractTextPlugin = require('extract-text-webpack-plugin')
+import CopyWebpackPlugin = require('copy-webpack-plugin')
+import HtmlWebpackPlugin = require('html-webpack-plugin')
+import OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+import CompressionWebpackPlugin = require('compression-webpack-plugin')
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 let produWebpackConfig = merge(baseWebpackConfig, {

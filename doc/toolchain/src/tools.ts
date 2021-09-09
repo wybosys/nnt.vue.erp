@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs = require('fs')
+import path = require('path')
 
 // 处理开发配置
 export let CONFIG = {

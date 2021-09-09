@@ -1,4 +1,4 @@
-import path from 'path'
+import path = require('path')
 import config from '../../config'
 import { AssetsPath } from '../../utils'
 import VueLoaderConfig from '../vue-loader'
