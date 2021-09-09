@@ -3,9 +3,14 @@ import config from './config'
 import fs from 'fs'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import notifier from 'node-notifier'
-import package_json from '../package.json'
 import { RuleSetRule } from 'webpack'
 import { Severity } from 'friendly-errors-webpack-plugin'
+
+export function LoadJson(file: string) {
+    return JSON.parse(fs.readFileSync(file).toLocaleString())
+}
+
+let package_json = LoadJson('../package.json')
 
 interface NewLoader {
     loader: string;
@@ -45,7 +50,7 @@ export interface CssLoadersOption {
     usePostCSS?: boolean
 }
 
-export function CssLoaders(options: CssLoadersOption = {}) {
+export function CssLoaders(options: CssLoadersOption = {}): { [key: string]: Loader[] } {
     let cssLoader: Loader = {
         loader: 'css-loader',
         options: {
@@ -69,7 +74,7 @@ export function CssLoaders(options: CssLoadersOption = {}) {
     }
 
     // generate loader string to be used with extract text plugin
-    function GenerateLoaders(loader: string = null, loaderOptions = {}): Loader[] {
+    function GenerateLoaders(loader = "", loaderOptions = {}): Loader[] {
         let ret = [cssLoader]
         if (options.usePostCSS)
             ret.push(postcssLoader)
@@ -134,7 +139,9 @@ export function CssLoaders(options: CssLoadersOption = {}) {
         sass: GenerateSassResourceLoader(),
         scss: GenerateSassResourceLoader(),
         stylus: GenerateLoaders('stylus'),
-        styl: GenerateLoaders('stylus')
+        styl: GenerateLoaders('stylus'),
+        ts: [],
+        tsx: []
     };
 }
 

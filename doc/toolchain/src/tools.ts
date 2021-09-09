@@ -12,16 +12,16 @@ export let CONFIG = {
 }
 
 if ('HOST' in process.env)
-    CONFIG.CONFIG_DEV.host = process.env.HOST;
+    CONFIG.CONFIG_DEV.host = process.env.HOST ?? "localhost"
 
 if ('PORT' in process.env)
-    CONFIG.CONFIG_DEV.port = parseInt(process.env.PORT);
+    CONFIG.CONFIG_DEV.port = parseInt(process.env.PORT ?? "8080")
 
 if ('VERBOSE' in process.env)
-    CONFIG.verbose = process.env.VERBOSE !== 'false';
+    CONFIG.verbose = process.env.VERBOSE !== 'false'
 
 if ('SOURCEMAP' in process.env)
-    CONFIG.sourcemap = process.env.SOURCEMAP !== 'false';
+    CONFIG.sourcemap = process.env.SOURCEMAP !== 'false'
 
 // 停止dev用的web服务器
 export function StopDevServer() {
@@ -53,13 +53,13 @@ export function UppercaseFirst(str: string) {
 export class RouterNode {
 
     // 访问路径
-    path: string = null
+    path?: string
 
     // 相对访问路径
-    rpath: string = null;
+    rpath?: string
 
     // 节点名
-    node: string = null
+    node?: string
 
     // 是否为模块
     module = false
@@ -68,16 +68,16 @@ export class RouterNode {
     priority = 9999
 
     // 显示的名称
-    label: string = null
+    label?: string
 
     // 页面路径
-    page: string = null
+    page?: string
 
     // 是否隐藏
     hide = false
 
     // 父节点
-    parent: RouterNode
+    parent?: RouterNode
 
     // 是否为默认节点
     default = false
@@ -135,7 +135,7 @@ export class RouterNode {
             r = r.concat(e.all())
         });
         r.sort((l, r) => {
-            return l.node.localeCompare(r.node)
+            return l.node!.localeCompare(r.node!)
         })
         return r
     }
@@ -200,9 +200,9 @@ export class RouterNode {
 }
 
 export function GenRouters(outputfile: string, ...srcdirs: string[]) {
-    let imports = [];
-    let defs = [];
-    let decls = [];
+    let imports: string[] = [];
+    let defs: string[] = [];
+    let decls: string[] = [];
 
     srcdirs.forEach(e => {
         if (!fs.existsSync(`src/${e}`))
@@ -277,7 +277,7 @@ export function GenRouters(outputfile: string, ...srcdirs: string[]) {
 }
 
 export function GenSites(dir: string) {
-    let sites = [];
+    let sites: string[] = [];
     let defaultsite = null;
 
     fs.readdirSync(`src/${dir}`).forEach(e => {

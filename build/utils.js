@@ -1,156 +1,142 @@
-'use strict';
-const path = require('path');
-const config = require('../config');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const packageConfig = require('../package.json');
-const fs = require('fs');
-
-exports.assetsPath = function (_path) {
-  const assetsSubDirectory = process.env.NODE_ENV === 'production' ? config.build.assetsSubDirectory : config.dev.assetsSubDirectory;
-  return path.posix.join(assetsSubDirectory, _path);
-};
-
-exports.cssLoaders = function (options) {
-  options = options || {};
-
-  const cssLoader = {
-    loader: 'css-loader',
-    options: {
-      sourceMap: options.sourceMap
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FriendlyErrorsHandler = exports.StyleLoaders = exports.CssLoaders = exports.AssetsPath = void 0;
+const path_1 = require("path");
+const config_1 = require("./config");
+const fs_1 = require("fs");
+const extract_text_webpack_plugin_1 = require("extract-text-webpack-plugin");
+const node_notifier_1 = require("node-notifier");
+const package_json_1 = require("../package.json");
+const friendly_errors_webpack_plugin_1 = require("friendly-errors-webpack-plugin");
+function AssetsPath(pth) {
+    const assetsSubDirectory = process.env.NODE_ENV === 'production' ? config_1.default.build.assetsSubDirectory : config_1.default.dev.assetsSubDirectory;
+    return path_1.default.posix.join(assetsSubDirectory, pth);
+}
+exports.AssetsPath = AssetsPath;
+function FindAllScssFiles(dirPath) {
+    let ret = [];
+    if (fs_1.default.existsSync(dirPath)) {
+        const files = fs_1.default.readdirSync(dirPath);
+        files.forEach(function (item, index) {
+            let nowDir = path_1.default.resolve(dirPath, item);
+            let stat = fs_1.default.statSync(nowDir);
+            if (stat.isDirectory() === true) {
+                ret.concat(FindAllScssFiles(nowDir));
+            }
+            else {
+                if (path_1.default.extname(nowDir) === '.scss') {
+                    ret.push(nowDir);
+                }
+            }
+        });
     }
-  };
-
-  const postcssLoader = {
-    loader: 'postcss-loader',
-    options: {
-      sourceMap: options.sourceMap
+    else {
+        console.warn(`${dirPath}该目录不存在`);
     }
-  };
-
-  var px2remLoader = {
-    loader: 'px2rem-loader',
-    // loader: 'postcss-px2rem',
-    options: {
-      remUnit: 75
-    }
-  };
-
-  // generate loader string to be used with extract text plugin
-  function generateLoaders(loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-
-    if (loader) {
-      loaders.push({
-        loader: loader + '-loader',
-        options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
-        })
-      });
-    }
-
-    // Extract CSS when that option is specified
-    // (which is the case during production build)
-    if (options.extract) {
-      return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'vue-style-loader'
-      });
-    } else {
-      return ['vue-style-loader'].concat(loaders)
-    }
-  }
-
-  let resources = [];
-
-  function findAllFile(dirPath) {
-    if (fs.existsSync(dirPath)) {
-      const files = fs.readdirSync(dirPath);
-      files.forEach(function (item, index) {
-        let nowDir = path.resolve(dirPath, item);
-        let stat = fs.statSync(nowDir);
-        if (stat.isDirectory() === true) {
-          findAllFile(nowDir);
-        } else {
-          if (path.extname(nowDir) === '.scss') {
-            resources.push(nowDir);
-          }
-        }
-      });
-    } else {
-      console.warn(`${dirPath}该目录不存在`);
-    }
-  }
-
-  findAllFile(path.resolve(__dirname, '../src'));
-
-  function generateSassResourceLoader() {
-    var loaders = [
-      cssLoader,
-      px2remLoader,
-      'postcss-loader',
-      'sass-loader',
-      {
-        loader: 'sass-resources-loader',
+    return ret;
+}
+function CssLoaders(options = {}) {
+    let cssLoader = {
+        loader: 'css-loader',
         options: {
-          resources: resources
+            sourceMap: options.sourceMap
         }
-      }
-    ];
-
-    if (options.extract) {
-      return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'vue-style-loader',
-        publicPath: '../../'
-      });
-    } else {
-      return ['vue-style-loader'].concat(loaders);
+    };
+    let postcssLoader = {
+        loader: 'postcss-loader',
+        options: {
+            sourceMap: options.sourceMap
+        }
+    };
+    let px2remLoader = {
+        loader: 'px2rem-loader',
+        options: {
+            remUnit: 75
+        }
+    };
+    function GenerateLoaders(loader = "", loaderOptions = {}) {
+        let ret = [cssLoader];
+        if (options.usePostCSS)
+            ret.push(postcssLoader);
+        if (loader) {
+            ret.push({
+                loader: loader + '-loader',
+                options: Object.assign({}, loaderOptions, {
+                    sourceMap: options.sourceMap
+                })
+            });
+        }
+        if (options.extract) {
+            ret = extract_text_webpack_plugin_1.default.extract({
+                use: ret,
+                fallback: 'vue-style-loader'
+            });
+        }
+        else {
+            ret.push('vue-style-loader');
+        }
+        return ret;
     }
-  }
-
-  // https://vue-loader.vuejs.org/en/configurations/extract-css.html
-  return {
-    css: generateLoaders(),
-    postcss: generateLoaders(),
-    less: generateLoaders('less'),
-    // sass: generateLoaders('sass', { indentedSyntax: true }),
-    // scss: generateLoaders('sass'),
-    sass: generateSassResourceLoader(),
-    scss: generateSassResourceLoader(),
-    stylus: generateLoaders('stylus'),
-    styl: generateLoaders('stylus')
-  };
-};
-
-// Generate loaders for standalone style files (outside of .vue)
-exports.styleLoaders = function (options) {
-  const output = [];
-  const loaders = exports.cssLoaders(options);
-  for (const extension in loaders) {
-    const loader = loaders[extension];
-    output.push({
-      test: new RegExp('\\.' + extension + '$'),
-      use: loader
+    let scssFiles = FindAllScssFiles(path_1.default.resolve(__dirname, '../src'));
+    function GenerateSassResourceLoader() {
+        var ret = [
+            cssLoader,
+            px2remLoader,
+            'postcss-loader',
+            'sass-loader',
+            {
+                loader: 'sass-resources-loader',
+                options: {
+                    resources: scssFiles
+                }
+            }
+        ];
+        if (options.extract) {
+            ret = extract_text_webpack_plugin_1.default.extract({
+                use: ret,
+                fallback: 'vue-style-loader',
+                publicPath: '../../'
+            });
+        }
+        else {
+            ret.push('vue-style-loader');
+        }
+        return ret;
+    }
+    return {
+        css: GenerateLoaders(),
+        postcss: GenerateLoaders(),
+        less: GenerateLoaders('less'),
+        sass: GenerateSassResourceLoader(),
+        scss: GenerateSassResourceLoader(),
+        stylus: GenerateLoaders('stylus'),
+        styl: GenerateLoaders('stylus'),
+        ts: [],
+        tsx: []
+    };
+}
+exports.CssLoaders = CssLoaders;
+function StyleLoaders(options = {}) {
+    const output = [];
+    const loaders = CssLoaders(options);
+    for (const extension in loaders) {
+        const loader = loaders[extension];
+        output.push({
+            test: new RegExp('\\.' + extension + '$'),
+            use: loader
+        });
+    }
+    return output;
+}
+exports.StyleLoaders = StyleLoaders;
+function FriendlyErrorsHandler(severity, errors) {
+    if (severity != friendly_errors_webpack_plugin_1.Severity.Error)
+        return;
+    node_notifier_1.default.notify({
+        title: package_json_1.default.name,
+        message: errors,
+        subtitle: severity,
+        icon: path_1.default.join(__dirname, 'logo.png')
     });
-  }
-  return output;
-};
-
-exports.createNotifierCallback = () => {
-  const notifier = require('node-notifier')
-
-  return (severity, errors) => {
-    if (severity !== 'error')
-      return;
-
-    const error = errors[0];
-    const filename = error.file && error.file.split('!').pop();
-
-    notifier.notify({
-      title: packageConfig.name,
-      message: severity + ': ' + error.name,
-      subtitle: filename || '',
-      icon: path.join(__dirname, 'logo.png')
-    });
-  };
-};
+}
+exports.FriendlyErrorsHandler = FriendlyErrorsHandler;

@@ -96,12 +96,15 @@ export default new Promise((resolve, reject) => {
         // add port to devServer config
         devWebpackServerConfig.port = port
 
-        devWebpackConfig.plugins.push(new FriendlyErrorsWebpackPlugin({
+        devWebpackConfig.plugins!.push(new FriendlyErrorsWebpackPlugin({
             compilationSuccessInfo: {
-                messages: [`运行地址: http://${devWebpackConfig.devServer.host}:${port}`],
+                messages: [`运行地址: http://${devWebpackServerConfig.host}:${port}`],
                 notes: []
             },
-            onErrors: config.dev.notifyOnErrors ? FriendlyErrorsHandler : null
+            onErrors: (severity, errors) => {
+                if (config.dev.notifyOnErrors)
+                    FriendlyErrorsHandler(severity, errors)
+            }
         }))
     })
 

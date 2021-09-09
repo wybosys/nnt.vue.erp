@@ -113,7 +113,7 @@ let produWebpackConfig = merge(baseWebpackConfig, {
 })
 
 if (config.build.productionGzip) {
-    produWebpackConfig.plugins.push(new CompressionWebpackPlugin({
+    produWebpackConfig.plugins!.push(new CompressionWebpackPlugin({
         algorithm: 'gzip',
         filename: '[path][base].gz[query]',
         test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
@@ -123,7 +123,7 @@ if (config.build.productionGzip) {
 }
 
 if (config.build.bundleAnalyzerReport) {
-    produWebpackConfig.plugins.push(new BundleAnalyzerPlugin())
+    produWebpackConfig.plugins!.push(new BundleAnalyzerPlugin())
 }
 
 export default produWebpackConfig

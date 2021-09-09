@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+tsc
+
+if [ -e ../../build ]; then
+    rm -rf ../../build
+fi
+
+mkdir ../../build
+cp -r tmp/src/* ../../build

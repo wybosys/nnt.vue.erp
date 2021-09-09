@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "build",
-    "target": "esnext",
+    "outDir": "tmp",
+    "target": "ESNext",
     "sourceMap": false,
+    "strict": true,    
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "module": "esnext",
+    "resolveJsonModule": false,
+    "esModuleInterop": false,
+    "module": "CommonJS",    
     "lib": [
-      "esnext",
-      "dom"
+      "ESNext",
+      "DOM"
     ]
   },
   "include": [

@@ -1,8 +1,10 @@
 import child_process from 'child_process'
-import semver from 'semver'
-import package_json from '../package.json'
+import { clean, satisfies } from 'semver'
 import shell from 'shelljs'
 import chalk from 'chalk'
+import { LoadJson } from './utils'
+
+let package_json = LoadJson('../package.json')
 
 function exec(cmd: string) {
   return child_process.execSync(cmd).toString().trim()
@@ -11,7 +13,7 @@ function exec(cmd: string) {
 const VersionRequirements = [
   {
     name: 'node',
-    currentVersion: semver.clean(process.version),
+    currentVersion: clean(process.version) ?? "",
     versionRequirement: package_json.engines.node
   }
 ]
@@ -27,7 +29,7 @@ if (shell.which('npm')) {
 export default () => {
   let warnings: string[] = []
   VersionRequirements.forEach(e => {
-    if (!semver.satisfies(e.currentVersion, e.versionRequirement)) {
+    if (!satisfies(e.currentVersion, e.versionRequirement)) {
       warnings.push(`${e.name}: ${chalk.red(e.currentVersion)} 版本必须为 ${chalk.green(e.versionRequirement)}`)
     }
   })

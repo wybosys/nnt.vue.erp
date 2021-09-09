@@ -6,15 +6,16 @@ const sourceMapEnabled = isProdu
     ? config.build.productionSourceMap
     : config.dev.cssSourceMap
 
-let LOADERS = CssLoaders({
+let loaders = CssLoaders({
     sourceMap: sourceMapEnabled,
     extract: isProdu
 })
-LOADERS['ts'] = 'ts-loader'
-LOADERS['tsx'] = 'babel-loader!ts-loader'
+
+loaders['ts'] = ['ts-loader']
+loaders['tsx'] = ['babel-loader!ts-loader']
 
 export default {
-    loaders: LOADERS,
+    loaders: loaders,
     cssSourceMap: sourceMapEnabled,
     cacheBusting: config.dev.cacheBusting,
     transformToRequire: {
