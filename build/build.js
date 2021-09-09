@@ -10,8 +10,7 @@ const produ_1 = require("./config/webpack/produ");
 const chalk = require("chalk");
 check_version_1.default();
 process.env.NODE_ENV = 'production';
-let spinner = ora_1.default('编译');
-spinner.start();
+let spinner = ora_1.default('编译生产').start();
 rm(path.join(config_1.default.build.assetsRoot, config_1.default.build.assetsSubDirectory), err => {
     if (err)
         throw err;

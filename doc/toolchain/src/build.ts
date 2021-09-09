@@ -14,8 +14,7 @@ checkVersion()
 process.env.NODE_ENV = 'production'
 
 // 启动任务
-let spinner = ora('编译')
-spinner.start()
+let spinner = ora('编译生产').start()
 
 // 删除旧文件并编译
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
