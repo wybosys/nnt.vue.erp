@@ -1,22 +1,15 @@
 {
   "compilerOptions": {
     "outDir": "tmp",
-    "target": "ESNext",
+    "target": "ESNext",    
+    "module": "CommonJS",
     "sourceMap": false,
     "strict": true,    
     "removeComments": true,
-    "allowSyntheticDefaultImports": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": false,
-    "esModuleInterop": false,
-    "module": "CommonJS",    
-    "lib": [
-      "ESNext",
-      "DOM"
-    ]
+    "moduleResolution": "Node"
   },
   "include": [
-    "src"
+    "src/**/*.ts"
   ]
 }

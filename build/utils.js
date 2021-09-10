@@ -2,10 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FriendlyErrorsHandler = exports.StyleLoaders = exports.CssLoaders = exports.AssetsPath = exports.LoadJson = void 0;
 const path = require("path");
-const config_1 = require("./config");
 const fs = require("fs");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const notifier = require("node-notifier");
+const config_1 = require("./config");
 const friendly_errors_webpack_plugin_1 = require("friendly-errors-webpack-plugin");
 function LoadJson(dir, file) {
     let af = path.resolve(dir, file);
@@ -25,7 +24,7 @@ function FindAllScssFiles(dirPath) {
         files.forEach(function (item, index) {
             let nowDir = path.resolve(dirPath, item);
             let stat = fs.statSync(nowDir);
-            if (stat.isDirectory() === true) {
+            if (stat.isDirectory()) {
                 ret.concat(FindAllScssFiles(nowDir));
             }
             else {
@@ -71,20 +70,12 @@ function CssLoaders(options = {}) {
                 })
             });
         }
-        if (options.extract) {
-            ret = ExtractTextPlugin.extract({
-                use: ret,
-                fallback: 'vue-style-loader'
-            });
-        }
-        else {
-            ret.push('vue-style-loader');
-        }
+        ret.push('vue-style-loader');
         return ret;
     }
     let scssFiles = FindAllScssFiles(path.resolve(__dirname, '../src'));
     function GenerateSassResourceLoader() {
-        var ret = [
+        let ret = [
             cssLoader,
             px2remLoader,
             'postcss-loader',
@@ -96,16 +87,7 @@ function CssLoaders(options = {}) {
                 }
             }
         ];
-        if (options.extract) {
-            ret = ExtractTextPlugin.extract({
-                use: ret,
-                fallback: 'vue-style-loader',
-                publicPath: '../../'
-            });
-        }
-        else {
-            ret.push('vue-style-loader');
-        }
+        ret.push('vue-style-loader');
         return ret;
     }
     return {

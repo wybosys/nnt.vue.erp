@@ -1,8 +1,8 @@
-import child_process = require('child_process')
-import { clean, satisfies } from 'semver'
-import shell = require('shelljs')
-import chalk = require('chalk')
-import { LoadJson } from './utils'
+import child_process = require('child_process');
+import shell = require('shelljs');
+import chalk = require('chalk');
+import {clean, satisfies} from 'semver'
+import {LoadJson} from './utils'
 
 function exec(cmd: string) {
   return child_process.execSync(cmd).toString().trim()
